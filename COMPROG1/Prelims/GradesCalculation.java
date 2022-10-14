@@ -8,20 +8,19 @@ public class GradesCalculation {
         int mathGrade = enterGrade("Math");
         int scienceGrade = enterGrade("Science");
         int englishGrade = enterGrade("English");
-        int averageGrade = mathGrade + scienceGrade + englishGrade;
+        int averageGrade = (mathGrade + scienceGrade + englishGrade) / 3;
 
         System.out.println(name + "'s average grade: " + averageGrade);
     }
 
     private static int enterGrade(String subjectName) {
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
-                System.out.println(subjectName + ":");
-                int grade = scanner.nextInt();
-                if (!(grade < 0 || grade > 100))
-                    return grade;
-                System.out.println("Grade must be within 0 to 100!");
-            }
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println(subjectName + ":");
+            int grade = scanner.nextInt();
+            if (!(grade < 0 || grade > 100))
+                return grade;
+            System.out.println("Grade must be within 0 to 100!");
         }
     }
 }
