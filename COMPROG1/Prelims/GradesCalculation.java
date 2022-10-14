@@ -18,8 +18,10 @@ public class GradesCalculation {
         while (true) {
             System.out.println(subjectName + ":");
             int grade = scanner.nextInt();
-            if (!(grade < 0 || grade > 100))
+            if (!(grade < 0 || grade > 100)) {
+                scanner.close();
                 return grade;
+            }
             System.out.println("Grade must be within 0 to 100!");
         }
     }
