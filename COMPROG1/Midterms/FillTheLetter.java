@@ -61,6 +61,7 @@ public class FillTheLetter {
         String correctWord = chooseRandomWord();
         String playerWord = randomizeWord(correctWord);
         char[] correctWordArr = correctWord.toCharArray();
+        List<Character> chosenLetters = new ArrayList<Character>();
         System.out.println("Complete the word!\n" + playerWord);
 
         while (tries < maxTries) {
@@ -70,8 +71,10 @@ public class FillTheLetter {
 
             boolean hasLetter = false;
             for (int i = 0; i < playerArr.length; i++) {
-                if (correctWordArr[i] == c) {
+                if (correctWordArr[i] == c && !chosenLetters.contains(c)) {
+                    chosenLetters.add(c);
                     playerArr[i] = c;
+                    correctWordArr[i] = '_';
                     hasLetter = true;
                 }
             }
