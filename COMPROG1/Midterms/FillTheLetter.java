@@ -28,7 +28,10 @@ public class FillTheLetter {
     }
 
     private static String chooseRandomWord() {
-        String[] words = { "dragon", "castle", "sword" };
+        String[] words = { 
+            "dragon", "castle", "sword", "keyboard", 
+            "vampire", "whiterun", "diamond", "destruction" 
+        };
         int chosenIndex = (int) Math.floor(Math.random() * words.length);
         return words[chosenIndex];
     }
@@ -56,7 +59,7 @@ public class FillTheLetter {
     private static void playGame() {
         Scanner input = new Scanner(System.in);
         final int maxTries = 3; // code readability
-        int tries = 0;
+        byte tries = 0;
 
         String correctWord = chooseRandomWord();
         String playerWord = randomizeWord(correctWord);
@@ -66,15 +69,15 @@ public class FillTheLetter {
 
         while (tries < maxTries) {
             System.out.println(maxTries - tries + " trials left");
-            char c = input.nextLine().charAt(0);
+            char c = input.nextLine().toLowerCase().charAt(0);
             char[] playerArr = playerWord.toCharArray();
 
             boolean hasLetter = false;
             for (int i = 0; i < playerArr.length; i++) {
                 if (correctWordArr[i] == c && !chosenLetters.contains(c)) {
-                    chosenLetters.add(c);
                     playerArr[i] = c;
                     correctWordArr[i] = '_';
+                    chosenLetters.add(c);
                     hasLetter = true;
                 }
             }
