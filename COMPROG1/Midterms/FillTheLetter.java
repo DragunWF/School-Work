@@ -27,10 +27,32 @@ public class FillTheLetter {
         return new Scanner(System.in).nextLine();
     }
 
+    private static HashMap<Character, Integer> mapLetters(char[] letters) {
+        HashMap<Character, Integer> letterCount = new HashMap<Character, Integer>();
+        for (int i = 0; i < letters.length; i++) {
+            if (!letterCount.containsKey(letters[i])) {
+                letterCount.put(letters[i], 1);
+            } else {
+                final int updatedValue = letterCount.get(letters[i]) + 1;
+                letterCount.put(letters[i], updatedValue);
+            }
+        }
+        return letterCount;
+    }
+
+    private static int countLetter(char[] wordArr, char letter) {
+        int count = 0;
+        for (char element : wordArr)
+            if (element == letter)
+                count++;
+        return count;
+    }
+
     private static String chooseRandomWord() {
         String[] words = { 
             "dragon", "castle", "sword", "keyboard", 
-            "vampire", "whiterun", "diamond", "destruction" 
+            "vampire", "whiterun", "diamond", "destruction",
+            "macbook", "starbucks", "magic", "wizards" 
         };
         int chosenIndex = (int) Math.floor(Math.random() * words.length);
         return words[chosenIndex];
@@ -47,15 +69,6 @@ public class FillTheLetter {
         return output;
     }
 
-    private static String getRemaining(String original, String missing) {
-        char[] output = new char[original.length()];
-        char[] org = original.toCharArray();
-        char[] input = missing.toCharArray();
-        for (int i = 0; i < output.length; i++)
-            output[i] = org[i] == input[i] ? org[i] : '_';
-        return String.valueOf(output);
-    }
-
     private static void playGame() {
         Scanner input = new Scanner(System.in);
         final int maxTries = 3; // code readability
@@ -64,7 +77,7 @@ public class FillTheLetter {
         String correctWord = chooseRandomWord();
         String playerWord = randomizeWord(correctWord);
         char[] correctWordArr = correctWord.toCharArray();
-        List<Character> chosenLetters = new ArrayList<Character>();
+        HashMap<Character, Integer> correctLetterCount = mapLetters(correctWordArr);
         System.out.println("Complete the word!\n" + playerWord);
 
         while (tries < maxTries) {
@@ -74,17 +87,23 @@ public class FillTheLetter {
 
             boolean hasLetter = false;
             for (int i = 0; i < playerArr.length; i++) {
-                if (correctWordArr[i] == c && !chosenLetters.contains(c)) {
+                int letterCount = countLetter(playerArr, c);
+                if (correctWordArr[i] == c && 
+                    correctLetterCount.get(c) != null &&
+                    letterCount < correctLetterCount.get(c)
+                ) {
                     playerArr[i] = c;
                     correctWordArr[i] = '_';
-                    chosenLetters.add(c);
+                    correctLetterCount.put(c, correctLetterCount.get(c) + 1);
                     hasLetter = true;
                 }
             }
 
             if (!hasLetter) {
                 tries++;
-                System.out.println("Try again!");
+                System.out.println(tries < maxTries ? 
+                    "Try again!" : String.format("Correct word was: %s", correctWord)
+                );
             }
 
             String remaining = String.valueOf(playerArr);
