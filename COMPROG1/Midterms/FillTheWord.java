@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class FillTheLetter {
+public class FillTheWord {
     public static void main(String[] args) {
         System.out.println("Welcome to the game!");
         int timesPlayed = 0;
