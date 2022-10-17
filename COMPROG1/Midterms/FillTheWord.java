@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class FillTheWord {
-    private static Scanner input = new Scanner(System.in); 
+    private static Scanner input = new Scanner(System.in);
     private static String previousChosenWord = "";
 
     public static void main(String[] args) {
@@ -58,10 +58,10 @@ public class FillTheWord {
     }
 
     private static String chooseRandomWord() {
-        String[] words = { 
-            "dragon", "castle", "sword", "keyboard", 
-            "vampire", "whiterun", "diamond", "destruction",
-            "macbook", "starbucks", "magic", "wizards" 
+        String[] words = {
+                "dragon", "castle", "sword", "keyboard",
+                "vampire", "whiterun", "diamond", "destruction",
+                "macbook", "starbucks", "magic", "wizards"
         };
         int chosenIndex = getRandomIndex(words.length);
         while (words[chosenIndex].equals(previousChosenWord))
@@ -87,43 +87,45 @@ public class FillTheWord {
 
         String correctWord = chooseRandomWord();
         String playerWord = randomizeWord(correctWord);
-        char[] correctWordArr = correctWord.toCharArray();
-        HashMap<Character, Integer> correctLetterCount = mapLetters(correctWordArr);
+        final char[] correctWordArr = correctWord.toCharArray();
+        final HashMap<Character, Integer> correctLetterCount = mapLetters(correctWordArr);
         System.out.println("Complete the word!\n" + playerWord);
 
         while (tries < maxTries) {
-            System.out.println(maxTries - tries + " trials left");
-            char c = input.nextLine().toLowerCase().charAt(0);
-            char[] playerArr = playerWord.toCharArray();
+            try {
+                System.out.println(maxTries - tries + " trials left");
+                char c = input.nextLine().toLowerCase().charAt(0);
+                char[] playerArr = playerWord.toCharArray();
 
-            boolean hasLetter = false;
-            for (int i = 0; i < playerArr.length; i++) {
-                int letterCount = countLetter(playerArr, c);
-                if (correctWordArr[i] == c && 
-                    correctLetterCount.get(c) != null &&
-                    letterCount < correctLetterCount.get(c)
-                ) {
-                    playerArr[i] = c;
-                    correctWordArr[i] = '_';
-                    correctLetterCount.put(c, correctLetterCount.get(c) + 1);
-                    hasLetter = true;
+                boolean hasLetter = false;
+                for (int i = 0; i < playerArr.length; i++) {
+                    int letterCount = countLetter(playerArr, c);
+                    if (correctWordArr[i] == c &&
+                            correctLetterCount.get(c) != null &&
+                            letterCount < correctLetterCount.get(c)) {
+                        playerArr[i] = c;
+                        correctWordArr[i] = '_';
+                        correctLetterCount.put(c, correctLetterCount.get(c) + 1);
+                        hasLetter = true;
+                    }
                 }
-            }
 
-            if (!hasLetter) {
-                tries++;
-                System.out.println(tries < maxTries ? 
-                    "Try again!" : String.format("Correct word was: %s", correctWord)
-                );
-            }
+                if (!hasLetter) {
+                    tries++;
+                    System.out.println(
+                            tries < maxTries ? "Try again!" : String.format("Correct word was: %s", correctWord));
+                }
 
-            String remaining = String.valueOf(playerArr);
-            System.out.println(remaining);
-            playerWord = remaining;
+                final String remaining = String.valueOf(playerArr);
+                System.out.println(remaining);
+                playerWord = remaining;
 
-            if (remaining.equals(correctWord)) {
-                System.out.println("Congrats, you won!");
-                break;
+                if (remaining.equals(correctWord)) {
+                    System.out.println("Congrats, you won!");
+                    break;
+                }
+            } catch (Exception error) {
+                System.out.println("An error has occured! Please check your input.");
             }
         }
     }
