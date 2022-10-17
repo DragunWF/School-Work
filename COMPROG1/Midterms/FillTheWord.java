@@ -2,7 +2,7 @@ import java.util.*;
 
 public class FillTheWord {
     private static Scanner input = new Scanner(System.in); 
-    private static String previousCorrectWord = "";
+    private static String previousChosenWord = "";
 
     public static void main(String[] args) {
         System.out.println("Welcome to the game!");
@@ -64,9 +64,9 @@ public class FillTheWord {
             "macbook", "starbucks", "magic", "wizards" 
         };
         int chosenIndex = getRandomIndex(words.length);
-        while (words[chosenIndex].equals(previousCorrectWord))
+        while (words[chosenIndex].equals(previousChosenWord))
             chosenIndex = getRandomIndex(words.length);
-        previousCorrectWord = words[chosenIndex];
+        previousChosenWord = words[chosenIndex];
         return words[chosenIndex];
     }
 
