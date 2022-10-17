@@ -6,7 +6,7 @@ public class AreaOfATriangle {
     public static void main(String[] args) {
         final double height = userInput("Enter height: ");
         final double base = userInput("Enter base: ");
-        final double area = (base * height) / 2;
+        final double area = base * height / 2;
         System.out.println(String.format("Area of the triangle: %s", area));
     }
 
