@@ -1,6 +1,9 @@
 import java.util.*;
 
 public class FillTheWord {
+    private static Scanner input = new Scanner(System.in); 
+    private static String previousCorrectWord = "";
+
     public static void main(String[] args) {
         System.out.println("Welcome to the game!");
         int timesPlayed = 0;
@@ -20,11 +23,13 @@ public class FillTheWord {
         String message = String.format("You've played the game for %s %s",
                 timesPlayed, timeStr);
         System.out.println(message);
+
+        input.close();
     }
 
     private static String playerInput(String prompt) {
         System.out.println(prompt);
-        return new Scanner(System.in).nextLine();
+        return input.nextLine();
     }
 
     private static HashMap<Character, Integer> mapLetters(char[] letters) {
@@ -48,13 +53,20 @@ public class FillTheWord {
         return count;
     }
 
+    private static int getRandomIndex(int arrayLength) {
+        return (int) Math.floor(Math.random() * arrayLength);
+    }
+
     private static String chooseRandomWord() {
         String[] words = { 
             "dragon", "castle", "sword", "keyboard", 
             "vampire", "whiterun", "diamond", "destruction",
             "macbook", "starbucks", "magic", "wizards" 
         };
-        int chosenIndex = (int) Math.floor(Math.random() * words.length);
+        int chosenIndex = getRandomIndex(words.length);
+        while (words[chosenIndex].equals(previousCorrectWord))
+            chosenIndex = getRandomIndex(words.length);
+        previousCorrectWord = words[chosenIndex];
         return words[chosenIndex];
     }
 
@@ -70,7 +82,6 @@ public class FillTheWord {
     }
 
     private static void playGame() {
-        Scanner input = new Scanner(System.in);
         final int maxTries = 3; // code readability
         byte tries = 0;
 
