@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class FillTheWord {
-    private static Scanner input = new Scanner(System.in);
+    private static final Scanner input = new Scanner(System.in);
     private static String previousChosenWord = "";
 
     public static void main(String[] args) {
