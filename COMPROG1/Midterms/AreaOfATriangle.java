@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class AreaOfATriangle {
-    private static Scanner input = new Scanner(System.in);
+    private static final Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
         final double height = userInput("Enter height: ");
