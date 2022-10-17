@@ -18,11 +18,11 @@ public class Pattern {
 
             for (int j = 1; j <= width; j++) {
                 if (evenIteration && rightSnake)
-                    line += j == width ? "#" : ".";
+                    line += j == width ? "x" : ".";
                 else if (evenIteration && !rightSnake)
-                    line += j == 1 ? "#" : ".";
+                    line += j == 1 ? "x" : ".";
                 else
-                    line += "#";
+                    line += "x";
             }
 
             if (evenIteration)
