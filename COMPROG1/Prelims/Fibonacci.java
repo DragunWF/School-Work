@@ -1,9 +1,11 @@
 import java.util.Scanner;
 
 public class Fibonacci {
+    private static final Scanner input = new Scanner(System.in);
+
     public static void main(String[] args) {
         System.out.println("Enter the limit:");
-        int num = new Scanner(System.in).nextInt();
+        final int num = input.nextInt();
         generateFibonacci(num);
     }
 
