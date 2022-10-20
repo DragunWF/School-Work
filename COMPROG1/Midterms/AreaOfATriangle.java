@@ -11,13 +11,7 @@ public class AreaOfATriangle {
     }
 
     private static double userInput(String prompt) {
-        while (true) {
-            try {
-                System.out.println(prompt);
-                return input.nextDouble();
-            } catch (Exception error) {
-                System.out.println("Please provide proper input");
-            }
-        }
+        System.out.println(prompt);
+        return input.nextDouble();
     }
 }
