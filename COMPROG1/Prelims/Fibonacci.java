@@ -17,5 +17,6 @@ public class Fibonacci {
         System.out.println("Fibonacci Sequence:");
         for (int num : seq)
             System.out.print(num + " ");
+        System.out.println();
     }
 }
