@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Challenge {
+public class Reverse {
     private static final Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
