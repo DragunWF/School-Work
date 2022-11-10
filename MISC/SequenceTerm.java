@@ -2,8 +2,8 @@ import java.util.*;
 
 public class SequenceTerm {
     private static final Scanner input = new Scanner(System.in);
-    private static final int d = 4;
-    private static final int a = 1;
+    private static final int d = 6;
+    private static final int a = 7;
 
     public static void main(String[] args) {
         System.out.printf("d = %s, a = %s\n", d, a);
