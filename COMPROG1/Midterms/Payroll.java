@@ -56,7 +56,7 @@ public class Payroll {
                 Integer.parseInt(info.get("Pag-ibig")));
         final int totalSalary = Integer.parseInt(info.get("Salary")) - tax;
 
-        info.put("SSS", (String.valueOf(sss)));
+        info.put("SSS", String.valueOf(sss));
         info.put("Tax", String.valueOf(tax));
         info.put("Total Salary", String.valueOf(totalSalary));
 
