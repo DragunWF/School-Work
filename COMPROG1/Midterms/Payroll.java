@@ -27,7 +27,7 @@ public class Payroll {
                     info.put(prompts[i], userStr);
                     break;
                 }
-                System.out.println("Invalid Input! Try again...");
+                System.out.println("\nInvalid Input! Try again...\n");
             }
         }
 
