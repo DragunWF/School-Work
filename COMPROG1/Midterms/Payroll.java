@@ -23,7 +23,7 @@ public class Payroll {
                 } else if (checkIntIndex(i) && checkForDigits(userStr)) {
                     info.put(prompts[i], userStr);
                     break;
-                } else {
+                } else if (!checkIntIndex(i)) {
                     info.put(prompts[i], userStr);
                     break;
                 }
@@ -76,11 +76,17 @@ public class Payroll {
     private static boolean checkForDigits(String userInfo) {
         char[] digits = { '1', '2', '3', '4', '5', '6', '7', '8', '9', '0' };
         char[] charInfo = userInfo.toCharArray();
+
         for (char item : charInfo) {
+            boolean foundDigit = false;
             for (char digit : digits) {
-                if (digit == item) {
-                    return false;
+                if (item == digit) {
+                    foundDigit = true;
+                    break;
                 }
+            }
+            if (!foundDigit) {
+                return false;
             }
         }
         return true;
