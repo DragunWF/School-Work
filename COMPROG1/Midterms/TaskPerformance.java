@@ -11,8 +11,8 @@ public class TaskPerformance {
             while (true) {
                 timesPlayed++;
                 if (playGame()) {
-                    int x = userInput("Congrats, you won! Do you want to play again? (1 = YES, 2 = NO)\n");
-                    if (x != 1)
+                    int choiceTwo = userInput("Congrats, you won! Do you want to play again? (1 = YES, 2 = NO)\n");
+                    if (choiceTwo != 1)
                         break;
                 } else {
                     System.out.println("You died!");
