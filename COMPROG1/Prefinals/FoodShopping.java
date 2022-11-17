@@ -57,8 +57,8 @@ public class FoodShopping {
     private static void askForAddOns() {
         String userChoice = userInput(
             "Would you like to add some sauce as an add on? It costs 25 PHP. (y/n) "
-            );
-            if (userChoice.equals("yes") || userChoice.equals("y")) {
+        );
+        if (userChoice.equals("yes") || userChoice.equals("y")) {
             foodCosts += 25;
             System.out.println("Thank you for buying the AddOns!");
         }
