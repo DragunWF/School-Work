@@ -11,12 +11,12 @@ public class FoodShopping {
         displayMenu();
         askForBalance();
 
-        while (orderFood()) {
+        do {
             displayCart();
             int totalPrice = getTotalPrice();
             foodCosts = totalPrice;
             System.out.printf("\nTotal Price: %s\n", totalPrice);
-        }
+        } while (orderFood());
         askForAddOns();
 
         String payment;
@@ -92,7 +92,7 @@ public class FoodShopping {
                 System.out.printf("%s: %s PHP\n", capitalize(item), price);
             }
         } else {
-            System.out.println("(Empty)\n");
+            System.out.println("(Empty)");
         }
     }
     
