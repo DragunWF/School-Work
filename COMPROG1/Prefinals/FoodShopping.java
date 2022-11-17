@@ -35,24 +35,6 @@ public class FoodShopping {
             System.out.println("\nThank you for shopping!");
         }
     }
-
-    private static boolean orderFood() {
-        String userChoice = userInput("Would you like to order food/drink? (y/n) ");
-        if (userChoice.equals("yes") || userChoice.equals("y")) {
-            while (true) {
-                String foodChoice = userInput("What food would you like to buy? ").toLowerCase();
-                if (menu.containsKey(foodChoice)) {
-                    System.out.printf("%s has been added to your cart!\n", foodChoice);
-                    cart.add(foodChoice);
-                    return true;
-                } else {
-                    System.out.println("\nThat isn't on our menu! Try again...\n");
-                }
-            }
-        }
-        return false;
-    }
-
     
     private static void askForAddOns() {
         String userChoice = userInput(
@@ -103,6 +85,23 @@ public class FoodShopping {
             System.out.printf("%s: %s PHP\n", capitalize(key), value);
         }
         System.out.println();
+    }
+
+    private static boolean orderFood() {
+        String userChoice = userInput("Would you like to order food/drink? (y/n) ");
+        if (userChoice.equals("yes") || userChoice.equals("y")) {
+            while (true) {
+                String foodChoice = userInput("What food would you like to buy? ").toLowerCase();
+                if (menu.containsKey(foodChoice)) {
+                    System.out.printf("%s has been added to your cart!\n", foodChoice);
+                    cart.add(foodChoice);
+                    return true;
+                } else {
+                    System.out.println("\nThat isn't on our menu! Try again...\n");
+                }
+            }
+        }
+        return false;
     }
     
     private static int getTotalPrice() {
