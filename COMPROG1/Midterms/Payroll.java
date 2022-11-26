@@ -5,7 +5,7 @@ public class Payroll {
     private static HashMap<String, String> info = new HashMap<String, String>();
     private static final String[] prompts = {
             "Name", "Age", "Position", "Salary",
-            "Pag-ibig", "Philhealth", "SSS #1", "SSS #2"
+            "Pag-ibig", "Philhealth", "SSS Range #1", "SSS Range #2"
     };
     private static final int[] intItemIndexes = { 3, 4, 5, 6, 7 };
     private static final int ageIndex = 1;
@@ -16,7 +16,7 @@ public class Payroll {
                 String userStr = userInput(prompts[i]);
                 if (i == ageIndex && checkForDigits(userStr)) {
                     final int age = Integer.parseInt(userStr);
-                    if (age >= 1 && age <= 120) { // age validation
+                    if (age >= 1 && age <= 115) { // age validation
                         info.put(prompts[i], String.valueOf(userStr));
                         break;
                     }
@@ -50,8 +50,8 @@ public class Payroll {
     }
 
     private static void computeMiscInfo() {
-        final int sss = Math.abs(Integer.parseInt(info.get("SSS #1")) -
-                Integer.parseInt(info.get("SSS #2")));
+        final int sss = Math.abs(Integer.parseInt(info.get("SSS Range #1")) -
+                Integer.parseInt(info.get("SSS Range #2")));
         final int tax = (sss + Integer.parseInt(info.get("Philhealth")) +
                 Integer.parseInt(info.get("Pag-ibig")));
         final int totalSalary = Integer.parseInt(info.get("Salary")) - tax;
@@ -60,8 +60,8 @@ public class Payroll {
         info.put("Tax", String.valueOf(tax));
         info.put("Total Salary", String.valueOf(totalSalary));
 
-        info.remove("SSS #1");
-        info.remove("SSS #2");
+        info.remove("SSS Range #1");
+        info.remove("SSS Range #2");
     }
 
     private static boolean checkIntIndex(int index) {
