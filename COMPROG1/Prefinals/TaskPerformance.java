@@ -1,5 +1,5 @@
 import java.util.*;
-// MyName | BSIT105
+// MyName | BSIT105 | Computer Programming 1
 
 public class TaskPerformance {
     private static final Scanner input = new Scanner(System.in);
@@ -20,7 +20,7 @@ public class TaskPerformance {
             c = userInput("Would you like to play (yes/no)");
         } while (!c.equalsIgnoreCase("yes") && !c.equalsIgnoreCase("no"));
 
-        if (c.equals("yes")) {
+        if (c.equalsIgnoreCase("yes")) {
             gameLoop();
             System.out.printf("Games Played: %s\nThank you for playing!\n", gamesPlayed);
         } else {
@@ -61,7 +61,7 @@ public class TaskPerformance {
 
     private static void displayBoard() {
         System.out.println();
-        for (int i = 1; i <= board.length; i++) {
+        for (int i = 0; i < board.length; i++) {
             switch (board[i]) {
                 case 0:
                     System.out.print("- ");
@@ -74,7 +74,7 @@ public class TaskPerformance {
                     break;
             }
 
-            if (i % 3 == 0) {
+            if ((i + 1) % 3 == 0) {
                 System.out.println();
             }
         }
@@ -112,7 +112,7 @@ public class TaskPerformance {
     }
 
     private static boolean firstMove() {
-        return (int) Math.floor(Math.random() * 1) == 1;
+        return (int) Math.floor(Math.random() * 2) == 1;
     }
 
     private static String userInput(String prompt) {
