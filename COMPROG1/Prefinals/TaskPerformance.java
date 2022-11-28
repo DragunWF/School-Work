@@ -1,11 +1,12 @@
 import java.util.*;
+// MyName | BSIT105
 
 public class TaskPerformance {
     private static final Scanner input = new Scanner(System.in);
     private static final int[][] winningConditions = {
-        { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 },
-        { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 },
-        { 0, 4, 8 }, { 2, 4, 6 }
+            { 0, 1, 2 }, { 3, 4, 5 }, { 6, 7, 8 },
+            { 0, 3, 6 }, { 1, 4, 7 }, { 2, 5, 8 },
+            { 0, 4, 8 }, { 2, 4, 6 }
     };
     private static int[] board = new int[9];
     private static int gamesPlayed = 0;
@@ -50,12 +51,12 @@ public class TaskPerformance {
         displayBoard();
 
         boolean playerTurn = firstMove();
-        System.out.println("Deciding who moves first...");
-        if (playerTurn) {
-            System.out.println("You move first!");
-        } else {
-            System.out.println("A.I moves first!");
-        }
+        System.out.println("Deciding who moves first...\n");
+        System.out.println(playerTurn ? "You move first!" : "A.I moves first!");
+
+        do {
+
+        } while (!checkWin(playerTurn ? 1 : 2));
     }
 
     private static void displayBoard() {
@@ -90,7 +91,7 @@ public class TaskPerformance {
         for (int i = 0; i < winningConditions.length; i++) {
             final int[] condition = winningConditions[i];
             boolean foundWin = false;
-            
+
             for (int j = 0; j < condition.length; j++) {
                 foundWin = true;
                 if (board[condition[j]] != userNum) {
