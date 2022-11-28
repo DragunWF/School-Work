@@ -88,7 +88,20 @@ public class TaskPerformance {
 
     private static boolean checkWin(int userNum) {
         for (int i = 0; i < winningConditions.length; i++) {
+            final int[] condition = winningConditions[i];
+            boolean foundWin = false;
+            
+            for (int j = 0; j < condition.length; j++) {
+                foundWin = true;
+                if (board[condition[j]] != userNum) {
+                    foundWin = false;
+                    break;
+                }
+            }
 
+            if (foundWin) {
+                return true;
+            }
         }
         return false;
     }
