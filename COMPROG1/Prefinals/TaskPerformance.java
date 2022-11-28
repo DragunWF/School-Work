@@ -12,7 +12,7 @@ public class TaskPerformance {
     private static int gamesPlayed = 0;
 
     public static void main(String[] args) {
-        System.out.println("Welcome to TicTacToe!");
+        System.out.println("\nWelcome to TicTacToe!\nx = Player\no = A.I");
 
         String c;
         do {
