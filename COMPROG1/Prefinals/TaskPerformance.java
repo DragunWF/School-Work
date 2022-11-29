@@ -1,5 +1,4 @@
 import java.util.*;
-// MyName | BSIT105 | Computer Programming 1
 
 public class TaskPerformance {
     private static final Scanner input = new Scanner(System.in);
@@ -54,16 +53,31 @@ public class TaskPerformance {
         System.out.println("Deciding who moves first...\n");
         System.out.println(playerTurn ? "You move first!" : "A.I moves first!");
 
+        boolean tie = true;
         do {
             if (playerTurn) {
                 int playerIndex = playerDecision();
                 board[playerIndex] = 1;
-             } else {
+            } else {
                 int aiIndex = AIDecision();
                 board[aiIndex] = 2;
+                System.out.printf("A.I has chosen board index %s!\n", aiIndex);
             }
+
             displayBoard();
-        } while (!checkWin(playerTurn ? 1 : 2));
+            playerTurn = playerTurn ? false : true;
+
+            if (!checkWin(!playerTurn ? 1 : 2)) {
+                tie = false;
+                break;
+            }
+        } while (checkTie());
+
+        if (!tie) {
+            System.out.println(!playerTurn ? "Congrats you won!" : "You lost!");
+        } else {
+            System.out.println("The game has tied!");
+        }
     }
 
     private static void displayBoard() {
@@ -74,10 +88,10 @@ public class TaskPerformance {
                     System.out.print("- ");
                     break;
                 case 1:
-                    System.out.print("o ");
+                    System.out.print("x ");
                     break;
                 case 2:
-                    System.out.print("x ");
+                    System.out.print("o ");
                     break;
             }
 
@@ -114,10 +128,19 @@ public class TaskPerformance {
         return false;
     }
 
+    private static boolean checkTie() {
+        for (int tile : board) {
+            if (tile == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private static int playerDecision() {
         while (true) {
             String choice = userInput("Choose an index on the board from 1 to 9");
-            int index = Integer.parseInt(choice) + 1;
+            int index = Integer.parseInt(choice);
             if (index >= 1 && index <= 9) {
                 if (board[index - 1] != 0) {
                     System.out.println("A symbol already occupies that spot!");
