@@ -37,6 +37,7 @@ public class TaskPerformance {
                 break;
             } else if (c.equalsIgnoreCase("yes")) {
                 playGame();
+                gamesPlayed++;
             } else {
                 System.out.println("Type either yes or no!");
                 continue;
@@ -67,11 +68,11 @@ public class TaskPerformance {
             displayBoard();
             playerTurn = playerTurn ? false : true;
 
-            if (!checkWin(!playerTurn ? 1 : 2)) {
+            if (checkWin(!playerTurn ? 1 : 2)) {
                 tie = false;
                 break;
             }
-        } while (checkTie());
+        } while (!checkTie());
 
         if (!tie) {
             System.out.println(!playerTurn ? "Congrats you won!" : "You lost!");
@@ -140,15 +141,19 @@ public class TaskPerformance {
     private static int playerDecision() {
         while (true) {
             String choice = userInput("Choose an index on the board from 1 to 9");
-            int index = Integer.parseInt(choice);
-            if (index >= 1 && index <= 9) {
-                if (board[index - 1] != 0) {
-                    System.out.println("A symbol already occupies that spot!");
-                    continue;
+            if (validateInput(choice)) {
+                int index = Integer.parseInt(choice);
+                if (index >= 1 && index <= 9) {
+                    if (board[index - 1] != 0) {
+                        System.out.println("A symbol already occupies that spot!");
+                        continue;
+                    }
+                    return index - 1;
+                } else {
+                    System.out.println("Index must be within the range from 1 to 9!");
                 }
-                return index - 1;
             } else {
-                System.out.println("Index must be within the range from 1 to 9!");
+                System.out.println("Input must be an integer!");
             }
         }
     }
@@ -159,6 +164,24 @@ public class TaskPerformance {
             aiChoice = (int) Math.floor(Math.random() * board.length);
         } while (board[aiChoice] != 0);
         return aiChoice;
+    }
+
+    private static boolean validateInput(String playerInput) {
+        char[] digits = "0123456789".toCharArray();
+        char[] playerInputArr = playerInput.toCharArray();
+        for (char character : playerInputArr) {
+            boolean foundDigit = false;
+            for (char digit : digits) {
+                if (character == digit) {
+                    foundDigit = true;
+                    break;
+                }
+            }
+            if (!foundDigit) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private static boolean firstMove() {
