@@ -55,7 +55,14 @@ public class TaskPerformance {
         System.out.println(playerTurn ? "You move first!" : "A.I moves first!");
 
         do {
-
+            if (playerTurn) {
+                int playerIndex = playerDecision();
+                board[playerIndex] = 1;
+             } else {
+                int aiIndex = AIDecision();
+                board[aiIndex] = 2;
+            }
+            displayBoard();
         } while (!checkWin(playerTurn ? 1 : 2));
     }
 
@@ -107,8 +114,28 @@ public class TaskPerformance {
         return false;
     }
 
+    private static int playerDecision() {
+        while (true) {
+            String choice = userInput("Choose an index on the board from 1 to 9");
+            int index = Integer.parseInt(choice) + 1;
+            if (index >= 1 && index <= 9) {
+                if (board[index - 1] != 0) {
+                    System.out.println("A symbol already occupies that spot!");
+                    continue;
+                }
+                return index - 1;
+            } else {
+                System.out.println("Index must be within the range from 1 to 9!");
+            }
+        }
+    }
+
     private static int AIDecision() {
-        return (int) Math.floor(Math.random() * board.length);
+        int aiChoice;
+        do {
+            aiChoice = (int) Math.floor(Math.random() * board.length);
+        } while (board[aiChoice] != 0);
+        return aiChoice;
     }
 
     private static boolean firstMove() {
