@@ -62,7 +62,7 @@ public class TaskPerformance {
             } else {
                 int aiIndex = AIDecision();
                 board[aiIndex] = 2;
-                System.out.printf("A.I has chosen board index %s!\n", aiIndex);
+                System.out.printf("A.I has chosen board index %s!\n", aiIndex + 1);
             }
 
             displayBoard();
