@@ -1,5 +1,5 @@
 public class MatrixArray {
-    private static final int size = 9;
+    private static final int size = 9; // Adjust size here. It must not be greater than 25
     private static int[][] matrix = new int[size][size];
     private static char[] alphabets = "abcdefghijklmnopqrstuvwxyz".toCharArray();
 
@@ -14,8 +14,8 @@ public class MatrixArray {
     private static void randomizeMatrix() {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                int random = (int) Math.floor(Math.random() * 10);
-                matrix[i][j] = random;
+                int randomNum = (int) Math.floor(Math.random() * 10);
+                matrix[i][j] = randomNum;
             }
         }
     }
