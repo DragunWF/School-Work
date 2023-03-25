@@ -56,7 +56,7 @@ public class App {
 
     private static void displayLine() {
         String line = "\n---------------------------\n";
-        System.out.printf("%s  -----------------------  %s\n", line, line);
+        System.out.printf("%s :----------------------:  %s\n", line, line);
     }
 
     private static double userInputDouble(String prompt) {
