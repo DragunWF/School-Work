@@ -15,7 +15,7 @@ public class App {
 
     private static void askQuestions() {
         for (int i = 0; i < questions.length; i++) {
-            System.out.printf("%s. ", i + 1, questions[i].getQuestion());
+            System.out.printf("%s. %s\n", i + 1, questions[i].getQuestion());
             questions[i].displayChoices();
 
             String playerAnswer = userAnswer().toUpperCase();
@@ -23,7 +23,7 @@ public class App {
                 score++;
                 System.out.println("Correct!\n");
             } else {
-                System.out.printf("Wrong! Correct answer was %s\n",
+                System.out.printf("Wrong! Correct answer was %s\n\n",
                         questions[i].getChoices().get(questions[i].getAnswer()));
             }
         }
@@ -49,11 +49,11 @@ public class App {
         questions[8] = new Question("Which country is Silicon Valley from?",
                 createChoices("Germany", "Canada", "United States"), "C");
         questions[9] = new Question("Which language is used to style a web page?",
-                createChoices("JavaScript", "HTML", "CSS"), "B");
+                createChoices("JavaScript", "CSS", "HTML"), "B");
     }
 
     private static HashMap<String, String> createChoices(String a, String b, String c) {
-        HashMap<String, String> output = new HashMap<>();
+        final HashMap<String, String> output = new HashMap<>();
         output.put("A", String.format("A: %s", a));
         output.put("B", String.format("B: %s", b));
         output.put("C", String.format("C: %s", c));
