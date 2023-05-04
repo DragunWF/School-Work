@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.io.*;
 
 public class LoginAuthentication {
-    private static final String path = "";
+    private static final String path = "/Users/marcplarisan/Documents/DevStuff/Repositories/School-Work/COMPROG2/Midterms/TaskPerf6/src/records.txt";
     private static final String alphanumeric = "abcdefghijklmnopqrstuvwxyz0123456789";
 
     public static void registerUser() throws IOException {
