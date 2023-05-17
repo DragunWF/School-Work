@@ -12,22 +12,33 @@ class DivisibilityGame {
     private int[] range = { 25, 5000 };
     private int[] divisorRange = { 2, 12 };
 
+    private int rowLength;
     private int numbersToSolve;
     private String[] table;
 
     public DivisibilityGame(int numbers) {
-        this.numbersToSolve = numbers;
-        this.table = new String[numbers];
+        this.numbersToSolve = numbers + 1; // Added one for header
+        this.table = new String[this.numbersToSolve];
         for (int i = 0; i < this.numbersToSolve; i++) {
             int randomNum = this.getRandomInt(this.range[0], this.range[1]);
             if (!chosenNumbers.contains(randomNum)) {
                 chosenNumbers.add(randomNum);
             }
         }
+        this.rowLength = this.divisorRange[1] - this.divisorRange[0] + 2;
     }
 
     private int getRandomInt(int min, int max) {
         return (int) Math.floor(Math.random() * (max - min) + min);
+    }
+
+    private String formatCellHeader(int number) {
+        int whiteSpaces = Utils.digitsLen(this.range[1]) - Utils.digitsLen(number) + 1;
+        String strNum = String.valueOf(number);
+        for (int i = 0; i < whiteSpaces; i++) {
+            strNum += " ";
+        }
+        return strNum;
     }
 
     private void generateTable() {
@@ -39,16 +50,20 @@ class DivisibilityGame {
 
     private String generateRow(int index) {
         int number = this.chosenNumbers.get(index);
-        String[] output = new String[this.divisorRange[1] - this.divisorRange[0] + 1];
-        for (int i = 0; i < output.length; i++) {
-            int divisor = this.divisorRange[0] + i;
-            output[i] = String.format("%s", number % divisor == 0 ? "Y" : "N");
+        String[] output = new String[this.rowLength];
+        output[0] = formatCellHeader(number);
+        for (int i = this.divisorRange[0]; i <= this.divisorRange[1]; i++) {
+            int outputIndex = i + 1 - this.divisorRange[0];
+            output[outputIndex] = String.format("%s", number % i == 0 ? "Y" : "N");
+            if (i >= 10) {
+                output[outputIndex] += " ";
+            }
         }
         return String.join(" | ", output);
     }
 
     private String generateHeader() {
-        String[] output = new String[this.numbersToSolve];
+        String[] output = new String[this.rowLength];
         String firstCell = " ";
         for (int i = 0, n = String.valueOf(this.range[1]).length(); i < n; i++) {
             firstCell += " ";
@@ -67,7 +82,7 @@ class DivisibilityGame {
     }
 
     public void play() {
-        System.out.println("Enter anything to show answers ");
+        System.out.print("Type in anything to show answers: ");
         Utils.voidInput();
         generateTable();
         printTable();
@@ -86,6 +101,10 @@ class Utils {
             return chooseAmount();
         }
         return output;
+    }
+
+    public static int digitsLen(int number) {
+        return String.valueOf(number).length();
     }
 
     public static void voidInput() {
