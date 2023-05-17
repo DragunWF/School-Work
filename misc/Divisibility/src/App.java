@@ -43,7 +43,7 @@ class DivisibilityGame {
 
     private void generateTable() {
         this.table[0] = generateHeader();
-        for (int i = 1; i < numbersToSolve; i++) {
+        for (int i = 1; i < this.numbersToSolve; i++) {
             this.table[i] = generateRow(i);
         }
     }
@@ -81,10 +81,22 @@ class DivisibilityGame {
         }
     }
 
+    private void printNumbers() {
+        System.out.printf("Numbers: ");
+        for (int i = 0, n = this.chosenNumbers.size() - 1; i < n; i++) {
+            System.out.printf("%s ", this.chosenNumbers.get(i));
+            if ((i + 1) % 5 == 0) {
+                System.out.println();
+            }
+        }
+        System.out.println();
+    }
+
     public void play() {
+        printNumbers();
+        generateTable();
         System.out.print("Type in anything to show answers: ");
         Utils.voidInput();
-        generateTable();
         printTable();
     }
 }
