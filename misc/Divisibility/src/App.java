@@ -65,7 +65,7 @@ class DivisibilityGame {
     private String generateHeader() {
         String[] output = new String[this.rowLength];
         String firstCell = " ";
-        for (int i = 0, n = String.valueOf(this.range[1]).length(); i < n; i++) {
+        for (int i = 0, n = Utils.digitsLen(this.range[1]); i < n; i++) {
             firstCell += " ";
         }
         output[0] = firstCell;
