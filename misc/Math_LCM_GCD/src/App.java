@@ -36,7 +36,8 @@ class MathGame {
 
             if (multiples.contains(multiple)) {
                 return multiple;
-            } else if (multiples.contains(otherMultiple)) {
+            }
+            if (multiples.contains(otherMultiple)) {
                 return otherMultiple;
             }
 
