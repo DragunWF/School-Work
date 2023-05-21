@@ -8,7 +8,7 @@ public class App {
 
 class MathGame {
     private int[][] numPairs;
-    private final int[] RANGE = { 10, 200 };
+    private final int[] RANGE = { 10, 125 };
 
     public MathGame(int problems) {
         this.numPairs = new int[problems][2];
@@ -57,7 +57,7 @@ class MathGame {
     }
 
     private void printAnswers() {
-        System.out.println("\n");
+        System.out.println();
         for (int i = 0; i < this.numPairs.length; i++) {
             int[] pair = this.numPairs[i];
             System.out.printf("%s.) gcd(%s, %s) = %s\n",
@@ -77,7 +77,7 @@ class MathGame {
 }
 
 class Utils {
-    private static Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
 
     public static int chooseAmount() {
         System.out.print("Select the amount of problems you want to solve: ");
@@ -95,6 +95,6 @@ class Utils {
     }
 
     public static void voidInput() {
-        sc.nextLine();
+        sc.next();
     }
 }
