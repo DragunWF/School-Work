@@ -1,4 +1,5 @@
 # This is my first script
+# Not actually the first but the instructions require me to type this
 clear
 echo "I am Marc"
 echo "I am 20 years old"
