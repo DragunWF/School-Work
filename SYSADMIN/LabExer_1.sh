@@ -13,6 +13,7 @@ echo "My goal is to graduate from this school"
 # ------- Separate Script Below -------
 
 # Script to print user info, current date & time
+# Also requires you install ncal with "sudo apt install ncal"
 clear
 echo "Hello "
 whoami
