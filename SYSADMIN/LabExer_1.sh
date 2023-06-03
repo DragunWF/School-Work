@@ -1,5 +1,4 @@
-# This is my first script
-# Not actually the first but the instructions require me to type this
+# This is not my first script
 clear
 echo "I am Marc"
 echo "I am [REDACTED] years old"
