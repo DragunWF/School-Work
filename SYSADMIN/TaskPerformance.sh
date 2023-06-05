@@ -1,3 +1,4 @@
+#!/bin/sh
 echo "Type a name for your new directory"
 read dirName
 mkdir $dirName
