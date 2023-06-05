@@ -5,10 +5,12 @@ mkdir $dirName
 
 echo "Type another name for your new sub directory"
 read subDirName
-mkdir "$dirName/$subDirName"
+subDirPath="$dirName/$subDirName"
+mkdir $subDirPath
 
-touch "grades"
-chmod 755 grades
+gradesPath="$subDirPath/grades"
+touch $gradesPath
+chmod 755 $gradesPath
 
 sudo apt install tree
 tree
