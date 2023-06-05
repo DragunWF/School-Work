@@ -1,3 +1,4 @@
+#!/bin/sh
 # This is not my first script
 clear
 echo "I am Marc"
