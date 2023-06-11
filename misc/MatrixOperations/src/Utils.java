@@ -13,8 +13,9 @@ public class Utils {
                 output[i] = String.format(" %s ", arr[i]);
             } else if (arr[i] > -10 && arr[i] < 0) {
                 output[i] += " ";
+            } else if (arr[i] >= 10) {
+                output[i] = String.format(" %s", arr[i]);
             }
-            System.out.printf("'%s'\n", output[i]);
         }
         return output;
     }
