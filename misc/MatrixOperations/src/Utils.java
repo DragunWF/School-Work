@@ -9,7 +9,17 @@ public class Utils {
         String[] output = new String[arr.length];
         for (int i = 0; i < arr.length; i++) {
             output[i] = String.valueOf(arr[i]);
+            if (arr[i] < 10 && arr[i] >= 0) {
+                output[i] = String.format(" %s ", arr[i]);
+            } else if (arr[i] > -10 && arr[i] < 0) {
+                output[i] += " ";
+            }
+            System.out.printf("'%s'\n", output[i]);
         }
         return output;
+    }
+
+    public static int randomRange(int min, int max) {
+        return (int) Math.floor(Math.random() * (max - min) + min);
     }
 }
