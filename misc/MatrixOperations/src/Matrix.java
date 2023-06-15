@@ -11,6 +11,12 @@ public class Matrix {
         generateMatrix();
     }
 
+    public int get(int rowIndex, int columnIndex) {
+        return matrix[rowIndex][columnIndex];
+    }
+
+
+
     public void display() {
         for (int i = 0; i < this.matrix.length; i++) {
             String nums = String.join(" ", Utils.stringify(this.matrix[i]));
