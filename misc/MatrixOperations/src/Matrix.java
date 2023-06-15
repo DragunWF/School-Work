@@ -1,5 +1,3 @@
-import java.util.*;
-
 public class Matrix {
     private int[][] matrix;
 
@@ -15,13 +13,37 @@ public class Matrix {
         return matrix[rowIndex][columnIndex];
     }
 
+    public int[][] add(Matrix otherMatrix) {
+        return operateMatrix(otherMatrix, true);
+    }
 
+    public int[][] subtract(Matrix otherMatrix) {
+        return operateMatrix(otherMatrix, false);
+    }
 
     public void display() {
         for (int i = 0; i < this.matrix.length; i++) {
             String nums = String.join(" ", Utils.stringify(this.matrix[i]));
             System.out.printf("[%s]\n", nums);
         }
+    }
+
+    public void mutateEntry(int rowIndex, int columnIndex, int value) {
+        this.matrix[rowIndex][columnIndex] = value;
+    }
+
+    private int[][] operateMatrix(Matrix otherMatrix, boolean isAddition) {
+        int[][] output = new int[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (isAddition) {
+                    output[i][j] = get(i, j) + otherMatrix.get(i, j);
+                    continue;
+                }
+                output[i][j] = get(i, j) - otherMatrix.get(i, j);
+            }
+        }
+        return output;
     }
 
     private void generateMatrix() {
