@@ -41,7 +41,7 @@ public class Matrix {
     public int[][] scalarMultiplication(int wholeNum) {
         int[][] output = new int[matrix.length][matrix[0].length];
         for (int i = 0; i < output.length; i++) {
-            for (int j = 0; j < output[0].length; j++) {
+            for (int j = 0; j < output[i].length; j++) {
                 output[i][j] = wholeNum * matrix[i][j];
             }
         }
@@ -53,10 +53,10 @@ public class Matrix {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (isAddition) {
-                    output[i][j] = get(i, j) + otherMatrix.get(i, j);
+                    this.matrix[i][j] = get(i, j) + otherMatrix.get(i, j);
                     continue;
                 }
-                output[i][j] = get(i, j) - otherMatrix.get(i, j);
+                this.matrix[i][j] = get(i, j) - otherMatrix.get(i, j);
             }
         }
         return output;
