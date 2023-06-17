@@ -21,7 +21,13 @@ public class Matrix {
         return operateMatrix(otherMatrix, false);
     }
 
-    public void display() {
+    public int[][] multiply(Matrix otherMatrix) {
+        // TODO: implement matrix multiplication
+        return null;
+    }
+
+    public void display(String matrixVarName) {
+        System.out.printf("Matrix %s:\n", matrixVarName);
         for (int i = 0; i < this.matrix.length; i++) {
             String nums = String.join(" ", Utils.stringify(this.matrix[i]));
             System.out.printf("[%s]\n", nums);
@@ -30,6 +36,16 @@ public class Matrix {
 
     public void mutateEntry(int rowIndex, int columnIndex, int value) {
         this.matrix[rowIndex][columnIndex] = value;
+    }
+
+    public int[][] scalarMultiplication(int wholeNum) {
+        int[][] output = new int[matrix.length][matrix[0].length];
+        for (int i = 0; i < output.length; i++) {
+            for (int j = 0; j < output[0].length; j++) {
+                output[i][j] = wholeNum * matrix[i][j];
+            }
+        }
+        return output;
     }
 
     private int[][] operateMatrix(Matrix otherMatrix, boolean isAddition) {
