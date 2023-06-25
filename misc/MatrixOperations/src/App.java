@@ -18,8 +18,9 @@ public class App {
     }
 
     private static void show(Matrix matrix, String varName) {
+        System.out.printf("Matrix %s:\n", varName);
         if (matrix != null) {
-            matrix.display(varName);
+            matrix.display();
         } else {
             System.out.println("undefined");
         }
