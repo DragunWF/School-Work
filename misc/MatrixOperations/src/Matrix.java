@@ -53,10 +53,10 @@ public class Matrix {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (isAddition) {
-                    this.matrix[i][j] = get(i, j) + otherMatrix.get(i, j);
+                    mutateEntry(i, j, get(i, j) + otherMatrix.get(i, j));
                     continue;
                 }
-                this.matrix[i][j] = get(i, j) - otherMatrix.get(i, j);
+                mutateEntry(i, j, get(i, j) - otherMatrix.get(i, j));
             }
         }
         return output;
