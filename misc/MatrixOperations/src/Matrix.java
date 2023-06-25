@@ -38,7 +38,6 @@ public class Matrix {
     }
 
     public ResultMatrix multiply(Matrix otherMatrix) throws Exception {
-        // TODO: implement matrix multiplication
         if (this.columns != otherMatrix.getRows()) {
             return null;
         }
