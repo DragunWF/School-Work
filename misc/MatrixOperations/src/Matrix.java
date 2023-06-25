@@ -26,6 +26,11 @@ public class Matrix {
         return null;
     }
 
+    public int[][] transpose() {
+        // TODO: implement matrix transpose
+        return null;
+    }
+
     public void display(String matrixVarName) {
         System.out.printf("Matrix %s:\n", matrixVarName);
         for (int i = 0; i < this.matrix.length; i++) {
