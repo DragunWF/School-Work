@@ -23,4 +23,12 @@ public class Utils {
     public static int randomRange(int min, int max) {
         return (int) Math.floor(Math.random() * (max - min) + min);
     }
+
+    public static int multiplyRowArray(int[] a, int[] b) {
+        int result = 0;
+        for (int i = 0; i < a.length; i++) {
+            result += a[i] * b[i];
+        }
+        return result;
+    }
 }
