@@ -1,0 +1,12 @@
+{
+  "java.project.sourcePaths": ["src"],
+  "java.project.outputPath": "bin",
+  "java.project.referencedLibraries": ["lib/**/*.jar"],
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-1.8",
+      "path": "e:\\Java",
+      "default": true
+    }
+  ]
+}
