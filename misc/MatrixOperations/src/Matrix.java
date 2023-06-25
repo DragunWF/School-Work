@@ -62,8 +62,7 @@ public class Matrix {
         return new ResultMatrix(output);
     }
 
-    public void display(String matrixVarName) {
-        System.out.printf("Matrix %s:\n", matrixVarName);
+    public void display() {
         for (int i = 0; i < this.matrix.length; i++) {
             String nums = String.join(" ", Utils.stringify(this.matrix[i]));
             System.out.printf("[%s]\n", nums);
