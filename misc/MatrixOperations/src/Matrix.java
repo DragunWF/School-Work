@@ -1,34 +1,56 @@
 public class Matrix {
-    private int[][] matrix;
+    protected int[][] matrix;
+    protected int rows;
+    protected int columns;
 
     public Matrix(int rows, int columns) throws Exception {
         if (rows <= 0 && columns <= 0) {
             throw new Exception("Invalid arguments!");
         }
         this.matrix = new int[rows][columns];
+        this.rows = rows;
+        this.columns = columns;
         generateMatrix();
+    }
+
+    public int getRows() {
+        return this.rows;
+    }
+
+    public int getColumns() {
+        return this.columns;
     }
 
     public int get(int rowIndex, int columnIndex) {
         return matrix[rowIndex][columnIndex];
     }
 
-    public int[][] add(Matrix otherMatrix) {
+    public ResultMatrix add(Matrix otherMatrix) throws Exception {
         return operateMatrix(otherMatrix, true);
     }
 
-    public int[][] subtract(Matrix otherMatrix) {
+    public ResultMatrix subtract(Matrix otherMatrix) throws Exception {
         return operateMatrix(otherMatrix, false);
     }
 
-    public int[][] multiply(Matrix otherMatrix) {
+    public ResultMatrix multiply(Matrix otherMatrix) throws Exception {
         // TODO: implement matrix multiplication
-        return null;
+        if (this.columns != otherMatrix.getRows()) {
+            return null;
+        }
+        int[][] output = new int[otherMatrix.getRows()][this.columns];
+        return new ResultMatrix(output);
     }
 
-    public int[][] transpose() {
+    public ResultMatrix transpose() throws Exception {
         // TODO: implement matrix transpose
-        return null;
+        int[][] result = new int[this.columns][this.rows];
+        for (int i = 0; i < result.length; i++) {
+            for (int j = 0; j < result[i].length; j++) {
+                result[i][j] = this.matrix[j][i];
+            }
+        }
+        return new ResultMatrix(result);
     }
 
     public void display(String matrixVarName) {
@@ -43,17 +65,17 @@ public class Matrix {
         this.matrix[rowIndex][columnIndex] = value;
     }
 
-    public int[][] scalarMultiplication(int wholeNum) {
+    public ResultMatrix scalarMultiplication(int wholeNum) throws Exception {
         int[][] output = new int[matrix.length][matrix[0].length];
         for (int i = 0; i < output.length; i++) {
             for (int j = 0; j < output[i].length; j++) {
                 output[i][j] = wholeNum * matrix[i][j];
             }
         }
-        return output;
+        return new ResultMatrix(output);
     }
 
-    private int[][] operateMatrix(Matrix otherMatrix, boolean isAddition) {
+    private ResultMatrix operateMatrix(Matrix otherMatrix, boolean isAddition) throws Exception {
         int[][] output = new int[matrix.length][matrix[0].length];
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -64,7 +86,7 @@ public class Matrix {
                 mutateEntry(i, j, get(i, j) - otherMatrix.get(i, j));
             }
         }
-        return output;
+        return new ResultMatrix(output);
     }
 
     private void generateMatrix() {
