@@ -43,7 +43,6 @@ public class Matrix {
     }
 
     public ResultMatrix transpose() throws Exception {
-        // TODO: implement matrix transpose
         int[][] output = new int[this.columns][this.rows];
         for (int i = 0; i < output.length; i++) {
             for (int j = 0; j < output[i].length; j++) {
@@ -76,14 +75,18 @@ public class Matrix {
     }
 
     private ResultMatrix operateMatrix(Matrix otherMatrix, boolean isAddition) throws Exception {
+        if (this.columns != otherMatrix.getColumns() || this.rows != otherMatrix.getRows()) {
+            return null;
+        }
+
         int[][] output = new int[matrix.length][matrix[0].length];
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (isAddition) {
-                    mutateEntry(i, j, get(i, j) + otherMatrix.get(i, j));
+                    output[i][j] = get(i, j) + otherMatrix.get(i, j);
                     continue;
                 }
-                mutateEntry(i, j, get(i, j) - otherMatrix.get(i, j));
+                output[i][j] = get(i, j) - otherMatrix.get(i, j);
             }
         }
         return new ResultMatrix(output);
