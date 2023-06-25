@@ -1,5 +1,8 @@
 import java.util.*;
 
+import Scripts.Matrix;
+import Scripts.ResultMatrix;
+
 public class App {
     private static Scanner sc = new Scanner(System.in);
 
@@ -15,6 +18,9 @@ public class App {
         show(a.subtract(b), "a - b");
         show(a.multiply(b), "a * b");
         show(a.transpose(), "a^t");
+
+        ResultMatrix c = a.transpose();
+        show(c.subtract(b), "c (a^t - b)");
     }
 
     private static void show(Matrix matrix, String varName) {
