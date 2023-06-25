@@ -25,6 +25,10 @@ public class Matrix {
         return matrix[rowIndex][columnIndex];
     }
 
+    public int[] getRow(int rowIndex) {
+        return this.matrix[rowIndex];
+    }
+
     public ResultMatrix add(Matrix otherMatrix) throws Exception {
         return operateMatrix(otherMatrix, true);
     }
@@ -38,7 +42,14 @@ public class Matrix {
         if (this.columns != otherMatrix.getRows()) {
             return null;
         }
-        int[][] output = new int[otherMatrix.getRows()][this.columns];
+
+        int[][] output = new int[this.rows][otherMatrix.getColumns()];
+        otherMatrix = otherMatrix.transpose();
+        for (int i = 0; i < output.length; i++) {
+            for (int j = 0; j < output[i].length; j++) {
+                output[i][j] = Utils.multiplyRowArray(this.matrix[i], otherMatrix.getRow(j));
+            }
+        }
         return new ResultMatrix(output);
     }
 
