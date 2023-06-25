@@ -44,13 +44,13 @@ public class Matrix {
 
     public ResultMatrix transpose() throws Exception {
         // TODO: implement matrix transpose
-        int[][] result = new int[this.columns][this.rows];
-        for (int i = 0; i < result.length; i++) {
-            for (int j = 0; j < result[i].length; j++) {
-                result[i][j] = this.matrix[j][i];
+        int[][] output = new int[this.columns][this.rows];
+        for (int i = 0; i < output.length; i++) {
+            for (int j = 0; j < output[i].length; j++) {
+                output[i][j] = this.matrix[j][i];
             }
         }
-        return new ResultMatrix(result);
+        return new ResultMatrix(output);
     }
 
     public void display(String matrixVarName) {
