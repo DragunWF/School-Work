@@ -1,11 +1,7 @@
-import java.util.*;
-
 import Scripts.Matrix;
 import Scripts.ResultMatrix;
 
 public class App {
-    private static Scanner sc = new Scanner(System.in);
-
     public static void main(String[] args) throws Exception {
         Matrix a = new Matrix(2, 3);
         Matrix b = new Matrix(3, 2);
