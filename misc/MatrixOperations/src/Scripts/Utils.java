@@ -1,3 +1,5 @@
+package Scripts;
+
 public class Utils {
     public static String getClassName(Object object) {
         String classStr = object.getClass().getName();

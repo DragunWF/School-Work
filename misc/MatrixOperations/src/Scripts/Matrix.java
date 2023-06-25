@@ -1,3 +1,5 @@
+package Scripts;
+
 public class Matrix {
     protected int[][] matrix;
     protected int rows;
