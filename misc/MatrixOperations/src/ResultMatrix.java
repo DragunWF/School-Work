@@ -1,6 +1,6 @@
 public class ResultMatrix extends Matrix {
-    public ResultMatrix(int rows, int columns, int[][] result) throws Exception {
-        super(rows, columns);
+    public ResultMatrix(int[][] result) throws Exception {
+        super(result.length, result[0].length);
         this.matrix = result;
     }
 }
