@@ -11,7 +11,6 @@ public class HandsOnActivity {
         addContents();
         displayLinkedList(songs);
         displayLinkedList(artists);
-        playlist.get(0);
         iterateLinkedList(playlist);
     }
 
