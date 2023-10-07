@@ -3,9 +3,6 @@
 dictionary = {}
 all_latin_words = []
 
-def ascii_value(word: str) -> int:
-    return sum([ord(letter) for letter in word])
-
 def print_output() -> None:
     displayed = []
     items = dictionary.items()
