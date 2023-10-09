@@ -8,7 +8,7 @@ public class FruitBasket {
     public static void main(String[] args) {
         System.out.println("Catch and eat any of these fruits:('apple', 'orange', 'mango', 'guava')");
         int fruitAmount = intInput("How many fruits would you like to catch? ");
-        System.out.println("Choose a fruit to catch. Press A, O, M, or G");
+        System.out.println("Choose a fruit to catch. Press A, O, M, or G.");
         for (int i = 0; i < fruitAmount; i++) {
             char option = charInput(String.format("Fruit %s of %s: ", i + 1, fruitAmount));
             switch (upperCase(option)) {
