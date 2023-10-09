@@ -9,7 +9,7 @@ public class FruitBasket {
         int fruitAmount = intInput("Enter your desired fruit amount: ");
         for (int i = 0; i < fruitAmount; i++) {
             char option = charInput((i + 1) + ". Enter your fruit [Options: 'A','O','M','G']: ");
-            switch (option) {
+            switch (upperCase(option)) {
                 case 'A' -> basket.push("Apple");
                 case 'O' -> basket.push("Orange");
                 case 'M' -> basket.push("Mango");
@@ -20,7 +20,7 @@ public class FruitBasket {
         while (basket.size() > 0) {
             displayBasket();
             char option = charInput("Enter 'E' or 'e' to start eating: ");
-            if (option == 'E' || option == 'e') {
+            if (upperCase(option) == 'E') {
                 basket.pop();
             }
         }
@@ -38,8 +38,10 @@ public class FruitBasket {
     }
 
     private static char upperCase(char character) {
-        // TODO: Implement later
-        return 'a';
+        if (character >= 97 && character <= 122) {
+            return (char) (character - 32);
+        }
+        return character;
     }
 
     private static int intInput(String prompt) {
