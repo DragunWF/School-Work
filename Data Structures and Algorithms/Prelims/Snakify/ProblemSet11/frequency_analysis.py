@@ -1,3 +1,4 @@
+<<<<<<< HEAD:Data Structures and Algorithms/Snakify/ProblemSet11/frequency_analysis.py
 # https://snakify.org/en/lessons/dictionaries_dicts/problems/frequency_analysis/
 
 
@@ -27,6 +28,23 @@ def main() -> None:
                 frequencies[word] += 1
         items.append(sorted(list(custom_items(frequencies)), reverse=True))
     print_frequencies(items)
+=======
+frequencies = {}
+
+def sorted_print() -> None:
+    frequencies
+
+def main() -> None:
+    n = int(input())
+    for i in range(n):
+        words = input().split(" ")
+        for word in words:
+            if word in frequencies:
+                frequencies[word] += 1
+            else:
+                frequencies[word] = 1
+    sorted_print()
+>>>>>>> 54e8b61fe76c820b7ca7436a91feeea73c32fda8:Data Structures and Algorithms/Prelims/Snakify/ProblemSet11/frequency_analysis.py
 
 
 if __name__ == "__main__":
