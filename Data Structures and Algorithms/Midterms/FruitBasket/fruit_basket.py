@@ -7,7 +7,7 @@ def lunch_time() -> None:
     while len(basket) > 0:
         if len(basket) < INITIAL_LEN:
             print(f"Fruit(s) in the basket: {basket}")
-        option = input("Press E to eat a fruit ").upper()
+        option = input("Press E to eat a fruit. ").upper()
         if option == "E":
             basket.pop()
     print("No more fruits")
