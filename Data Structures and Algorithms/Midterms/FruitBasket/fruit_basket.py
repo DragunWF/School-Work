@@ -3,9 +3,9 @@ basket = []
 
 def lunch_time() -> None:
     print(f"Your basket now has: {basket}")
-    initial_len = len(basket)
+    INITIAL_LEN = len(basket)
     while len(basket) > 0:
-        if len(basket) < initial_len:
+        if len(basket) < INITIAL_LEN:
             print(f"Fruit(s) in the basket: {basket}")
         option = input("Press E to eat a fruit ").upper()
         if option == "E":
