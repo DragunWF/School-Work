@@ -6,9 +6,11 @@ public class FruitBasket {
     private static Stack<String> basket = new Stack<>();
 
     public static void main(String[] args) {
-        int fruitAmount = intInput("Enter your desired fruit amount: ");
+        System.out.println("Catch and eat any of these fruits:('apple', 'orange', 'mango', 'guava')");
+        int fruitAmount = intInput("How many fruits would you like to catch? ");
+        System.out.println("Choose a fruit to catch. Press A, O, M, or G");
         for (int i = 0; i < fruitAmount; i++) {
-            char option = charInput((i + 1) + ". Enter your fruit [Options: 'A','O','M','G']: ");
+            char option = charInput(String.format("Fruit %s of %s ", i + 1, fruitAmount));
             switch (upperCase(option)) {
                 case 'A' -> basket.push("Apple");
                 case 'O' -> basket.push("Orange");
@@ -17,9 +19,14 @@ public class FruitBasket {
                 default -> System.out.println("Unknown fruit!");
             }
         }
+
+        System.out.printf("Your basket now has: %s\n", showBasket());
+        final int INITIAL_LENGTH = basket.size();
         while (basket.size() > 0) {
-            displayBasket();
-            char option = charInput("Enter 'E' or 'e' to start eating: ");
+            if (basket.size() < INITIAL_LENGTH) {
+                System.out.printf("Fruit(s) in the basket: %s\n", showBasket());
+            }
+            char option = charInput("Enter 'E' or 'e' to start eating ");
             if (upperCase(option) == 'E') {
                 basket.pop();
             }
@@ -27,14 +34,16 @@ public class FruitBasket {
         System.out.println("No more fruits");
     }
 
-    private static void displayBasket() {
-        if (basket.size() > 0) {
-            System.out.printf("Top of the basket: %s\n", basket.peek());
+    private static String showBasket() {
+        Object[] fruits = basket.toArray();
+        String output = "[";
+        for (int i = 0; i < fruits.length; i++) {
+            output += String.valueOf(fruits[i]);
+            if (i + 1 < fruits.length) {
+                output += ", ";
+            }
         }
-        Object[] contents = basket.toArray();
-        for (int i = 1; i < contents.length; i++) {
-            System.out.printf("| %s |\n", contents[i]);
-        }
+        return output + "]";
     }
 
     private static char upperCase(char character) {
