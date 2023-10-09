@@ -20,10 +20,10 @@ def main() -> None:
     for i in range(fruit_amount):
         fruit = input(f"Fruit {i + 1} of {fruit_amount}: ")
         match fruit.upper():
-            case "A": basket.append("Apple")
-            case "O": basket.append("Orange")
-            case "M": basket.append("Mango")
-            case "G": basket.append("Guava")
+            case "A": basket.append("apple")
+            case "O": basket.append("orange")
+            case "M": basket.append("mango")
+            case "G": basket.append("guava")
     lunch_time()
 
 

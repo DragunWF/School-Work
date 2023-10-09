@@ -12,10 +12,10 @@ public class FruitBasket {
         for (int i = 0; i < fruitAmount; i++) {
             char option = charInput(String.format("Fruit %s of %s: ", i + 1, fruitAmount));
             switch (upperCase(option)) {
-                case 'A' -> basket.push("Apple");
-                case 'O' -> basket.push("Orange");
-                case 'M' -> basket.push("Mango");
-                case 'G' -> basket.push("Guava");
+                case 'A' -> basket.push("apple");
+                case 'O' -> basket.push("orange");
+                case 'M' -> basket.push("mango");
+                case 'G' -> basket.push("guava");
                 default -> System.out.println("Unknown fruit!");
             }
         }
