@@ -10,7 +10,7 @@ public class FruitBasket {
         int fruitAmount = intInput("How many fruits would you like to catch? ");
         System.out.println("Choose a fruit to catch. Press A, O, M, or G");
         for (int i = 0; i < fruitAmount; i++) {
-            char option = charInput(String.format("Fruit %s of %s ", i + 1, fruitAmount));
+            char option = charInput(String.format("Fruit %s of %s: ", i + 1, fruitAmount));
             switch (upperCase(option)) {
                 case 'A' -> basket.push("Apple");
                 case 'O' -> basket.push("Orange");
@@ -26,7 +26,7 @@ public class FruitBasket {
             if (basket.size() < INITIAL_LENGTH) {
                 System.out.printf("Fruit(s) in the basket: %s\n", showBasket());
             }
-            char option = charInput("Enter 'E' or 'e' to start eating ");
+            char option = charInput("Press E to eat a fruit. ");
             if (upperCase(option) == 'E') {
                 basket.pop();
             }
