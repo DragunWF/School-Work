@@ -20,7 +20,7 @@ def main() -> None:
     print(f"Movies to watch are: {movies}")
     print(f"Snacks available are: {snacks}")
     while len(snacks):
-        option = input("Press S each time you finish a snack")
+        option = input("Press S each time you finish a snack\n")
         if option.upper() == "S":
             snacks.popleft()
         print(snacks)
