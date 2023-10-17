@@ -1,3 +1,5 @@
+// ELMS - 05 HandsOnActivity 1, Human-Computer Interaction
+
 public class EventDriven {
         public static void main(String[] args) {
                 InputUI inputUI = new InputUI();
