@@ -4,11 +4,13 @@ public class RunBloodDataPart2 {
     private static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
+        System.out.println(); // spacing for a cleaner output
         BloodData bd1 = createBloodData();
         display(bd1);
         System.out.println(); // for spacing and a cleaner outputs
         BloodData bd2 = createBloodData();
         display(bd2);
+        System.out.println(); // spacing for a cleaner output
     }
 
     private static BloodData createBloodData() {
