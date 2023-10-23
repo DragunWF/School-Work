@@ -3,7 +3,7 @@ import java.util.Stack;
 import java.util.Queue;
 import java.util.Scanner;
 
-public class Main {
+public class NumberOne {
     private static final Scanner sc = new Scanner(System.in);
     private static final int BOOKS_COUNT = 4;
     private static Stack<String> books = new Stack<>();
