@@ -19,8 +19,7 @@ public class NumberOne {
     private static void enterBooks() {
         System.out.println("Enter four book titles.");
         for (int i = 1; i <= BOOKS_COUNT; i++) {
-            books.push(input(
-                    String.format("Book %s: ", i)));
+            books.push(input(String.format("Book %s: ", i)));
         }
     }
 
