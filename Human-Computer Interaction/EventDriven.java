@@ -1,11 +1,29 @@
 // ELMS - 05 HandsOnActivity 1, Human-Computer Interaction
 
-public class EventDriven {
-        public static void main(String[] args) {
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class EventDriven extends JFrame {
+        public EventDriven() {
                 InputUI inputUI = new InputUI();
                 inputUI.setVisible(true);
                 inputUI.onReady();
         }
+
+        public static void main(String[] args) {
+                new EventDriven();
+        }
+
+        /*
+           btnSubmit, btnClearAll, btnOkay are implemented via instantiation in
+           the nested classes below. "btnSubmit" and "btnClearAll" are in the InputUI
+           nested class while "btnOkay" is in the OutputUI class.
+
+           btnSubmit - Start at Line 276
+           btnClearAll - Start at Line 307
+           btnOkay - Start at Line 515
+        */
 }
 
 class InputUI extends javax.swing.JFrame {
