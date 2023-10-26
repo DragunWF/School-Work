@@ -95,7 +95,7 @@ public class HtmlTree extends JFrame {
                     currentSiblings.add(child.toString());
                 }
                 oneLevelSubtree[i + 1] = child.toString();
-                if (i + 2 != n + 1) {
+                if (i + 2 != n + 1) { // i + 2 and n + 1 to match with oneLevelSubtree array
                     oneLevelSubtree[i + 1] += "/";
                 }
                 traverse((DefaultMutableTreeNode) child);
