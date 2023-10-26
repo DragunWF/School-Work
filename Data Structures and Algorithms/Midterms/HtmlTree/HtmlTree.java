@@ -102,7 +102,9 @@ public class HtmlTree extends JFrame {
             }
 
             oneLevelSubTrees.add(String.join("", oneLevelSubtree));
-            siblings.add(String.join("-", currentSiblings));
+            if (currentSiblings.size() > 1) {
+                siblings.add(String.join("-", currentSiblings));
+            }
         }
     }
 
