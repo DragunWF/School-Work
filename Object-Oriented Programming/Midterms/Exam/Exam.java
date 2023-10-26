@@ -26,11 +26,11 @@ public class Exam {
          */
 
         Midterm m = new Midterm();
-        System.out.printf("\"%s\" inherits from \"super %s\"\n", m.getClass(),
+        System.out.printf("\"sub%s\" inherits from \"super %s\"\n", m.getClass(),
                 m.getClass().getSuperclass());
 
         Essay e = new Essay();
-        System.out.printf("\"%s\" inherits from super class \"super %s\"\n", e.getClass(),
+        System.out.printf("\"derived %s\" inherits from \"base %s\"\n", e.getClass(),
                 e.getClass().getSuperclass());
     }
 }
