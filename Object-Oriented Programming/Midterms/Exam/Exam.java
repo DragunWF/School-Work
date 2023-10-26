@@ -26,6 +26,7 @@ public class Exam {
          */
 
         Midterm m = new Midterm();
+        System.out.println("Inheritance between classes:");
         System.out.printf("\"sub%s\" inherits from \"super %s\"\n", m.getClass(),
                 m.getClass().getSuperclass());
 
