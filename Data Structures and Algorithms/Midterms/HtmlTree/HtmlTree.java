@@ -84,7 +84,7 @@ public class HtmlTree extends JFrame {
         nodesPerLevel.get(node.getLevel()).add(node.toString());
         if (!node.isLeaf()) {
             ArrayList<String> currentSiblings = new ArrayList<>();
-            String[] oneLevelSubtree = new String[node.getChildCount()];
+            String[] oneLevelSubtree = new String[node.getChildCount() + 1]; // +1 because it includes the parent
             oneLevelSubtree[0] = node.toString() + "-";
             parents.add(node);
             degrees.put(node.toString(), node.getChildCount());
@@ -94,11 +94,9 @@ public class HtmlTree extends JFrame {
                 if (n > 1) {
                     currentSiblings.add(child.toString());
                 }
-                if (i > 1) {
-                    oneLevelSubtree[i] = child.toString();
-                    if (i + 1 != n) {
-                        oneLevelSubtree[i] += "/";
-                    }
+                oneLevelSubtree[i + 1] = child.toString();
+                if (i + 2 != n + 1) {
+                    oneLevelSubtree[i + 1] += "/";
                 }
                 traverse((DefaultMutableTreeNode) child);
             }
