@@ -2,16 +2,27 @@ import javax.swing.*;
 import javax.swing.tree.*;
 import java.util.Collections;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HtmlTree extends JFrame {
     private JTree tree;
     private DefaultMutableTreeNode root;
+    private ArrayList<TreeNode> parents = new ArrayList<>();
+    private ArrayList<String> siblings = new ArrayList<>();
+    private ArrayList<String> oneLevelSubTrees = new ArrayList<>();
+    private ArrayList<ArrayList<String>> nodesPerLevel = new ArrayList<>();
+    private HashMap<String, Integer> degrees = new HashMap<>();
 
     public HtmlTree() {
         // Initiation
         addNodes();
         this.tree = new JTree(root);
         this.add(this.tree);
+
+        for (int i = 0, n = root.getDepth() + 1; i < n; i++) {
+            nodesPerLevel.add(new ArrayList<>());
+        }
+        traverse(root);
 
         // Window Methods
         this.setTitle("HTML Tree");
@@ -44,20 +55,57 @@ public class HtmlTree extends JFrame {
 
     public void enumerateTree() {
         display("Root", root.getRoot());
-        display("Parent Nodes", Collections.list(root.children()));
-        // Parent Nodes
-        // Siblings
-        // One-level subtrees
-        // Nodes per level
+        display("Parent Nodes", parents);
+        display("Siblings", siblings);
+
+        System.out.println("One Level Subtrees");
+        for (int i = 0, n = oneLevelSubTrees.size(); i < n; i++) {
+            System.out.printf("- %s\n", oneLevelSubTrees.get(i));
+        }
+
+        System.out.println("Nodes Per Level");
+        for (int i = 0, n = root.getDepth() + 1; i < n; i++) {
+            display("Level " + i, nodesPerLevel.get(i));
+        }
+
         display("Depth", root.getDepth());
-        // Degree of each one-level subtree
+
+        System.out.println("Degrees");
+        for (String key : degrees.keySet()) {
+            display(key, degrees.get(key));
+        }
+
         display("Breadth-First", Collections.list(root.breadthFirstEnumeration()));
         display("Preorder", Collections.list(root.preorderEnumeration()));
         display("Postorder", Collections.list(root.postorderEnumeration()));
     }
 
-    private void displayParents() {
-        
+    private void traverse(DefaultMutableTreeNode node) {
+        nodesPerLevel.get(node.getLevel()).add(node.toString());
+        if (!node.isLeaf()) {
+            ArrayList<String> currentSiblings = new ArrayList<>();
+            String[] oneLevelSubtree = new String[node.getChildCount()];
+            oneLevelSubtree[0] = node.toString() + "-";
+            parents.add(node);
+            degrees.put(node.toString(), node.getChildCount());
+
+            for (int i = 0, n = node.getChildCount(); i < n; i++) {
+                DefaultMutableTreeNode child = (DefaultMutableTreeNode) node.getChildAt(i);
+                if (n > 1) {
+                    currentSiblings.add(child.toString());
+                }
+                if (i > 1) {
+                    oneLevelSubtree[i] = child.toString();
+                    if (i + 1 != n) {
+                        oneLevelSubtree[i] += "/";
+                    }
+                }
+                traverse((DefaultMutableTreeNode) child);
+            }
+
+            oneLevelSubTrees.add(String.join("", oneLevelSubtree));
+            siblings.add(String.join("-", currentSiblings));
+        }
     }
 
     private static void display(String title, Object value) {
