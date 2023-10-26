@@ -70,9 +70,9 @@ public class HtmlTree extends JFrame {
 
         display("Depth", root.getDepth());
 
-        System.out.println("Degrees");
+        System.out.println("Degree Of Each One-Level Subtree");
         for (String key : degrees.keySet()) {
-            display(key, degrees.get(key));
+            display("Subtree " + key, degrees.get(key));
         }
 
         display("Breadth-First", Collections.list(root.breadthFirstEnumeration()));
