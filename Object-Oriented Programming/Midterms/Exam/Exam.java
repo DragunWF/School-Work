@@ -1,3 +1,15 @@
+/*
+  * Instructions:
+  * 1. Create a constructor named Exam that assigns "Good luck" to a previously declared String variable named message.
+  * 2. Create an empty overloaded constructor for the Exam class with two (2) String parameters named period and level.
+  * 3. Declare a double-type accessor named getPrice that returns the value of price.
+  * 4. Declare a boolean-type accessor named isFinished that returns the value of status.
+  * 5. Declare a class named Midterm that inherits from the class named Exam.
+  * 6. Create three (3) class declarations to show multiple levels of inheritance. Use the classes named Exam, Midterm, and Essay.
+  * 7. Create a constructor named Midterm that prints "Exam has started." using println(). Its first statement should be a call to a constructor in the parent class.
+  * 8. Given the base class named Quiz and the derived class named Essay, write a statement to show inheritance between these classes. 
+*/
+
 public class Exam {
     private String message;
     private double price;
