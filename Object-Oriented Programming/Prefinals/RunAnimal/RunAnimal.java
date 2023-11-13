@@ -40,7 +40,7 @@ class Bird extends Animal {
     }
 
     public void sleep() {
-        System.out.println("Bird is sleeping for 10 hours");
+        System.out.println("Bird is sleeping for 10-12 hours");
     }
 
     public void makeSound() {
