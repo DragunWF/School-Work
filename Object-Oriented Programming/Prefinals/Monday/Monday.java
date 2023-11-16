@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 
 public class Monday extends Weekday {
     private static final Scanner sc = new Scanner(System.in);
@@ -17,12 +18,16 @@ public class Monday extends Weekday {
     }
 
     public void showAlarm() {
-        LocalTime alarm = LocalTime.parse(time);
-        LocalTime now = LocalTime.now();
-        if (alarm.isAfter(now)) {
-            System.out.println("Alarm is set for tomorrow!");
-        } else if (alarm.isBefore(now)) {
-            System.out.println("I'll wake you up later!");
+        try {
+            LocalTime alarm = LocalTime.parse(time);
+            LocalTime now = LocalTime.now();
+            if (alarm.isAfter(now)) {
+                System.out.println("Alarm is set for tomorrow!");
+            } else if (alarm.isBefore(now)) {
+                System.out.println("I'll wake you up later!");
+            }
+        } catch (DateTimeParseException e) {
+            System.out.println("You've entered an invalid time format!");
         }
     }
 }
