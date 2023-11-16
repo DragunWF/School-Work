@@ -24,6 +24,7 @@ public class Monday extends Weekday {
             if (alarm.isAfter(now)) {
                 System.out.println("Alarm is set for tomorrow!");
             } else if (alarm.isBefore(now)) {
+                // I would use else instead but instructions required me to use this .isBefore()
                 System.out.println("I'll wake you up later!");
             }
         } catch (DateTimeParseException e) {
