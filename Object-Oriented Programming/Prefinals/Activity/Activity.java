@@ -1,0 +1,24 @@
+import java.util.Map;
+import java.util.HashMap;
+
+public class Activity {
+    public static void main(String[] args) {
+        // 1.
+        Map<String, String> programs = new HashMap<String, String>();
+
+        // 2.
+        programs.put("BSIT", "Bachelor of Science in Information Technology");
+        programs.put("BSCS", "Bachelor of Science in Computer Science");
+        programs.put("BSIS", "Bachelor of Science in Information Systems");
+
+        // 3.
+        System.out.println(programs);
+        // {BSIT=Bachelor of Science in Information Technology, BSIS=Bachelor of Science in Information Systems, BSCS=Bachelor of Science in Computer Science}
+
+        // 4.
+        programs.remove("BSIT");
+
+        // 5.
+        programs.containsKey("BSCpE");
+    }
+}
