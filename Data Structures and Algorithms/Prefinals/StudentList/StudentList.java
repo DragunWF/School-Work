@@ -5,26 +5,27 @@ import java.util.HashMap;
 public class StudentList {
     private static final Scanner sc = new Scanner(System.in);
     private static Map<String, String> students = new HashMap<>();
+    private static final int CLASSMATE_COUNT = 3;
+    private static String[] orderOfKeys = new String[CLASSMATE_COUNT];
 
     public static void main(String[] args) {
-        String thirdEntryKey = null;
-        for (int i = 1, classmates = 3; i <= classmates; i++) {
+        for (int i = 1; i <= CLASSMATE_COUNT; i++) {
             String key = input(String.format("Enter student number %s: ", i));
             students.put(key, input(String.format("Enter first name %s: ", i)));
-            if (i == 3) {
-                thirdEntryKey = key;
-            }
+            orderOfKeys[i - 1] = key;
         }
 
-        printStudentList(students);
-        students.remove(thirdEntryKey);
-        students.put(input("Enter your student number: "), input("Enter your first name: "));
-        printStudentList(students);
+        printStudentList();
+        students.remove(orderOfKeys[2]);
+        String userStudentNum = input("Enter your student number: ");
+        students.put(userStudentNum, input("Enter your first name: "));
+        orderOfKeys[2] = userStudentNum;
+        printStudentList();
     }
 
-    private static void printStudentList(Map<String, String> students) {
+    private static void printStudentList() {
         System.out.println("Student List:");
-        for (String key : students.keySet()) {
+        for (String key : orderOfKeys) {
             System.out.printf("%s %s\n", key, students.get(key));
         }
     }
