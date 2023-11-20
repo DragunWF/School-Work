@@ -7,11 +7,11 @@ def main() -> None:
         students[key] = input(f"Enter first name {i}: ")
         if i == 3:
             third_entry_key = key
-    print_student_list()
+    print_student_list(students)
 
     del students[third_entry_key]
     students[input("Enter your student number: ")] = input("Enter your first name")
-    print_student_list()
+    print_student_list(students)
 
 
 def print_student_list(students: dict) -> None:
