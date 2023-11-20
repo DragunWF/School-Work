@@ -14,12 +14,12 @@
 
 ## Midterms
 
+- Data Structures and Algorithms: `97/100`
 - Object-Oriented Programming: `97/100`
+- Human-Computer Interaction: `87/100`
 - Principles of Communication: `79/100`
-- Rizal's Life and Works - `74/100`
 - Platform Technology (Operating Systems): `75/100`
+- Rizal's Life and Works - `74/100`
 - Readings in Philippine History: `61/100`
-- Data Structures and Algorithms: `To be announced...`
-- Human-Computer Interaction: `To be announced...`
 
-**Average Score Per Exam:** `Waiting for other scores...`
+**Average Score Per Exam:** `81/100`
