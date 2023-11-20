@@ -10,7 +10,8 @@ def main() -> None:
     print_student_list(students)
 
     del students[third_entry_key]
-    students[input("Enter your student number: ")] = input("Enter your first name: ")
+    user_student_number = input("Enter your student number: ") # To change the order of prompts
+    students[user_student_number] = input("Enter your first name: ")
     print_student_list(students)
 
 
