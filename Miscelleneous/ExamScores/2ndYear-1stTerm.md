@@ -8,9 +8,9 @@
 - Principles of Communication: `83/100`
 - Human-Computer Interaction: `81/100`
 - Readings in Philippine History: `75/100`
-- Rizal's Life and Works - `Unknown`
+- Rizal's Life and Works - `75/100`
 
-**Average Score Per Exam:** `87/100`
+**Average Score Per Exam:** `85/100`
 
 ## Midterms
 
@@ -19,7 +19,7 @@
 - Human-Computer Interaction: `87/100`
 - Principles of Communication: `79/100`
 - Platform Technology (Operating Systems): `75/100`
-- Rizal's Life and Works - `74/100`
+- Rizal's Life and Works - `69/100`
 - Readings in Philippine History: `61/100`
 
-**Average Score Per Exam:** `81/100`
+**Average Score Per Exam:** `80/100`
