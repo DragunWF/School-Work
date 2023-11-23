@@ -23,3 +23,15 @@
 - Readings in Philippine History: `61/100`
 
 **Average Score Per Exam:** `80/100`
+
+## Finals
+
+- Data Structures and Algorithms: `/100`
+- Object-Oriented Programming: `/100`
+- Human-Computer Interaction: `/100`
+- Principles of Communication: `/100`
+- Platform Technology (Operating Systems): `/100`
+- Rizal's Life and Works - `/100`
+- Readings in Philippine History: `/100`
+
+**Average Score Per Exam:** `/100`
