@@ -71,8 +71,8 @@ public class Game {
     public static int intInput(String prompt) {
         try {
             System.out.printf("%s: ", prompt);
-            return sc.nextInt();
-        } catch (NumberFormatException nfe) {
+            return Integer.parseInt(input(prompt));
+        } catch (NumberFormatException ime) {
             System.out.println("Invalid input!");
             return intInput(prompt);
         }
