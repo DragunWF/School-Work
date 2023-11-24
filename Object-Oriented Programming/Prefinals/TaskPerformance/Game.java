@@ -245,24 +245,30 @@ class StoryMode implements GameMode, Story {
 
 class SurvivalMode implements GameMode, Survival {
     private Player player;
-    private int enemiesDefeated;
-
-    private final int maxAttack = 100;
-    private final int minAttack = 25;
-    private final int minHealth = 100;
-    private final int maxHealth = 250;
+    private int enemiesDefeated = 0;
+    private final int minAttack = 25, maxAttack = 125;
+    private final int minHealth = 100, maxHealth = 300;
     private final String[] enemyNames = {
             "Goblin", "Vampire", "Zombie", "Troll", "Orc", "Bandit", "Baby Dragon"
     };
+    private String previousChosenName = null;
 
     public SurvivalMode(Player player) {
         this.player = player;
     }
 
     public void startGame() {
+        System.out.println("You have entered an arena with portals surrounding each entrance...");
+        System.out.println("Monsters come out and now you have to fight to the death to survive!");
         while (!this.player.isDead()) {
-
+            Enemy enemy = getRandomEnemy();
+            Game.fight(enemy, player);
+            if (enemy.isDead()) {
+                enemiesDefeated++;
+            }
         }
+        System.out.println("After a valiant fight, you have finally fallen!");
+        System.out.printf("You have defeated %s %s!\n", enemiesDefeated, enemiesDefeated > 1 ? "enemy" : "enemies");
     }
 
     private Enemy getRandomEnemy() {
@@ -278,6 +284,11 @@ class SurvivalMode implements GameMode, Survival {
     }
 
     private String getRandomName() {
-        return enemyNames[(int) Math.floor(Math.random() * enemyNames.length)];
+        String chosenName = enemyNames[(int) Math.floor(Math.random() * enemyNames.length)];
+        if (chosenName != this.previousChosenName) {
+            this.previousChosenName = chosenName;
+            return chosenName;
+        }
+        return getRandomName();
     }
 }
