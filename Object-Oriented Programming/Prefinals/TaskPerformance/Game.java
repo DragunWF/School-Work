@@ -88,8 +88,7 @@ interface Survival {
 
 abstract class Entity {
     protected String name;
-    protected int minAttack;
-    protected int maxAttack;
+    protected int minAttack, maxAttack;
     protected int health;
     protected int potions;
     protected boolean dead = false;
