@@ -64,6 +64,16 @@ public class Game {
         System.out.printf("%s: ", prompt);
         return sc.nextLine();
     }
+
+    public static int intInput(String prompt) {
+        try {
+            System.out.printf("%s: ", prompt);
+            return sc.nextInt();
+        } catch (NumberFormatException nfe) {
+            System.out.println("Invalid input!");
+            return intInput(prompt);
+        }
+    }
 }
 
 abstract class Entity {
@@ -162,8 +172,7 @@ class Player extends Entity {
         for (int i = 0; i < choices.length; i++) {
             System.out.printf("%s - %s\n", i + 1, choices[i]);
         }
-        System.out.print("Option: ");
-        int playerChoice = Game.sc.nextInt() - 1;
+        int playerChoice = Game.intInput("Option") - 1;
         if (playerChoice < 0 || playerChoice >= choices.length) {
             System.out.println("Invalid Choice!");
             return chooseCombatOption();
@@ -291,5 +300,5 @@ interface Character {
 }
 
 interface Survival {
-    
+
 }
