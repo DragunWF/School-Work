@@ -26,7 +26,7 @@ public class Game {
     private static String selectGame() {
         System.out.println("Press 1 or 2 to select your game mode.");
         System.out.println("1 - Story\n2 - Survival");
-        String choice = input("");
+        String choice = input("Option");
         switch (choice) {
             case "1":
                 gameChosen = "story";
