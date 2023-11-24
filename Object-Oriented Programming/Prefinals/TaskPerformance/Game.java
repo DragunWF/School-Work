@@ -28,9 +28,15 @@ public class Game {
         System.out.println("1 - Story\n2 - Survival");
         String choice = input("");
         switch (choice) {
-            case "1" -> gameChosen = "story";
-            case "2" -> gameChosen = "survival";
-            default -> System.out.println("Invalid choice!");
+            case "1":
+                gameChosen = "story";
+                break;
+            case "2":
+                gameChosen = "survival";
+                break;
+            default:
+                System.out.println("Invalid choice!");
+                break;
         }
         if (!gameChosen.isEmpty()) {
             return choice;
@@ -45,9 +51,15 @@ public class Game {
         while (!enemy.isDead() && !player.isDead()) {
             String playerChoice = player.chooseCombatOption();
             switch (playerChoice) {
-                case "attack" -> player.attack(enemy);
-                case "upgrade" -> player.upgradeAttack();
-                case "heal" -> player.heal();
+                case "attack":
+                    player.attack(enemy);
+                    break;
+                case "upgrade":
+                    player.upgradeAttack();
+                    break;
+                case "heal":
+                    player.heal();
+                    break;
             }
             isPlayerTurn = !isPlayerTurn;
 
