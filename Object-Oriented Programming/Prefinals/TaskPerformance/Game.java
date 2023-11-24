@@ -66,26 +66,6 @@ public class Game {
     }
 }
 
-interface GameMode {
-    public void startGame();
-}
-
-interface Character {
-    public void attack();
-
-    public void heal();
-
-    public void damage();
-
-    public void death();
-}
-
-interface Story {
-}
-
-interface Survival {
-}
-
 abstract class Entity {
     protected String name;
     protected int minAttack, maxAttack;
@@ -212,7 +192,7 @@ class Player extends Entity {
     }
 }
 
-class StoryMode implements GameMode, Story {
+class StoryMode implements GameMode {
     private Enemy[] enemies = {
             new Enemy("Zombie", 20, 100),
             new Enemy("Vampire", 40, 150),
@@ -294,4 +274,22 @@ class SurvivalMode implements GameMode, Survival {
         }
         return getRandomName();
     }
+}
+
+interface GameMode {
+    public void startGame();
+}
+
+interface Character {
+    public void attack();
+
+    public void heal();
+
+    public void damage();
+
+    public void death();
+}
+
+interface Survival {
+    
 }
