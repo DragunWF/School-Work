@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.Map;
+import java.util.HashMap;
 
 public class Game {
     public static final Scanner sc = new Scanner(System.in);
@@ -15,6 +17,7 @@ public class Game {
         } else {
             SurvivalMode survival = new SurvivalMode(new Player(playerName));
             survival.startGame();
+            survival.showEnemiesDefeated();
         }
         System.out.printf("Combat turns to finish the game: %s\n", combatTurns);
         System.out.println("Thanks for playing!");
@@ -234,6 +237,7 @@ class StoryMode implements GameMode {
 class SurvivalMode implements GameMode, Survival {
     private Player player;
     private int enemiesDefeated = 0;
+    private Map<String, Integer> enemyTypesDefeated = new HashMap<>();
     private final int minAttack = 25, maxAttack = 125;
     private final int minHealth = 100, maxHealth = 300;
     private final String[] enemyNames = {
@@ -245,6 +249,13 @@ class SurvivalMode implements GameMode, Survival {
         this.player = player;
     }
 
+    public void showEnemiesDefeated() {
+        System.out.println("Enemies defeated:");
+        for (String key : enemyTypesDefeated.keySet()) {
+            System.out.printf("- %s x%s\n", key, enemyTypesDefeated.get(key));
+        }
+    }
+
     public void startGame() {
         System.out.println("You have entered an arena with portals surrounding each entrance...");
         System.out.println("Monsters come out and now you have to fight to the death to survive!");
@@ -253,6 +264,12 @@ class SurvivalMode implements GameMode, Survival {
             Game.fight(enemy, player);
             if (enemy.isDead()) {
                 enemiesDefeated++;
+                if (enemyTypesDefeated.containsKey(enemy.getName())) {
+                    int value = enemyTypesDefeated.get(enemy.getName());
+                    enemyTypesDefeated.put(enemy.getName(), value + 1);
+                } else {
+                    enemyTypesDefeated.put(enemy.getName(), 1);
+                }
             }
         }
         if (enemiesDefeated == 0) {
@@ -300,5 +317,7 @@ interface Character {
 }
 
 interface Survival {
+    public void startGame();
 
+    public void showEnemiesDefeated();
 }
