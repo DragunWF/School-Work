@@ -238,7 +238,7 @@ class SurvivalMode implements GameMode, Survival {
     private Player player;
     private int enemiesDefeated = 0;
     private Map<String, Integer> enemyTypesDefeated = new HashMap<>();
-    private final int minAttack = 25, maxAttack = 125;
+    private final int minAttack = 25, maxAttack = 50;
     private final int minHealth = 100, maxHealth = 300;
     private final String[] enemyNames = {
             "Goblin", "Vampire", "Zombie", "Troll", "Orc", "Bandit", "Baby Dragon"
@@ -250,9 +250,11 @@ class SurvivalMode implements GameMode, Survival {
     }
 
     public void showEnemiesDefeated() {
-        System.out.println("Enemies defeated:");
-        for (String key : enemyTypesDefeated.keySet()) {
-            System.out.printf("- %s x%s\n", key, enemyTypesDefeated.get(key));
+        if (enemiesDefeated > 0) {
+            System.out.println("Enemies defeated:");
+            for (String key : enemyTypesDefeated.keySet()) {
+                System.out.printf("- %s x%s\n", key, enemyTypesDefeated.get(key));
+            }
         }
     }
 
