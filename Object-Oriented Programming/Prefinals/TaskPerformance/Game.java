@@ -6,8 +6,8 @@ public class Game {
 
     public static void main(String[] args) {
         System.out.println("Welcome to the game!");
+        Player player = new Player(input("Enter your name"));
         selectGame();
-        Player player = new Player(input("Enter your name: "));
         if (gameChosen.equals("story")) {
             StoryMode story = new StoryMode(player);
             story.startGame();
@@ -20,7 +20,7 @@ public class Game {
 
     private static String selectGame() {
         System.out.println("Press 1 or 2 to select your game mode.");
-        System.out.println("1 - Story\n2- Survival");
+        System.out.println("1 - Story\n2 - Survival");
         String choice = input("");
         switch (choice) {
             case "1" -> gameChosen = "story";
@@ -44,6 +44,7 @@ public class Game {
                 case "heal" -> player.heal();
             }
             isPlayerTurn = !isPlayerTurn;
+
             String enemyChoice = enemy.makeCombatChoice();
             if (enemyChoice == "attack") {
                 enemy.attack(player);
@@ -53,6 +54,7 @@ public class Game {
                 System.out.printf("%s did nothing for this turn!\n", enemy.getName());
             }
         }
+        System.out.printf("%s has won the fight!\n", enemy.isDead() ? player.getName() : enemy.getName());
     }
 
     public static String input(String prompt) {
@@ -91,7 +93,7 @@ abstract class Entity {
 
     public void attack(Entity other) {
         if (!this.dead) {
-            other.damage(attack);
+            other.damage(this.getAttack());
         } else {
             System.out.printf("%s is already dead and cannot attack anymore!\n", this.name);
         }
@@ -207,9 +209,9 @@ class Player extends Entity {
 
 class StoryMode implements GameMode, Story {
     private Enemy[] enemies = {
-            new Enemy("Zombie", 10, 100),
-            new Enemy("Vampire", 25, 150),
-            new Enemy("Death Knight", 35, 200)
+            new Enemy("Zombie", 20, 100),
+            new Enemy("Vampire", 40, 150),
+            new Enemy("Death Knight", 75, 200)
     };
     private Player player;
 
@@ -222,8 +224,15 @@ class StoryMode implements GameMode, Story {
         System.out.println("Along the way you encounter monsters...");
         for (int i = 0; i < enemies.length; i++) {
             Game.fight(this.enemies[i], this.player);
+            if (!this.player.isDead()) {
+                System.out.println("As you continue along the path of the swamp, you encounter new enemies!");
+            } else {
+                System.out.println("You have died! The story has now ended in a tragic way...");
+            }
         }
-        System.out.println("You have defeated all the enemies in your way! You have won!");
+        if (!this.player.isDead()) {
+            System.out.println("You have defeated all the enemies in your way! You have won!");
+        }
     }
 }
 
