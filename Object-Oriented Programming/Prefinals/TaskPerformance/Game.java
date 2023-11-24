@@ -3,18 +3,20 @@ import java.util.Scanner;
 public class Game {
     public static final Scanner sc = new Scanner(System.in);
     public static String gameChosen = "";
+    private static int combatTurns = 0;
 
     public static void main(String[] args) {
         System.out.println("Welcome to the game!");
-        Player player = new Player(input("Enter your name"));
+        String playerName = input("Enter your name");
         selectGame();
         if (gameChosen.equals("story")) {
-            StoryMode story = new StoryMode(player);
+            StoryMode story = new StoryMode(new Player(playerName));
             story.startGame();
         } else {
-            SurvivalMode survival = new SurvivalMode();
+            SurvivalMode survival = new SurvivalMode(new Player(playerName));
             survival.startGame();
         }
+        System.out.printf("Combat turns to finish the game: %s\n", combatTurns);
         System.out.println("Thanks for playing!");
     }
 
@@ -34,13 +36,14 @@ public class Game {
     }
 
     public static void fight(Enemy enemy, Player player) {
+        combatTurns++;
         enemy.intro();
         boolean isPlayerTurn = true;
         while (!enemy.isDead() && !player.isDead()) {
             String playerChoice = player.chooseCombatOption();
             switch (playerChoice) {
                 case "attack" -> player.attack(enemy);
-                case "defend" -> player.defend();
+                case "upgrade" -> player.upgradeAttack();
                 case "heal" -> player.heal();
             }
             isPlayerTurn = !isPlayerTurn;
@@ -85,7 +88,8 @@ interface Survival {
 
 abstract class Entity {
     protected String name;
-    protected int attack;
+    protected int minAttack;
+    protected int maxAttack;
     protected int health;
     protected int potions;
     protected boolean dead = false;
@@ -93,7 +97,7 @@ abstract class Entity {
 
     public void attack(Entity other) {
         if (!this.dead) {
-            other.damage(this.getAttack());
+            other.damage(this.getMaxAttack());
         } else {
             System.out.printf("%s is already dead and cannot attack anymore!\n", this.name);
         }
@@ -102,7 +106,7 @@ abstract class Entity {
     public void damage(int amount) {
         this.health -= amount;
         System.out.printf("%s has taken %s damage! %s remaining health: %s\n",
-                this.name, amount, this.attack, this.health);
+                this.name, amount, this.maxAttack, this.health);
         if (this.health <= 0) {
             death();
         }
@@ -126,9 +130,8 @@ abstract class Entity {
         this.dead = true;
     }
 
-    public int getAttack() {
-        final int min = 5;
-        return (int) Math.floor(Math.random() * (min + this.attack) - min);
+    public int getMaxAttack() {
+        return (int) Math.floor(Math.random() * (this.minAttack + this.maxAttack) + this.minAttack);
     }
 
     public boolean isDead() {
@@ -144,7 +147,8 @@ class Enemy extends Entity {
     public Enemy(String name, int attack, int health) {
         this.name = name;
         this.potions = 1;
-        this.attack = attack < 3 ? 3 : attack; // min attack is 3
+        this.maxAttack = attack < 20 ? 20 : attack; // min attack is 20
+        this.minAttack = this.maxAttack - 15;
         this.health = health;
     }
 
@@ -162,11 +166,12 @@ class Enemy extends Entity {
 }
 
 class Player extends Entity {
+    private static final int upgradeAttackAmount = 25;
     private boolean isDefended;
 
     public Player(String name) {
         this.name = name;
-        this.attack = 25;
+        this.maxAttack = 25;
         this.potions = 3; // amount of times the player can heal
         this.isDefended = false;
         this.health = Game.gameChosen.equals("story") ? 100 : 500;
@@ -195,11 +200,12 @@ class Player extends Entity {
         }
     }
 
-    public void upgradeAttack(int amount) {
-        final int previousAttack = this.attack;
-        this.attack += amount;
+    public void upgradeAttack() {
+        final int previousAttack = this.maxAttack;
+        this.maxAttack += Player.upgradeAttackAmount;
+        this.minAttack += Player.upgradeAttackAmount;
         System.out.printf("%s's attack has been increased from %s to %s!\n",
-                this.name, previousAttack, this.attack);
+                this.name, previousAttack, this.maxAttack);
     }
 
     public boolean isDefended() {
@@ -228,6 +234,7 @@ class StoryMode implements GameMode, Story {
                 System.out.println("As you continue along the path of the swamp, you encounter new enemies!");
             } else {
                 System.out.println("You have died! The story has now ended in a tragic way...");
+                break;
             }
         }
         if (!this.player.isDead()) {
@@ -237,8 +244,40 @@ class StoryMode implements GameMode, Story {
 }
 
 class SurvivalMode implements GameMode, Survival {
+    private Player player;
     private int enemiesDefeated;
 
+    private final int maxAttack = 100;
+    private final int minAttack = 25;
+    private final int minHealth = 100;
+    private final int maxHealth = 250;
+    private final String[] enemyNames = {
+            "Goblin", "Vampire", "Zombie", "Troll", "Orc", "Bandit", "Baby Dragon"
+    };
+
+    public SurvivalMode(Player player) {
+        this.player = player;
+    }
+
     public void startGame() {
+        while (!this.player.isDead()) {
+
+        }
+    }
+
+    private Enemy getRandomEnemy() {
+        return new Enemy(getRandomName(), getRandomAttack(), getRandomHealth());
+    }
+
+    private int getRandomAttack() {
+        return (int) Math.floor(Math.random() * (maxAttack - minAttack) + minAttack);
+    }
+
+    private int getRandomHealth() {
+        return (int) Math.floor(Math.random() * (maxHealth - minHealth) + minHealth);
+    }
+
+    private String getRandomName() {
+        return enemyNames[(int) Math.floor(Math.random() * enemyNames.length)];
     }
 }
