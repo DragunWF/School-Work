@@ -222,7 +222,11 @@ class StoryMode implements GameMode {
         for (int i = 0; i < enemies.length; i++) {
             Game.fight(this.enemies[i], this.player);
             if (!this.player.isDead()) {
-                System.out.println("As you continue along the path of the swamp, you encounter new enemies!");
+                if (i + 1 != enemies.length) {
+                    System.out.println("As you continue along the path of the swamp, you encounter new enemies!");
+                } else {
+                    System.out.println("The final boss has been defeated, congratulations!");
+                }
             } else {
                 System.out.println("You have died! The story has now ended in a tragic way...");
                 break;
