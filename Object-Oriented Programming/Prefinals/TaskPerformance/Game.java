@@ -266,8 +266,12 @@ class SurvivalMode implements GameMode, Survival {
                 enemiesDefeated++;
             }
         }
-        System.out.println("After a valiant fight, you have finally fallen!");
-        System.out.printf("You have defeated %s %s!\n", enemiesDefeated, enemiesDefeated > 1 ? "enemy" : "enemies");
+        if (enemiesDefeated == 0) {
+            System.out.println("You have defeated no enemies!");
+        } else {
+            System.out.println("After a valiant fight, you have finally fallen!");
+            System.out.printf("You have defeated %s %s!\n", enemiesDefeated, enemiesDefeated > 1 ? "enemy" : "enemies");
+        }
     }
 
     private Enemy getRandomEnemy() {
