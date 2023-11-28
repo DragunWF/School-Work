@@ -135,7 +135,7 @@ class Test:
                 raise Exception("Invalid key for process!")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     Scheduler([Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
                Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
                Process("K", 24, 12)]).main()
