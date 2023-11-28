@@ -1,3 +1,8 @@
+# Platform Technology (Operating Systems)
+# Applying scheduling algorithms through Python code
+# Programmed by DragunWF
+# My GitHub: https://github.com/DragunWF
+
 from rich import print
 from tabulate import tabulate
 from collections import deque
