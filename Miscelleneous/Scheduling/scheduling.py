@@ -58,7 +58,7 @@ class Scheduler:
         self.__average_turnaround_time: int = None
         self.__burst_times: list[tuple[int]] = []
 
-    def main(self) -> None:
+    def run(self) -> None:
         self.fcfs()
         self.order_processes()
         self.calculate_waiting_times()
@@ -138,4 +138,4 @@ class Test:
 if __name__ == "__main__":
     Scheduler([Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
                Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
-               Process("K", 24, 12)]).main()
+               Process("K", 24, 12)]).run()
