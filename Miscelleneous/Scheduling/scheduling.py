@@ -40,16 +40,14 @@ class Process:
         return self.__waiting_time
 
 
-class FCFS:
-    def __init__(self, attributes: tuple[tuple[int]]):
-        self.__attributes: tuple[tuple[int]] = attributes
-        self.__ready_queue: list[Process] = deque([])
+class Scheduler:
+    def __init__(self, queue: list[Process]):
+        self.__ready_queue: list[Process] = deque(queue)
         self.__average_waiting_time: int = None
         self.__average_turnaround_time: int = None
         self.__burst_times: list[tuple[int]] = []
 
     def main(self) -> None:
-        self.add_table_contents()
         self.fcfs()
         self.order_processes()
         self.calculate_waiting_times()
@@ -61,11 +59,6 @@ class FCFS:
 
         print(f"Average Waiting Time: {self.__average_waiting_time}")
         print(f"Average Turnaround Time: {self.__average_turnaround_time}")
-
-    def add_table_contents(self) -> None:
-        for i in range(len(self.__attributes)):
-            self.__ready_queue.append(
-                Process(f"P{i + 1}", self.__attributes[i][0], self.__attributes[i][1]))
 
     def order_processes(self) -> None:
         current_waiting_time: int = 0
@@ -132,4 +125,6 @@ class Test:
 
 if __name__ == '__main__':
     # First index is the arrival time and the second index is the burst time
-    FCFS(((2, 3), (3, 5), (0, 2), (1, 4), (4, 6))).main()
+    Scheduler([Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
+               Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
+               Process("K", 24, 12)]).main()
