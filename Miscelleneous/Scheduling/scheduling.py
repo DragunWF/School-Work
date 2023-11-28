@@ -50,7 +50,7 @@ class FCFS:
 
     def main(self) -> None:
         self.add_table_contents()
-        self.bubble_sort()
+        self.fcfs()
         self.order_processes()
         self.calculate_waiting_times()
         self.calculate_turnaround_times()
@@ -74,7 +74,8 @@ class FCFS:
                 (current_waiting_time, current_waiting_time + process.get_burst_time()))
             current_waiting_time += process.get_burst_time()
 
-    def bubble_sort(self) -> None:
+    def fcfs(self) -> None:
+        # First-Come First-Serve Scheduling
         for i in range(len(self.__ready_queue)):
             is_sorted = True
             for j in range(len(self.__ready_queue) - 1):
@@ -84,6 +85,13 @@ class FCFS:
                     is_sorted = False
             if is_sorted:
                 break
+
+    def srtf(self) -> None:
+        # Shortest Time Remaining First
+        pass
+
+    def round_robin(self, quantum: int) -> None:
+        pass
 
     def calculate_waiting_times(self):
         for i in range(len(self.__ready_queue)):
