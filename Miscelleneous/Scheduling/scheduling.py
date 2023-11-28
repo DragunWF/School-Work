@@ -3,6 +3,10 @@
 # Programmed by DragunWF
 # My GitHub: https://github.com/DragunWF
 
+# Requires two modules to install
+# > pip install rich
+# > pip install tabulate
+
 from rich import print
 from tabulate import tabulate
 from collections import deque
