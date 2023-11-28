@@ -8,8 +8,9 @@ class Process:
         self.__name = name
         self.__arrival_time = arrival_time
         self.__burst_time = burst_time
-        self.__waiting_time = None
-        self.__turnaround_time = None
+        self.__waiting_time: int = None
+        self.__turnaround_time: int = None
+        self.__completion_time: int = -1  # Default value
 
     def get_name(self) -> str:
         return self.__name
@@ -20,21 +21,31 @@ class Process:
     def get_burst_time(self) -> int:
         return self.__burst_time
 
+    def set_completion_time(self, value) -> None:
+        self.__completion_time = value
+
+    def get_completion_time(self) -> int:
+        return self.__completion_time
+
     def calculate_turnaround_time(self) -> None:
         if self.__waiting_time is None:
             print(
-                f"Waiting time has to be calculated first for process {self.__name}")
+                f"Process {self.__name}: Waiting time has to be calculated first")
         elif self.__turnaround_time is None:
             self.__turnaround_time = self.__burst_time + self.__waiting_time
         else:
             print(
-                f"Turnaround time has already been calculated for process {self.__name}")
+                f"Process {self.__name}: Turnaround time has already been calculated")
 
     def get_turnaround_time(self) -> int:
         return self.__turnaround_time
 
-    def set_waiting_time(self, value: int) -> None:
-        self.__waiting_time = value
+    def calculate_waiting_time(self, completion_time: int) -> None:
+        if self.__waiting_time is None:
+            self.__waiting_time = completion_time - self.__arrival_time
+        else:
+            print(
+                f"Process {self.__name}: Waiting time has already been calculated")
 
     def get_waiting_time(self) -> int:
         return self.__waiting_time
@@ -88,7 +99,8 @@ class Scheduler:
 
     def calculate_waiting_times(self):
         for i in range(len(self.__ready_queue)):
-            self.__ready_queue[i].set_waiting_time(self.__burst_times[i][0])
+            self.__ready_queue[i].calculate_waiting_time(
+                self.__burst_times[i][0])
 
     def calculate_turnaround_times(self):
         for i in range(len(self.__ready_queue)):
@@ -124,7 +136,6 @@ class Test:
 
 
 if __name__ == '__main__':
-    # First index is the arrival time and the second index is the burst time
     Scheduler([Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
                Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
                Process("K", 24, 12)]).main()
