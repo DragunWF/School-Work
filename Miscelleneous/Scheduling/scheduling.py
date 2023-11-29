@@ -67,8 +67,17 @@ class Scheduler:
         self.__average_turnaround_time: int = None
         self.__burst_times: list[tuple[int]] = []
 
-    def run(self) -> None:
-        self.fcfs()
+    def run(self, algorithm: str) -> None:
+        match (algorithm.upper()):
+            case "FCFS":
+                self.fcfs()
+            case "SRTF":
+                self.srtf()
+            case "RR":
+                self.round_robin()
+            case _:
+                raise Exception("Scheduling algorithm not recognized!")
+            
         self.order_processes()
         self.calculate_waiting_times()
         self.calculate_turnaround_times()
@@ -101,7 +110,13 @@ class Scheduler:
 
     def srtf(self) -> None:
         # Shortest Time Remaining First
-        pass
+        current_processes:list[Process] = []
+        time_passed = 0
+        while True:
+            for process in self.__ready_queue:
+                if process.get_arrival_time() == time_passed:
+                    current_processes.append(process)
+            time_passed += 1
 
     def round_robin(self, quantum: int) -> None:
         pass
@@ -130,9 +145,17 @@ class Scheduler:
         print(self.__burst_times[queue_len - 1][1])
 
 
-class Test:
+class Utils:
+    @staticmethod
+    def get_min_burst_time(queue: list[Process]):
+        min_value = queue[0].get_burst_time()
+        for i in range(1, len(queue)):
+            if queue[i].get_burst_time() < min_value:
+                min_value = queue[i].get_burst_time()
+
     @staticmethod
     def print_values(values: list[Process], key: str) -> None:
+        # For Testing
         match (key):
             case "arrival_time":
                 print([p.get_arrival_time() for p in values])
@@ -145,6 +168,9 @@ class Test:
 
 
 if __name__ == "__main__":
-    Scheduler([Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
-               Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
-               Process("K", 24, 12)]).run()
+    processes = [Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
+                 Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
+                 Process("K", 24, 12)]
+    Scheduler(processes).run("FCFS")
+    # Scheduler(processes).run("SRTF")
+    # Scheduler(processes).run("RR")
