@@ -19,13 +19,17 @@ class Process:
         self.__burst_time = burst_time
         self.__waiting_time: int = None
         self.__turnaround_time: int = None
-        self.__completion_time: int = -1  # Default value
+        self.__completion_time: int = 0  # Default value
+        self.__algorithm = None
 
     def get_name(self) -> str:
         return self.__name
 
     def get_arrival_time(self) -> int:
         return self.__arrival_time
+    
+    def set_burst_time(self, value: int) -> None:
+        self.__burst_time = value
 
     def get_burst_time(self) -> int:
         return self.__burst_time
@@ -68,10 +72,12 @@ class Scheduler:
         self.__burst_times: list[tuple[int]] = []
 
     def run(self, algorithm: str) -> None:
-        match (algorithm.upper()):
+        self.__algorithm = algorithm.upper()
+        match (self.__algorithm):
             case "FCFS":
                 self.fcfs()
             case "SRTF":
+                self.__gantt_chart:list[list] = [[0]]
                 self.srtf()
             case "RR":
                 self.round_robin()
@@ -97,7 +103,7 @@ class Scheduler:
             current_waiting_time += process.get_burst_time()
 
     def fcfs(self) -> None:
-        # First-Come First-Serve Scheduling
+        # First-Come First-Serve
         for i in range(len(self.__ready_queue)):
             is_sorted = True
             for j in range(len(self.__ready_queue) - 1):
@@ -111,12 +117,36 @@ class Scheduler:
     def srtf(self) -> None:
         # Shortest Time Remaining First
         current_processes:list[Process] = []
+        max_time = Utils.get_max_time(self.__ready_queue)
+        current_completion_time = 1
         time_passed = 0
-        while True:
+        previous_process_name = ""
+
+        while time_passed < max_time:
+            # Find processes with the same arrival time as the time passed
             for process in self.__ready_queue:
                 if process.get_arrival_time() == time_passed:
                     current_processes.append(process)
+
+            # Burst Time Logic
+            attributes: dict = Utils.get_min_burst_time(current_processes)
+            min_process: Process = current_processes[attributes["index"]]
+            min_process.set_burst_time(min_process.get_burst_time() - 1)
+            if min_process.get_burst_time() <= 0:
+                current_processes.pop(attributes["index"])
+            
+            # Gantt Chart Logic
+            if attributes["name"] != previous_process_name:
+                NEW_COMPLETION_TIME = current_completion_time
+                self.__gantt_chart.append([attributes["name"], NEW_COMPLETION_TIME])
+                min_process.set_completion_time(NEW_COMPLETION_TIME)
+            elif attributes["name"] == previous_process_name:
+                self.__gantt_chart[len(self.__gantt_chart) - 1][1] += 1
+
+            current_completion_time += 1
             time_passed += 1
+            previous_process_name = attributes["name"]
+
 
     def round_robin(self, quantum: int) -> None:
         pass
@@ -138,21 +168,43 @@ class Scheduler:
             sum([p.get_turnaround_time() for p in self.__ready_queue]) / queue_len, 4)
 
     def display_gantt_chart(self) -> None:
-        queue_len = len(self.__ready_queue)
-        for i in range(queue_len):
-            process = self.__ready_queue[i]
-            print(f"{process.get_waiting_time()} {process.get_name()}", end=" ")
-        print(self.__burst_times[queue_len - 1][1])
+        match (self.__algorithm):
+            case "FCFS":
+                queue_len = len(self.__ready_queue)
+                for i in range(queue_len):
+                    process = self.__ready_queue[i]
+                    print(f"{process.get_waiting_time()} {process.get_name()}", end=" ")
+                print(self.__burst_times[queue_len - 1][1])
+            case "SRTF":
+                print(0, end=" ")
+                for i in range(1, len(self.__gantt_chart)):
+                    print(f"{self.__gantt_chart[i][0]} {self.__gantt_chart[i][1]}", end=" ")
+                print()
+            case "RR":
+                pass
+            case _:
+                raise Exception("Algorithm is not recognized!")
 
 
 class Utils:
     @staticmethod
-    def get_min_burst_time(queue: list[Process]):
+    def get_min_burst_time(queue: list[Process]) -> dict:
+        if not queue:
+            return None
         min_value = queue[0].get_burst_time()
+        min_process_name = queue[0].get_name()
+        min_process_index = 0
         for i in range(1, len(queue)):
-            if queue[i].get_burst_time() < min_value:
+            if queue[i].get_burst_time() < min_value and queue[i].get_burst_time() != 0:
                 min_value = queue[i].get_burst_time()
-
+                min_process_name = queue[i].get_name()
+                min_process_index = i
+        return {"name": min_process_name, "index": min_process_index }
+    
+    @staticmethod
+    def get_max_time(queue: list[Process]) -> int:
+        return sum([p.get_burst_time() for p in queue])
+    
     @staticmethod
     def print_values(values: list[Process], key: str) -> None:
         # For Testing
@@ -168,9 +220,11 @@ class Utils:
 
 
 if __name__ == "__main__":
+    old_example = [Process("P1", 1, 1), Process("P2", 0, 5), Process("P3", 3, 2),
+                   Process("P4", 1, 2), Process("P5", 2, 3)]
     processes = [Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
                  Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
                  Process("K", 24, 12)]
-    Scheduler(processes).run("FCFS")
-    # Scheduler(processes).run("SRTF")
+    # Scheduler(processes).run("FCFS")
+    Scheduler(old_example).run("SRTF")
     # Scheduler(processes).run("RR")
