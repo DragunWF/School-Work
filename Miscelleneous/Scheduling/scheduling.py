@@ -27,7 +27,7 @@ class Process:
 
     def get_arrival_time(self) -> int:
         return self.__arrival_time
-    
+
     def set_burst_time(self, value: int) -> None:
         self.__burst_time = value
 
@@ -77,13 +77,13 @@ class Scheduler:
             case "FCFS":
                 self.fcfs()
             case "SRTF":
-                self.__gantt_chart:list[list] = [[0]]
+                self.__gantt_chart: list[list] = [[0]]
                 self.srtf()
             case "RR":
                 self.round_robin()
             case _:
                 raise Exception("Scheduling algorithm not recognized!")
-            
+
         self.order_processes()
         self.calculate_waiting_times()
         self.calculate_turnaround_times()
@@ -116,7 +116,7 @@ class Scheduler:
 
     def srtf(self) -> None:
         # Shortest Time Remaining First
-        current_processes:list[Process] = []
+        current_processes: list[Process] = []
         max_time = Utils.get_max_time(self.__ready_queue)
         current_completion_time = 1
         time_passed = 0
@@ -134,10 +134,11 @@ class Scheduler:
             min_process.set_burst_time(min_process.get_burst_time() - 1)
             if min_process.get_burst_time() <= 0:
                 current_processes.pop(attributes["index"])
-            
+
             # Gantt Chart Logic
             if attributes["name"] != previous_process_name:
-                self.__gantt_chart.append([attributes["name"], current_completion_time])
+                self.__gantt_chart.append(
+                    [attributes["name"], current_completion_time])
                 min_process.set_completion_time(current_completion_time)
             elif attributes["name"] == previous_process_name:
                 self.__gantt_chart[len(self.__gantt_chart) - 1][1] += 1
@@ -146,7 +147,6 @@ class Scheduler:
             current_completion_time += 1
             time_passed += 1
             previous_process_name = attributes["name"]
-
 
     def round_robin(self, quantum: int) -> None:
         pass
@@ -173,12 +173,14 @@ class Scheduler:
                 queue_len = len(self.__ready_queue)
                 for i in range(queue_len):
                     process = self.__ready_queue[i]
-                    print(f"{process.get_waiting_time()} {process.get_name()}", end=" ")
+                    print(
+                        f"{process.get_waiting_time()} {process.get_name()}", end=" ")
                 print(self.__burst_times[queue_len - 1][1])
             case "SRTF":
                 print(0, end=" ")
                 for i in range(1, len(self.__gantt_chart)):
-                    print(f"{self.__gantt_chart[i][0]} {self.__gantt_chart[i][1]}", end=" ")
+                    print(
+                        f"{self.__gantt_chart[i][0]} {self.__gantt_chart[i][1]}", end=" ")
                 print()
             case "RR":
                 pass
@@ -199,12 +201,12 @@ class Utils:
                 min_value = queue[i].get_burst_time()
                 min_process_name = queue[i].get_name()
                 min_process_index = i
-        return {"name": min_process_name, "index": min_process_index }
-    
+        return {"name": min_process_name, "index": min_process_index}
+
     @staticmethod
     def get_max_time(queue: list[Process]) -> int:
         return sum([p.get_burst_time() for p in queue])
-    
+
     @staticmethod
     def print_values(values: list[Process], key: str) -> None:
         # For Testing
