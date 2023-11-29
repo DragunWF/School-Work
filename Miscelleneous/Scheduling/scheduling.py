@@ -137,11 +137,11 @@ class Scheduler:
             
             # Gantt Chart Logic
             if attributes["name"] != previous_process_name:
-                NEW_COMPLETION_TIME = current_completion_time
-                self.__gantt_chart.append([attributes["name"], NEW_COMPLETION_TIME])
-                min_process.set_completion_time(NEW_COMPLETION_TIME)
+                self.__gantt_chart.append([attributes["name"], current_completion_time])
+                min_process.set_completion_time(current_completion_time)
             elif attributes["name"] == previous_process_name:
                 self.__gantt_chart[len(self.__gantt_chart) - 1][1] += 1
+            min_process.set_completion_time(current_completion_time)
 
             current_completion_time += 1
             time_passed += 1
