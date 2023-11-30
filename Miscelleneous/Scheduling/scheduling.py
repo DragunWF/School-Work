@@ -53,9 +53,9 @@ class Process:
     def get_turnaround_time(self) -> int:
         return self.__turnaround_time
 
-    def calculate_waiting_time(self, completion_time: int) -> None:
+    def calculate_waiting_time(self) -> None:
         if self.__waiting_time is None:
-            self.__waiting_time = completion_time - self.__arrival_time
+            self.__waiting_time = self.__completion_time - self.__arrival_time
         else:
             print(
                 f"Process {self.__name}: Waiting time has already been calculated")
@@ -77,14 +77,13 @@ class Scheduler:
             case "FCFS":
                 self.fcfs()
             case "SRTF":
-                self.__gantt_chart: list[list] = [[0]]
+                self.__srtf_chart: list[list] = [[0]]
                 self.srtf()
             case "RR":
                 self.round_robin()
             case _:
                 raise Exception("Scheduling algorithm not recognized!")
 
-        self.order_processes()
         self.calculate_waiting_times()
         self.calculate_turnaround_times()
         self.calculate_averages()
@@ -114,11 +113,15 @@ class Scheduler:
             if is_sorted:
                 break
 
+        self.order_processes()
+        for i in range(len(self.__ready_queue)):
+            self.__ready_queue[i].set_completion_time(self.__burst_times[i][0])
+
     def srtf(self) -> None:
         # Shortest Time Remaining First
         current_processes: list[Process] = []
         max_time = Utils.get_max_time(self.__ready_queue)
-        current_completion_time = 1
+        current_ct = 1
         time_passed = 0
         previous_process_name = ""
 
@@ -137,24 +140,30 @@ class Scheduler:
 
             # Gantt Chart Logic
             if attributes["name"] != previous_process_name:
-                self.__gantt_chart.append(
-                    [attributes["name"], current_completion_time])
-                min_process.set_completion_time(current_completion_time)
+                self.__srtf_chart.append(
+                    [attributes["name"], current_ct])
             elif attributes["name"] == previous_process_name:
-                self.__gantt_chart[len(self.__gantt_chart) - 1][1] += 1
-            min_process.set_completion_time(current_completion_time)
+                self.__srtf_chart[len(self.__srtf_chart) - 1][1] += 1
 
-            current_completion_time += 1
+            current_ct += 1
             time_passed += 1
             previous_process_name = attributes["name"]
+
+        ready_queue_names = [p.get_name() for p in self.__ready_queue]
+        for i in range(1, len(self.__srtf_chart) - 1):
+            completion_time = self.__srtf_chart[i + 1][1]
+            process_index = ready_queue_names.index(self.__srtf_chart[i][0])
+            current_ct = self.__ready_queue[process_index].get_completion_time(
+            )
+            self.__ready_queue[process_index].set_completion_time(
+                current_ct + completion_time)
 
     def round_robin(self, quantum: int) -> None:
         pass
 
     def calculate_waiting_times(self):
         for i in range(len(self.__ready_queue)):
-            self.__ready_queue[i].calculate_waiting_time(
-                self.__burst_times[i][0])
+            self.__ready_queue[i].calculate_waiting_time()
 
     def calculate_turnaround_times(self):
         for i in range(len(self.__ready_queue)):
@@ -174,13 +183,13 @@ class Scheduler:
                 for i in range(queue_len):
                     process = self.__ready_queue[i]
                     print(
-                        f"{process.get_waiting_time()} {process.get_name()}", end=" ")
+                        f"{self.__burst_times[i][0]} {process.get_name()}", end=" ")
                 print(self.__burst_times[queue_len - 1][1])
             case "SRTF":
                 print(0, end=" ")
-                for i in range(1, len(self.__gantt_chart)):
+                for i in range(1, len(self.__srtf_chart)):
                     print(
-                        f"{self.__gantt_chart[i][0]} {self.__gantt_chart[i][1]}", end=" ")
+                        f"{self.__srtf_chart[i][0]} {self.__srtf_chart[i][1]}", end=" ")
                 print()
             case "RR":
                 pass
@@ -215,6 +224,10 @@ class Utils:
                 print([p.get_arrival_time() for p in values])
             case "burst_time":
                 print([p.get_burst_time() for p in values])
+            case "completion_time":
+                print([p.get_completion_time() for p in values])
+            case "waiting_time":
+                print([p.get_waiting_time() for p in values])
             case "name":
                 print([p.get_name() for p in values])
             case _:
@@ -227,6 +240,6 @@ if __name__ == "__main__":
     processes = [Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
                  Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
                  Process("K", 24, 12)]
-    # Scheduler(processes).run("FCFS")
-    Scheduler(old_example).run("SRTF")
+    Scheduler(old_example).run("FCFS")
+    # Scheduler(processes.copy()).run("SRTF")
     # Scheduler(processes).run("RR")
