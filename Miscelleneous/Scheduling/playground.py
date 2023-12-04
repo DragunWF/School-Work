@@ -1,4 +1,5 @@
 from rich import print
+from collections import deque
 
 # Testing for the Round Robin scheduling algorithm
 
@@ -16,7 +17,14 @@ def main() -> None:
             if item_index >= len(items):
                 item_index = 0
     print()
+
+def foo() -> None:
+    values = deque(["macOS", "Windows", "Linux", "TempleOS"])
+    while values:
+        print(values[0])
+        values.popleft()
     
 
 if __name__ == "__main__":
-    main()
+    # main()
+    foo()
