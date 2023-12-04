@@ -89,6 +89,7 @@ class Scheduler:
         self.__average_waiting_time: int = None
         self.__average_turnaround_time: int = None
         self.__burst_times: list[tuple[int]] = []
+        self.__gantt_chart: list[ChartProcess] = []
 
     def run(self, algorithm: str) -> None:
         self.__algorithm = algorithm.upper()
@@ -129,6 +130,9 @@ class Scheduler:
         # Visualize the Gantt Chart
         current_waiting_time = 0
         for process in self.__ready_queue:
+            self.__gantt_chart.append(
+                ChartProcess(current_waiting_time, process.get_name(), 
+                            current_waiting_time + process.get_burst_time()))
             self.__burst_times.append(
                 (current_waiting_time, current_waiting_time + process.get_burst_time()))
             current_waiting_time += process.get_burst_time()
@@ -136,6 +140,8 @@ class Scheduler:
         # Set completion time of all processes in the ready queue
         for i in range(len(self.__ready_queue)):
             self.__ready_queue[i].set_completion_time(self.__burst_times[i][0])
+        
+        Utils.display_chart(self.__gantt_chart)
 
     def srtf(self) -> None:
         # Shortest Time Remaining First
@@ -298,12 +304,13 @@ class Utils:
     
     @staticmethod
     def display_chart(values: list[ChartProcess]) -> None:
+        print("Test Gantt Chart")
         for i in range(len(values)):
             process: ChartProcess = values[i]
-            if i + 1 != len(values):
+            if (i + 1) != len(values):
                 print(f"{process.get_start()} {process.get_name()}", end=" ")
             else:
-                print(f"{process.get_end()}")
+                print(f"{process.get_name()} {process.get_end()}")
 
 
 def main() -> None:
@@ -314,9 +321,9 @@ def main() -> None:
     processes = [Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
                  Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
                  Process("K", 24, 12)]
-    # Scheduler(old_example).run("FCFS")
+    Scheduler(old_example).run("FCFS")
     # Scheduler(processes.copy()).run("SRTF")
-    Scheduler(processes).run("RR")
+    # Scheduler(processes).run("RR")
 
 
 if __name__ == "__main__":
