@@ -64,6 +64,25 @@ class Process:
         return self.__waiting_time
 
 
+class ChartProcess:
+    def __init__(self, start: int, name: str, end: int):
+        self.__start = start
+        self.__name = name
+        self.__end = end
+
+    def get_start(self) -> int:
+        return self.__start
+    
+    def get_name(self) -> str:
+        return self.__name
+    
+    def get_end(self) -> int:
+        return self.__end
+    
+    def set_end(self, value: int) -> None:
+        self.__end = value
+
+
 class Scheduler:
     def __init__(self, queue: list[Process]):
         self.__ready_queue: list[Process] = deque(queue)
@@ -159,7 +178,28 @@ class Scheduler:
                 current_ct + completion_time)
 
     def round_robin(self, quantum: int) -> None:
-        pass
+        arrival_times = [p.get_arrival_time() for p in self.__ready_queue]
+        max_arrival_time, min_arrival_time = max(arrival_times), min(arrival_times)
+        current_queue = [p for p in self.__ready_queue if p.get_arrival_time() == min_arrival_time]
+        queue_index = 0
+        self.__gantt_chart = [ChartProcess(0, current_queue[0].get_name(), 0)]
+
+        while time_passed < max_arrival_time:
+            time_passed += 1
+            if not current_queue:
+                continue
+
+            if time_passed % quantum == 0:
+                queue_index += 1
+            if queue_index >= len(current_queue):
+                queue_index = 0
+            else:
+                self.__gantt_chart.append(ChartProcess(time_passed, current_queue[0].get_name(), 
+                                                       time_passed))
+            current_queue[queue_index].set_burst_time(current_queue[queue_index].get_burst_time() - 1)
+            if current_queue[queue_index].get_burst_time() <= 0:
+                current_queue.pop(queue_index)
+
 
     def calculate_waiting_times(self):
         for i in range(len(self.__ready_queue)):
