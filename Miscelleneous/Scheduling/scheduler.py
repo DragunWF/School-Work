@@ -113,15 +113,9 @@ class Scheduler:
         print(f"Average Waiting Time: {self.__average_waiting_time}")
         print(f"Average Turnaround Time: {self.__average_turnaround_time}")
 
-    def order_processes(self) -> None:
-        current_waiting_time: int = 0
-        for process in self.__ready_queue:
-            self.__burst_times.append(
-                (current_waiting_time, current_waiting_time + process.get_burst_time()))
-            current_waiting_time += process.get_burst_time()
-
     def fcfs(self) -> None:
         # First-Come First-Serve
+        # A simple bubble sort to sort the processes by its arrival time
         for i in range(len(self.__ready_queue)):
             is_sorted = True
             for j in range(len(self.__ready_queue) - 1):
@@ -132,7 +126,14 @@ class Scheduler:
             if is_sorted:
                 break
 
-        self.order_processes()
+        # Visualize the Gantt Chart
+        current_waiting_time = 0
+        for process in self.__ready_queue:
+            self.__burst_times.append(
+                (current_waiting_time, current_waiting_time + process.get_burst_time()))
+            current_waiting_time += process.get_burst_time()
+
+        # Set completion time of all processes in the ready queue
         for i in range(len(self.__ready_queue)):
             self.__ready_queue[i].set_completion_time(self.__burst_times[i][0])
 
@@ -197,8 +198,9 @@ class Scheduler:
             if not current_queue:
                 continue
             
-            # Subtract the burst time of the process per iteration
-            current_queue[process_index].set_burst_time(current_queue[process_index].get_burst_time() - 1)
+            # Decrement the burst time of the process per iteration
+            current_queue[process_index].set_burst_time(
+                current_queue[process_index].get_burst_time() - 1)
 
             # Pop the process out of the queue once burst time runs out
             if current_queue[process_index].get_burst_time() <= 0:
