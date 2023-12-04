@@ -99,7 +99,7 @@ class Scheduler:
                 self.__srtf_chart: list[list] = [[0]]
                 self.srtf()
             case "RR":
-                self.round_robin()
+                self.round_robin(3) # Default time quantum is 3
             case _:
                 raise Exception("Scheduling algorithm not recognized!")
 
@@ -179,26 +179,47 @@ class Scheduler:
 
     def round_robin(self, quantum: int) -> None:
         arrival_times = [p.get_arrival_time() for p in self.__ready_queue]
-        max_arrival_time, min_arrival_time = max(arrival_times), min(arrival_times)
-        current_queue = [p for p in self.__ready_queue if p.get_arrival_time() == min_arrival_time]
-        queue_index = 0
-        self.__gantt_chart = [ChartProcess(0, current_queue[0].get_name(), 0)]
+        min_arrival_time = min(arrival_times)
+        current_queue: list[Process] = [p for p in self.__ready_queue if p.get_arrival_time() == min_arrival_time]
+        self.__gantt_chart = [ChartProcess(0, current_queue[0].get_name(), 1)]
 
-        while time_passed < max_arrival_time:
+        process_index = 0
+        time_passed = 0
+
+        while current_queue:
+            quantum_loop_met = False
             time_passed += 1
+            
+            # Add the processes that meet the arrival time
+            for process in self.__ready_queue:
+                if time_passed == process.get_arrival_time():
+                    current_queue.append(process)
             if not current_queue:
                 continue
+            
+            # Subtract the burst time of the process per iteration
+            current_queue[process_index].set_burst_time(current_queue[process_index].get_burst_time() - 1)
 
-            if time_passed % quantum == 0:
-                queue_index += 1
-            if queue_index >= len(current_queue):
-                queue_index = 0
-            else:
-                self.__gantt_chart.append(ChartProcess(time_passed, current_queue[0].get_name(), 
-                                                       time_passed))
-            current_queue[queue_index].set_burst_time(current_queue[queue_index].get_burst_time() - 1)
-            if current_queue[queue_index].get_burst_time() <= 0:
-                current_queue.pop(queue_index)
+            # Pop the process out of the queue once burst time runs out
+            if current_queue[process_index].get_burst_time() <= 0:
+                current_queue.pop(process_index)
+                quantum_loop_met = True
+            elif time_passed % quantum == 0:
+                # When time passed meets the time quantum it switches to the next process of the circular queue
+                process_index += 1
+                quantum_loop_met = True  
+
+                # Process loops back at the beginning after the end
+                if process_index >= len(current_queue):
+                    process_index = 0
+            
+            # Update the Gantt Chart representation
+            if quantum_loop_met and current_queue:
+                self.__gantt_chart.append(ChartProcess(time_passed, current_queue[process_index].get_name(), 
+                                                        time_passed))
+            # print(f"{[p.get_name() for p in current_queue]} {current_queue[process_index].get_name()}")
+        
+        Utils.display_chart(self.__gantt_chart)
 
 
     def calculate_waiting_times(self):
@@ -272,14 +293,29 @@ class Utils:
                 print([p.get_name() for p in values])
             case _:
                 raise Exception("Invalid key for process!")
+    
+    @staticmethod
+    def display_chart(values: list[ChartProcess]) -> None:
+        for i in range(len(values)):
+            process: ChartProcess = values[i]
+            if i + 1 != len(values):
+                print(f"{process.get_start()} {process.get_name()}", end=" ")
+            else:
+                print(f"{process.get_end()}")
 
 
-if __name__ == "__main__":
+def main() -> None:
     old_example = [Process("P1", 1, 1), Process("P2", 0, 5), Process("P3", 3, 2),
                    Process("P4", 1, 2), Process("P5", 2, 3)]
+    # 0 2 3 5 11 17 24
+    # 4 9 3 7 5 6 12
     processes = [Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
                  Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
                  Process("K", 24, 12)]
-    Scheduler(old_example).run("FCFS")
+    # Scheduler(old_example).run("FCFS")
     # Scheduler(processes.copy()).run("SRTF")
-    # Scheduler(processes).run("RR")
+    Scheduler(processes).run("RR")
+
+
+if __name__ == "__main__":
+    main()
