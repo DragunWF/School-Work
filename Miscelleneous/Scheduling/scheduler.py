@@ -348,6 +348,45 @@ class Utils:
                 print(f"{process.get_start()} {process.get_name()} {process.get_end()}")
 
 
+class ProcessCreator:
+    def __init__(self):
+        self.__data:list[Process] = []
+    
+    def create_process(self) -> Process:
+        name = input("Process name: ")
+        arrival_time = self.input_num("Arrival Time: ")
+        burst_time = self.input_num("Burst Time: ")
+        return Process(name, arrival_time, burst_time)
+    
+    def choose_option(self, prompt: str) -> str:
+        option = input(f"{prompt} (y/n)").lower()
+        if option == "y" or option == "yes":
+            return "y"
+        elif option == "n" or option == "no":
+            return "n"
+        print("Invalid option! Choose either yes or no (y/n)")
+        return self.choose_option(prompt)
+        
+    def input_num(self, prompt: str) -> int:
+        try:
+            output = int(input(prompt))
+            if output < 0:
+                raise ValueError()
+            return output
+        except ValueError:
+            print("Invalid input! It must be a number that is greater or equal to 0!")
+            return self.input_num(prompt)
+
+    def get_data(self) -> list:
+        return self.__data
+    
+    def run(self) -> None:
+        while True:
+            is_continue = self.choose_option()
+            if is_continue == "n":
+                break
+            self.__data.append(self.create_process())
+
 def main() -> None:
     # 1 0 3 1 2
     # 1 5 2 2 3
