@@ -282,9 +282,9 @@ class Scheduler:
         for i in range(len(self.__gantt_chart)):
             process: ChartProcess = self.__gantt_chart[i]
             if (i + 1) != len(self.__gantt_chart):
-                print(f"{process.get_start()} {process.get_name()}", end=" ")
+                print(f"| {process.get_start()} | {process.get_name()}", end=" ")
             else:
-                print(f"{process.get_start()} {process.get_name()} {process.get_end()}")
+                print(f"| {process.get_start()} | {process.get_name()} | {process.get_end()}")
 
 
 class Utils:
