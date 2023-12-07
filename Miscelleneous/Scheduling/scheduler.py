@@ -20,7 +20,6 @@ class Process:
         self.__waiting_time: int = None
         self.__turnaround_time: int = None
         self.__completion_time: int = 0  # Default value
-        self.__algorithm = None
 
     def get_name(self) -> str:
         return self.__name
@@ -142,13 +141,16 @@ class Scheduler:
 
     def srtf(self) -> None:
         # Shortest Time Remaining First
-        current_processes: list[Process] = []
+        first_process = Utils.get_min_arrival_time(self.__ready_queue)
+        current_processes: list[Process] = [first_process]
         max_time = Utils.get_max_time(self.__ready_queue)
         current_waiting_time = 1
-        time_passed = 0
-        previous_process_name = ""
+        time_passed = 1
 
-        while time_passed < max_time:
+        self.__gantt_chart.append(ChartProcess(0, current_processes[0].get_name(), 1))
+        index = self.__ready_queue.index(first_process)
+        self.__ready_queue[index].set_completion_time(1)
+        while time_passed <= max_time:
             # Enter processes when time passed meets its arrival time
             for process in self.__ready_queue:
                 if process.get_arrival_time() == time_passed:
@@ -158,23 +160,22 @@ class Scheduler:
             attributes: dict = Utils.get_min_burst_time(current_processes)
             min_process: Process = current_processes[attributes["index"]]
             min_process.set_burst_time(min_process.get_burst_time() - 1)
+            is_process_finished = False
             if min_process.get_burst_time() <= 0:
-                current_processes.pop(attributes["index"])
+                is_process_finished = True
 
-            # Gantt Chart Logic
-            if attributes["name"] != previous_process_name:
-                self.__gantt_chart.append(ChartProcess(current_waiting_time, attributes["name"], 
+            # New Gantt Chart Logic
+            if attributes["name"] != self.__gantt_chart[-1].get_name():
+                self.__gantt_chart.append(ChartProcess(current_waiting_time, attributes["name"],
                                                        current_waiting_time))
-                self.__srtf_chart.append(
-                    [attributes["name"], current_waiting_time])
-            elif attributes["name"] == previous_process_name:
-                last_index = len(self.__gantt_chart) - 1
-                self.__gantt_chart[last_index].set_end(self.__gantt_chart[last_index].get_end() + 1)
-                self.__srtf_chart[len(self.__srtf_chart) - 1][1] += 1
+            else:
+                CURRENT_END_TIME = self.__gantt_chart[-1].get_end()
+                self.__gantt_chart[-1].set_end(CURRENT_END_TIME + 1)
+            if is_process_finished:
+                current_processes.pop(attributes["index"])
 
             current_waiting_time += 1
             time_passed += 1
-            previous_process_name = attributes["name"]
 
         Utils.display_chart(self.__gantt_chart)
 
@@ -184,15 +185,12 @@ class Scheduler:
         for i in range(1, len(self.__srtf_chart) - 1):
             completion_time = self.__srtf_chart[i + 1][1]
             process_index = ready_queue_names.index(self.__srtf_chart[i][0])
-            current_ct = self.__ready_queue[process_index].get_completion_time(
-            )
+            current_ct = self.__ready_queue[process_index].get_completion_time()
             self.__ready_queue[process_index].set_completion_time(
                 current_ct + completion_time)
             
-
     def round_robin(self, quantum: int) -> None:
-        arrival_times = [p.get_arrival_time() for p in self.__ready_queue]
-        min_arrival_time = min(arrival_times)
+        min_arrival_time = min([p.get_arrival_time() for p in self.__ready_queue])
         current_queue: list[Process] = [p for p in self.__ready_queue if p.get_arrival_time() == min_arrival_time]
         self.__gantt_chart = [ChartProcess(0, current_queue[0].get_name(), 1)]
 
@@ -298,6 +296,16 @@ class Utils:
                 min_process_name = queue[i].get_name()
                 min_process_index = i
         return {"name": min_process_name, "index": min_process_index}
+    
+    @staticmethod
+    def get_min_arrival_time(queue: list[Process]) -> Process:
+        min_process = queue[0]
+        min_arrival_time = queue[0].get_arrival_time()
+        for process in queue:
+            if process.get_arrival_time() < min_arrival_time:
+                min_process = process
+                min_arrival_time = process.get_arrival_time()
+        return min_process
 
     @staticmethod
     def get_max_time(queue: list[Process]) -> int:
