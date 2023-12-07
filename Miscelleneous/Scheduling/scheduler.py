@@ -148,8 +148,8 @@ class Scheduler:
         time_passed = 1
 
         self.__gantt_chart.append(ChartProcess(0, current_processes[0].get_name(), 1))
-        index = self.__ready_queue.index(first_process)
-        self.__ready_queue[index].set_completion_time(1)
+        first_process_index = self.__ready_queue.index(first_process)
+        self.__ready_queue[first_process_index].set_completion_time(1)
         while time_passed <= max_time:
             # Enter processes when time passed meets its arrival time
             for process in self.__ready_queue:
@@ -164,7 +164,7 @@ class Scheduler:
             if min_process.get_burst_time() <= 0:
                 is_process_finished = True
 
-            # New Gantt Chart Logic
+            # New Gantt Chart logic
             if attributes["name"] != self.__gantt_chart[-1].get_name():
                 self.__gantt_chart.append(ChartProcess(current_waiting_time, attributes["name"],
                                                        current_waiting_time))
@@ -174,6 +174,7 @@ class Scheduler:
             if is_process_finished:
                 current_processes.pop(attributes["index"])
 
+            # Increment time
             current_waiting_time += 1
             time_passed += 1
 
