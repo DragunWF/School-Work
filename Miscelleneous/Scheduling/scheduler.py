@@ -18,7 +18,7 @@ class Process:
         self.__name = name
         self.__arrival_time = arrival_time
         self.__burst_time = burst_time
-        self.__start_burst_time = burst_time # For displaying in the table
+        self.__start_burst_time = burst_time  # For displaying in the table
         self.__waiting_time: int = None
         self.__turnaround_time: int = None
         self.__completion_time: int = 0  # Default value
@@ -34,7 +34,7 @@ class Process:
 
     def get_burst_time(self) -> int:
         return self.__burst_time
-    
+
     def get_start_burst_time(self) -> int:
         return self.__start_burst_time
 
@@ -76,13 +76,13 @@ class ChartProcess:
 
     def get_start(self) -> int:
         return self.__start
-    
+
     def get_name(self) -> str:
         return self.__name
-    
+
     def get_end(self) -> int:
         return self.__end
-    
+
     def set_end(self, value: int) -> None:
         self.__end = value
 
@@ -104,7 +104,7 @@ class Scheduler:
                 self.__srtf_chart: list[list] = [[0]]
                 self.srtf()
             case "RR":
-                self.round_robin(3) # Default time quantum is 3
+                self.round_robin(3)  # Default time quantum is 3
             case _:
                 raise Exception("Scheduling algorithm not recognized!")
 
@@ -137,11 +137,10 @@ class Scheduler:
         for process in self.__ready_queue:
             new_waiting_time = current_waiting_time + process.get_burst_time()
             self.__gantt_chart.append(
-                ChartProcess(current_waiting_time, process.get_name(), 
+                ChartProcess(current_waiting_time, process.get_name(),
                              new_waiting_time))
             # process.set_completion_time(current_waiting_time)
             current_waiting_time += process.get_burst_time()
-        
 
     def srtf(self) -> None:
         # Shortest Time Remaining First
@@ -151,7 +150,8 @@ class Scheduler:
         current_waiting_time = 1
         time_passed = 1
 
-        self.__gantt_chart.append(ChartProcess(0, current_processes[0].get_name(), 1))
+        self.__gantt_chart.append(ChartProcess(
+            0, current_processes[0].get_name(), 1))
         first_process_index = self.__ready_queue.index(first_process)
         self.__ready_queue[first_process_index].set_completion_time(1)
         while time_passed <= max_time:
@@ -185,7 +185,7 @@ class Scheduler:
             # Increment time
             current_waiting_time += 1
             time_passed += 1
-        
+
         for process in self.__gantt_chart:
             print([process.get_start(), process.get_name(), process.get_end()])
 
@@ -197,11 +197,14 @@ class Scheduler:
         #     current_ct = self.__ready_queue[process_index].get_completion_time()
         #     self.__ready_queue[process_index].set_completion_time(
         #         current_ct + completion_time)
-            
+
     def round_robin(self, quantum: int) -> None:
-        min_arrival_time = min([p.get_arrival_time() for p in self.__ready_queue])
-        current_queue: list[Process] = [p for p in self.__ready_queue if p.get_arrival_time() == min_arrival_time]
-        self.__gantt_chart.append(ChartProcess(0, current_queue[0].get_name(), 1))
+        min_arrival_time = min([p.get_arrival_time()
+                               for p in self.__ready_queue])
+        current_queue: list[Process] = [
+            p for p in self.__ready_queue if p.get_arrival_time() == min_arrival_time]
+        self.__gantt_chart.append(ChartProcess(
+            0, current_queue[0].get_name(), 1))
 
         process_index = 0
         time_passed = 0
@@ -209,14 +212,14 @@ class Scheduler:
         while current_queue:
             quantum_loop_met = False
             time_passed += 1
-            
+
             # Add the processes that meet the arrival time
             for process in self.__ready_queue:
                 if time_passed == process.get_arrival_time():
                     current_queue.append(process)
             if not current_queue:
                 continue
-            
+
             # Decrement the burst time of the process per iteration
             current_queue[process_index].set_burst_time(
                 current_queue[process_index].get_burst_time() - 1)
@@ -228,15 +231,15 @@ class Scheduler:
             elif time_passed % quantum == 0:
                 # When time passed meets the time quantum it switches to the next process of the circular queue
                 process_index += 1
-                quantum_loop_met = True  
+                quantum_loop_met = True
 
                 # Process loops back at the beginning after the end
                 if process_index >= len(current_queue):
                     process_index = 0
-            
+
             # Update the Gantt Chart representation
             if quantum_loop_met and current_queue:
-                self.__gantt_chart.append(ChartProcess(time_passed, current_queue[process_index].get_name(), 
+                self.__gantt_chart.append(ChartProcess(time_passed, current_queue[process_index].get_name(),
                                                        time_passed))
             # print(f"{[p.get_name() for p in current_queue]} {current_queue[process_index].get_name()}")
 
@@ -249,8 +252,9 @@ class Scheduler:
                     break
             if process_index is None:
                 raise Exception("Process not found!")
-            self.__ready_queue[process_index].set_completion_time(process.get_end())
-    
+            self.__ready_queue[process_index].set_completion_time(
+                process.get_end())
+
     def calculate_waiting_times(self) -> None:
         for i in range(len(self.__ready_queue)):
             self.__ready_queue[i].calculate_waiting_time()
@@ -265,22 +269,23 @@ class Scheduler:
             sum([p.get_waiting_time() for p in self.__ready_queue]) / queue_len, 4)
         self.__average_turnaround_time = round(
             sum([p.get_turnaround_time() for p in self.__ready_queue]) / queue_len, 4)
-        
+
     def create_table(self) -> None:
         for process in self.__ready_queue:
-            self.__table.append([process.get_name(), process.get_arrival_time(), 
-                                 process.get_start_burst_time(), process.get_completion_time(), 
+            self.__table.append([process.get_name(), process.get_arrival_time(),
+                                 process.get_start_burst_time(), process.get_completion_time(),
                                  process.get_turnaround_time(), process.get_waiting_time()])
-    
+
     def display_table(self) -> None:
         algorithm_names = {"FCFS": "First-Come, First-Serve", "SRTF": "Shortest Remaining Time First",
                            "RR": "Round Robin"}
-        print(f"{self.__algorithm}: {algorithm_names[self.__algorithm]} - Scheduling Algorithm")
+        print(
+            f"{self.__algorithm}: {algorithm_names[self.__algorithm]} - Scheduling Algorithm")
         print(tabulate(self.__table, headers=["Name", "Arrival Time",
                                               "Burst Time", "Finish Time",
-                                              "Turnaround Time", "Waiting Time"], 
+                                              "Turnaround Time", "Waiting Time"],
                        tablefmt="simple_grid"))
-        
+
     def display_gantt_chart(self) -> None:
         print("+--------------- Gantt Chart ---------------+")
         for i in range(len(self.__gantt_chart)):
@@ -288,7 +293,8 @@ class Scheduler:
             if (i + 1) != len(self.__gantt_chart):
                 print(f"| {process.get_start()} | {process.get_name()}", end=" ")
             else:
-                print(f"| {process.get_start()} | {process.get_name()} | {process.get_end()}")
+                print(
+                    f"| {process.get_start()} | {process.get_name()} | {process.get_end()}")
 
 
 class Utils:
@@ -305,7 +311,7 @@ class Utils:
                 min_process_name = queue[i].get_name()
                 min_process_index = i
         return {"name": min_process_name, "index": min_process_index}
-    
+
     @staticmethod
     def get_min_arrival_time(queue: list[Process]) -> Process:
         min_process = queue[0]
@@ -336,7 +342,7 @@ class Utils:
                 print([p.get_name() for p in values])
             case _:
                 raise Exception("Invalid key for process!")
-    
+
     @staticmethod
     def display_chart(values: list[ChartProcess]) -> None:
         print("Test Gantt Chart")
@@ -345,19 +351,20 @@ class Utils:
             if (i + 1) != len(values):
                 print(f"{process.get_start()} {process.get_name()}", end=" ")
             else:
-                print(f"{process.get_start()} {process.get_name()} {process.get_end()}")
+                print(
+                    f"{process.get_start()} {process.get_name()} {process.get_end()}")
 
 
 class ProcessCreator:
     def __init__(self):
-        self.__data:list[Process] = []
-    
+        self.__data: list[Process] = []
+
     def create_process(self) -> Process:
         name = input("Process name: ")
         arrival_time = self.input_num("Arrival Time: ")
         burst_time = self.input_num("Burst Time: ")
         return Process(name, arrival_time, burst_time)
-    
+
     def choose_option(self, prompt: str) -> str:
         option = input(f"{prompt} (y/n)").lower()
         if option == "y" or option == "yes":
@@ -366,7 +373,7 @@ class ProcessCreator:
             return "n"
         print("Invalid option! Choose either yes or no (y/n)")
         return self.choose_option(prompt)
-        
+
     def input_num(self, prompt: str) -> int:
         try:
             output = int(input(prompt))
@@ -379,13 +386,14 @@ class ProcessCreator:
 
     def get_data(self) -> list:
         return self.__data
-    
+
     def run(self) -> None:
         while True:
             is_continue = self.choose_option()
             if is_continue == "n":
                 break
             self.__data.append(self.create_process())
+
 
 def main() -> None:
     # 1 0 3 1 2
@@ -397,8 +405,8 @@ def main() -> None:
     processes = [Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
                  Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
                  Process("K", 24, 12)]
-    
-    algorithm = "FCFS" # Default algorithm
+
+    algorithm = "FCFS"  # Default algorithm
     if len(argv) > 1:
         algorithm = argv[1].upper()
     match (algorithm):
