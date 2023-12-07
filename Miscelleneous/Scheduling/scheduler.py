@@ -201,7 +201,7 @@ class Scheduler:
     def round_robin(self, quantum: int) -> None:
         min_arrival_time = min([p.get_arrival_time() for p in self.__ready_queue])
         current_queue: list[Process] = [p for p in self.__ready_queue if p.get_arrival_time() == min_arrival_time]
-        self.__gantt_chart = [ChartProcess(0, current_queue[0].get_name(), 1)]
+        self.__gantt_chart.append(ChartProcess(0, current_queue[0].get_name(), 1))
 
         process_index = 0
         time_passed = 0
