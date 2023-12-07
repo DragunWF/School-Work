@@ -18,6 +18,7 @@ class Process:
         self.__name = name
         self.__arrival_time = arrival_time
         self.__burst_time = burst_time
+        self.__start_burst_time = burst_time # For displaying in the table
         self.__waiting_time: int = None
         self.__turnaround_time: int = None
         self.__completion_time: int = 0  # Default value
@@ -33,6 +34,9 @@ class Process:
 
     def get_burst_time(self) -> int:
         return self.__burst_time
+    
+    def get_start_burst_time(self) -> int:
+        return self.__start_burst_time
 
     def set_completion_time(self, value) -> None:
         self.__completion_time = value
@@ -88,7 +92,6 @@ class Scheduler:
         self.__ready_queue: list[Process] = deque(queue)
         self.__average_waiting_time: int = None
         self.__average_turnaround_time: int = None
-        self.__burst_times: list[tuple[int]] = []
         self.__gantt_chart: list[ChartProcess] = []
         self.__table = []
 
@@ -183,7 +186,6 @@ class Scheduler:
 
         # Old logic of setting completion time (doesn't work)
         ready_queue_names = [p.get_name() for p in self.__ready_queue]
-        print(self.__srtf_chart)
         for i in range(1, len(self.__srtf_chart) - 1):
             completion_time = self.__srtf_chart[i + 1][1]
             process_index = ready_queue_names.index(self.__srtf_chart[i][0])
@@ -265,7 +267,7 @@ class Scheduler:
     def create_table(self) -> None:
         for process in self.__ready_queue:
             self.__table.append([process.get_name(), process.get_arrival_time(), 
-                                 process.get_burst_time(), process.get_completion_time(), 
+                                 process.get_start_burst_time(), process.get_completion_time(), 
                                  process.get_turnaround_time(), process.get_waiting_time()])
     
     def display_table(self) -> None:
@@ -273,7 +275,7 @@ class Scheduler:
                            "RR": "Round Robin"}
         print(f"{self.__algorithm}: {algorithm_names[self.__algorithm]} - Scheduling Algorithm")
         print(tabulate(self.__table, headers=["Name", "Arrival Time",
-                                              "Burst Time", "Completion Time",
+                                              "Burst Time", "Finish Time",
                                               "Turnaround Time", "Waiting Time"], 
                        tablefmt="simple_grid"))
         
