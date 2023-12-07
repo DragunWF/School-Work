@@ -276,7 +276,8 @@ class Scheduler:
     def display_table(self) -> None:
         print(tabulate(self.__table, headers=["Name", "Arrival Time",
                                               "Burst Time", "Completion Time",
-                                              "Turnaround Time", "Waiting Time"]))
+                                              "Turnaround Time", "Waiting Time"], 
+                       tablefmt="simple_grid"))
 
     def display_gantt_chart(self) -> None:
         match (self.__algorithm):
