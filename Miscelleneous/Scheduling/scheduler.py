@@ -89,6 +89,7 @@ class Scheduler:
         self.__average_turnaround_time: int = None
         self.__burst_times: list[tuple[int]] = []
         self.__gantt_chart: list[ChartProcess] = []
+        self.__table = []
 
     def run(self, algorithm: str) -> None:
         self.__algorithm = algorithm.upper()
@@ -108,7 +109,8 @@ class Scheduler:
         self.calculate_turnaround_times()
         self.calculate_averages()
 
-        print("Gantt Chart")
+        self.create_table()
+        self.display_table()
         # self.display_gantt_chart()
 
         print(f"Average Waiting Time: {self.__average_waiting_time}")
@@ -164,13 +166,15 @@ class Scheduler:
             if min_process.get_burst_time() <= 0:
                 is_process_finished = True
 
-            # New Gantt Chart logic
+            # New Gantt Chart Logic
             if attributes["name"] != self.__gantt_chart[-1].get_name():
                 self.__gantt_chart.append(ChartProcess(current_waiting_time, attributes["name"],
                                                        current_waiting_time))
             else:
                 CURRENT_END_TIME = self.__gantt_chart[-1].get_end()
                 self.__gantt_chart[-1].set_end(CURRENT_END_TIME + 1)
+
+            # Pop process when burst time goes to 0
             if is_process_finished:
                 current_processes.pop(attributes["index"])
 
@@ -236,16 +240,18 @@ class Scheduler:
 
     def set_completion_times(self) -> None:
         for process in self.__gantt_chart:
-            process_index = -1
+            process_index = None
             for i in range(len(self.__ready_queue)):
                 if self.__ready_queue[i].get_name() == process.get_name():
                     process_index = i
                     break
-            if process_index == -1:
+            if process_index is None:
                 raise Exception("Process not found!")
             process_completion_time = self.__ready_queue[process_index].get_completion_time()
             self.__ready_queue[process_index].set_completion_time(
-                process_completion_time + process.get_start())
+                process_completion_time + process.get_end())
+            print([process.get_start(), process.get_name(), process.get_end()])
+        print()
     
     def calculate_waiting_times(self) -> None:
         for i in range(len(self.__ready_queue)):
@@ -261,6 +267,17 @@ class Scheduler:
             sum([p.get_waiting_time() for p in self.__ready_queue]) / queue_len, 4)
         self.__average_turnaround_time = round(
             sum([p.get_turnaround_time() for p in self.__ready_queue]) / queue_len, 4)
+        
+    def create_table(self) -> None:
+        for process in self.__ready_queue:
+            self.__table.append([process.get_name(), process.get_arrival_time(), 
+                                 process.get_burst_time(), process.get_completion_time(), 
+                                 process.get_turnaround_time(), process.get_waiting_time()])
+    
+    def display_table(self) -> None:
+        print(tabulate(self.__table, headers=["Name", "Arrival Time"
+                                              "Burst Time", "Completion Time",
+                                              "Turnaround Time", "Waiting Time"]))
 
     def display_gantt_chart(self) -> None:
         match (self.__algorithm):
@@ -350,8 +367,8 @@ def main() -> None:
     processes = [Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
                  Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
                  Process("K", 24, 12)]
-    # Scheduler(old_example).run("FCFS")
-    Scheduler(old_example).run("SRTF")
+    Scheduler(old_example).run("FCFS")
+    # Scheduler(old_example).run("SRTF")
     # Scheduler(processes).run("RR")
 
 
