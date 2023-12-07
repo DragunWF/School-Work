@@ -164,6 +164,8 @@ class Scheduler:
             attributes: dict = Utils.get_min_burst_time(current_processes)
             min_process: Process = current_processes[attributes["index"]]
             min_process.set_burst_time(min_process.get_burst_time() - 1)
+
+            # Identify when process is finished
             is_process_finished = False
             if min_process.get_burst_time() <= 0:
                 is_process_finished = True
@@ -176,7 +178,7 @@ class Scheduler:
                 CURRENT_END_TIME = self.__gantt_chart[-1].get_end()
                 self.__gantt_chart[-1].set_end(CURRENT_END_TIME + 1)
 
-            # Pop process when burst time goes to 0
+            # Pop process when burst time goes to 0 (Process finished)
             if is_process_finished:
                 current_processes.pop(attributes["index"])
 
