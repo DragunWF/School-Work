@@ -10,6 +10,7 @@
 from rich import print
 from tabulate import tabulate
 from collections import deque
+from sys import argv
 
 
 class Process:
@@ -111,10 +112,9 @@ class Scheduler:
 
         self.create_table()
         self.display_table()
-        # self.display_gantt_chart()
-
         print(f"Average Waiting Time: {self.__average_waiting_time}")
         print(f"Average Turnaround Time: {self.__average_turnaround_time}")
+        self.display_gantt_chart()
 
     def fcfs(self) -> None:
         # First-Come First-Serve
@@ -139,7 +139,6 @@ class Scheduler:
             # process.set_completion_time(current_waiting_time)
             current_waiting_time += process.get_burst_time()
         
-        Utils.display_chart(self.__gantt_chart)
 
     def srtf(self) -> None:
         # Shortest Time Remaining First
@@ -181,8 +180,6 @@ class Scheduler:
             # Increment time
             current_waiting_time += 1
             time_passed += 1
-
-        Utils.display_chart(self.__gantt_chart)
 
         # Old logic of setting completion time (doesn't work)
         ready_queue_names = [p.get_name() for p in self.__ready_queue]
@@ -236,7 +233,6 @@ class Scheduler:
                                                        time_passed))
             # print(f"{[p.get_name() for p in current_queue]} {current_queue[process_index].get_name()}")
         
-        Utils.display_chart(self.__gantt_chart)
 
     def set_completion_times(self) -> None:
         for process in self.__gantt_chart:
@@ -250,7 +246,6 @@ class Scheduler:
             process_completion_time = self.__ready_queue[process_index].get_completion_time()
             self.__ready_queue[process_index].set_completion_time(
                 process_completion_time + process.get_end())
-        print()
     
     def calculate_waiting_times(self) -> None:
         for i in range(len(self.__ready_queue)):
@@ -274,30 +269,22 @@ class Scheduler:
                                  process.get_turnaround_time(), process.get_waiting_time()])
     
     def display_table(self) -> None:
+        algorithm_names = {"FCFS": "First-Come, First-Serve", "SRTF": "Shortest Remaining Time First",
+                           "RR": "Round Robin"}
+        print(f"{self.__algorithm}: {algorithm_names[self.__algorithm]} - Scheduling Algorithm")
         print(tabulate(self.__table, headers=["Name", "Arrival Time",
                                               "Burst Time", "Completion Time",
                                               "Turnaround Time", "Waiting Time"], 
                        tablefmt="simple_grid"))
-
+        
     def display_gantt_chart(self) -> None:
-        match (self.__algorithm):
-            case "FCFS":
-                queue_len = len(self.__ready_queue)
-                for i in range(queue_len):
-                    process = self.__ready_queue[i]
-                    print(
-                        f"{self.__burst_times[i][0]} {process.get_name()}", end=" ")
-                print(self.__burst_times[queue_len - 1][1])
-            case "SRTF":
-                print(0, end=" ")
-                for i in range(1, len(self.__srtf_chart)):
-                    print(
-                        f"{self.__srtf_chart[i][0]} {self.__srtf_chart[i][1]}", end=" ")
-                print()
-            case "RR":
-                pass
-            case _:
-                raise Exception("Algorithm is not recognized!")
+        print("+--------------- Gantt Chart ---------------+")
+        for i in range(len(self.__gantt_chart)):
+            process: ChartProcess = self.__gantt_chart[i]
+            if (i + 1) != len(self.__gantt_chart):
+                print(f"{process.get_start()} {process.get_name()}", end=" ")
+            else:
+                print(f"{process.get_start()} {process.get_name()} {process.get_end()}")
 
 
 class Utils:
@@ -367,9 +354,19 @@ def main() -> None:
     processes = [Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
                  Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
                  Process("K", 24, 12)]
-    Scheduler(old_example).run("FCFS")
-    # Scheduler(old_example).run("SRTF")
-    # Scheduler(processes).run("RR")
+    
+    algorithm = "FCFS" # Default algorithm
+    if len(argv) > 1:
+        algorithm = argv[1].upper()
+    match (algorithm):
+        case "FCFS":
+            Scheduler(old_example).run("FCFS")
+        case "SRTF":
+            Scheduler(old_example).run("SRTF")
+        case "RR":
+            Scheduler(processes).run("RR")
+        case _:
+            raise Exception("Algorithm entered is not recognized!")
 
 
 if __name__ == "__main__":
