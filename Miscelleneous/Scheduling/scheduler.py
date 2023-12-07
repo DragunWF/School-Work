@@ -185,15 +185,18 @@ class Scheduler:
             # Increment time
             current_waiting_time += 1
             time_passed += 1
+        
+        for process in self.__gantt_chart:
+            print([process.get_start(), process.get_name(), process.get_end()])
 
         # Old logic of setting completion time (doesn't work)
-        ready_queue_names = [p.get_name() for p in self.__ready_queue]
-        for i in range(1, len(self.__srtf_chart) - 1):
-            completion_time = self.__srtf_chart[i + 1][1]
-            process_index = ready_queue_names.index(self.__srtf_chart[i][0])
-            current_ct = self.__ready_queue[process_index].get_completion_time()
-            self.__ready_queue[process_index].set_completion_time(
-                current_ct + completion_time)
+        # ready_queue_names = [p.get_name() for p in self.__ready_queue]
+        # for i in range(1, len(self.__srtf_chart) - 1):
+        #     completion_time = self.__srtf_chart[i + 1][1]
+        #     process_index = ready_queue_names.index(self.__srtf_chart[i][0])
+        #     current_ct = self.__ready_queue[process_index].get_completion_time()
+        #     self.__ready_queue[process_index].set_completion_time(
+        #         current_ct + completion_time)
             
     def round_robin(self, quantum: int) -> None:
         min_arrival_time = min([p.get_arrival_time() for p in self.__ready_queue])
@@ -236,7 +239,6 @@ class Scheduler:
                 self.__gantt_chart.append(ChartProcess(time_passed, current_queue[process_index].get_name(), 
                                                        time_passed))
             # print(f"{[p.get_name() for p in current_queue]} {current_queue[process_index].get_name()}")
-        
 
     def set_completion_times(self) -> None:
         for process in self.__gantt_chart:
@@ -247,9 +249,7 @@ class Scheduler:
                     break
             if process_index is None:
                 raise Exception("Process not found!")
-            process_completion_time = self.__ready_queue[process_index].get_completion_time()
-            self.__ready_queue[process_index].set_completion_time(
-                process_completion_time + process.get_end())
+            self.__ready_queue[process_index].set_completion_time(process.get_end())
     
     def calculate_waiting_times(self) -> None:
         for i in range(len(self.__ready_queue)):
