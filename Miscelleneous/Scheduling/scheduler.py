@@ -104,12 +104,13 @@ class Scheduler:
             case _:
                 raise Exception("Scheduling algorithm not recognized!")
 
+        self.set_completion_times()
         self.calculate_waiting_times()
         self.calculate_turnaround_times()
         self.calculate_averages()
 
         print("Gantt Chart")
-        self.display_gantt_chart()
+        # self.display_gantt_chart()
 
         print(f"Average Waiting Time: {self.__average_waiting_time}")
         print(f"Average Turnaround Time: {self.__average_turnaround_time}")
@@ -130,16 +131,12 @@ class Scheduler:
         # Visualize the Gantt Chart
         current_waiting_time = 0
         for process in self.__ready_queue:
+            new_waiting_time = current_waiting_time + process.get_burst_time()
             self.__gantt_chart.append(
                 ChartProcess(current_waiting_time, process.get_name(), 
-                            current_waiting_time + process.get_burst_time()))
-            self.__burst_times.append(
-                (current_waiting_time, current_waiting_time + process.get_burst_time()))
+                             new_waiting_time))
+            process.set_completion_time(current_waiting_time)
             current_waiting_time += process.get_burst_time()
-
-        # Set completion time of all processes in the ready queue
-        for i in range(len(self.__ready_queue)):
-            self.__ready_queue[i].set_completion_time(self.__burst_times[i][0])
         
         Utils.display_chart(self.__gantt_chart)
 
@@ -147,12 +144,12 @@ class Scheduler:
         # Shortest Time Remaining First
         current_processes: list[Process] = []
         max_time = Utils.get_max_time(self.__ready_queue)
-        current_ct = 1
+        current_waiting_time = 1
         time_passed = 0
         previous_process_name = ""
 
         while time_passed < max_time:
-            # Find processes with the same arrival time as the time passed
+            # Enter processes when time passed meets its arrival time
             for process in self.__ready_queue:
                 if process.get_arrival_time() == time_passed:
                     current_processes.append(process)
@@ -166,16 +163,24 @@ class Scheduler:
 
             # Gantt Chart Logic
             if attributes["name"] != previous_process_name:
+                self.__gantt_chart.append(ChartProcess(current_waiting_time, attributes["name"], 
+                                                       current_waiting_time))
                 self.__srtf_chart.append(
-                    [attributes["name"], current_ct])
+                    [attributes["name"], current_waiting_time])
             elif attributes["name"] == previous_process_name:
+                last_index = len(self.__gantt_chart) - 1
+                self.__gantt_chart[last_index].set_end(self.__gantt_chart[last_index].get_end() + 1)
                 self.__srtf_chart[len(self.__srtf_chart) - 1][1] += 1
 
-            current_ct += 1
+            current_waiting_time += 1
             time_passed += 1
             previous_process_name = attributes["name"]
 
+        Utils.display_chart(self.__gantt_chart)
+
+        # Old logic of setting completion time (doesn't work)
         ready_queue_names = [p.get_name() for p in self.__ready_queue]
+        print(self.__srtf_chart)
         for i in range(1, len(self.__srtf_chart) - 1):
             completion_time = self.__srtf_chart[i + 1][1]
             process_index = ready_queue_names.index(self.__srtf_chart[i][0])
@@ -183,6 +188,7 @@ class Scheduler:
             )
             self.__ready_queue[process_index].set_completion_time(
                 current_ct + completion_time)
+            
 
     def round_robin(self, quantum: int) -> None:
         arrival_times = [p.get_arrival_time() for p in self.__ready_queue]
@@ -224,21 +230,33 @@ class Scheduler:
             # Update the Gantt Chart representation
             if quantum_loop_met and current_queue:
                 self.__gantt_chart.append(ChartProcess(time_passed, current_queue[process_index].get_name(), 
-                                                        time_passed))
+                                                       time_passed))
             # print(f"{[p.get_name() for p in current_queue]} {current_queue[process_index].get_name()}")
         
         Utils.display_chart(self.__gantt_chart)
 
-
-    def calculate_waiting_times(self):
+    def set_completion_times(self) -> None:
+        for process in self.__gantt_chart:
+            process_index = -1
+            for i in range(len(self.__ready_queue)):
+                if self.__ready_queue[i].get_name() == process.get_name():
+                    process_index = i
+                    break
+            if process_index == -1:
+                raise Exception("Process not found!")
+            process_completion_time = self.__ready_queue[process_index].get_completion_time()
+            self.__ready_queue[process_index].set_completion_time(
+                process_completion_time + process.get_start())
+    
+    def calculate_waiting_times(self) -> None:
         for i in range(len(self.__ready_queue)):
             self.__ready_queue[i].calculate_waiting_time()
 
-    def calculate_turnaround_times(self):
+    def calculate_turnaround_times(self) -> None:
         for i in range(len(self.__ready_queue)):
             self.__ready_queue[i].calculate_turnaround_time()
 
-    def calculate_averages(self):
+    def calculate_averages(self) -> None:
         queue_len = len(self.__ready_queue)
         self.__average_waiting_time = round(
             sum([p.get_waiting_time() for p in self.__ready_queue]) / queue_len, 4)
@@ -310,10 +328,12 @@ class Utils:
             if (i + 1) != len(values):
                 print(f"{process.get_start()} {process.get_name()}", end=" ")
             else:
-                print(f"{process.get_name()} {process.get_end()}")
+                print(f"{process.get_start()} {process.get_name()} {process.get_end()}")
 
 
 def main() -> None:
+    # 1 0 3 1 2
+    # 1 5 2 2 3
     old_example = [Process("P1", 1, 1), Process("P2", 0, 5), Process("P3", 3, 2),
                    Process("P4", 1, 2), Process("P5", 2, 3)]
     # 0 2 3 5 11 17 24
@@ -321,8 +341,8 @@ def main() -> None:
     processes = [Process("E", 0, 4), Process("F", 2, 9), Process("G", 3, 3),
                  Process("H", 5, 7), Process("I", 11, 5), Process("J", 17, 6),
                  Process("K", 24, 12)]
-    Scheduler(old_example).run("FCFS")
-    # Scheduler(processes.copy()).run("SRTF")
+    # Scheduler(old_example).run("FCFS")
+    Scheduler(old_example).run("SRTF")
     # Scheduler(processes).run("RR")
 
 
