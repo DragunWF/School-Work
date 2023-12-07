@@ -40,11 +40,11 @@ class Process:
         return self.__completion_time
 
     def calculate_turnaround_time(self) -> None:
-        if self.__waiting_time is None:
+        if self.__completion_time is None:
             print(
-                f"Process {self.__name}: Waiting time has to be calculated first")
+                f"Process {self.__name}: Completion time has to be set first")
         elif self.__turnaround_time is None:
-            self.__turnaround_time = self.__burst_time + self.__waiting_time
+            self.__turnaround_time = self.__completion_time - self.__arrival_time
         else:
             print(
                 f"Process {self.__name}: Turnaround time has already been calculated")
@@ -54,7 +54,7 @@ class Process:
 
     def calculate_waiting_time(self) -> None:
         if self.__waiting_time is None:
-            self.__waiting_time = self.__completion_time - self.__arrival_time
+            self.__waiting_time = self.__turnaround_time - self.__burst_time
         else:
             print(
                 f"Process {self.__name}: Waiting time has already been calculated")
@@ -105,8 +105,8 @@ class Scheduler:
                 raise Exception("Scheduling algorithm not recognized!")
 
         self.set_completion_times()
-        self.calculate_waiting_times()
         self.calculate_turnaround_times()
+        self.calculate_waiting_times()
         self.calculate_averages()
 
         self.create_table()
@@ -136,7 +136,7 @@ class Scheduler:
             self.__gantt_chart.append(
                 ChartProcess(current_waiting_time, process.get_name(), 
                              new_waiting_time))
-            process.set_completion_time(current_waiting_time)
+            # process.set_completion_time(current_waiting_time)
             current_waiting_time += process.get_burst_time()
         
         Utils.display_chart(self.__gantt_chart)
@@ -250,7 +250,6 @@ class Scheduler:
             process_completion_time = self.__ready_queue[process_index].get_completion_time()
             self.__ready_queue[process_index].set_completion_time(
                 process_completion_time + process.get_end())
-            print([process.get_start(), process.get_name(), process.get_end()])
         print()
     
     def calculate_waiting_times(self) -> None:
@@ -275,7 +274,7 @@ class Scheduler:
                                  process.get_turnaround_time(), process.get_waiting_time()])
     
     def display_table(self) -> None:
-        print(tabulate(self.__table, headers=["Name", "Arrival Time"
+        print(tabulate(self.__table, headers=["Name", "Arrival Time",
                                               "Burst Time", "Completion Time",
                                               "Turnaround Time", "Waiting Time"]))
 
