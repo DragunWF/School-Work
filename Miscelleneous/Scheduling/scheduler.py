@@ -141,6 +141,10 @@ class Scheduler:
                              new_waiting_time))
             # process.set_completion_time(current_waiting_time)
             current_waiting_time += process.get_burst_time()
+    
+    def sjf() -> None:
+        # Shortest Job First
+        pass
 
     def srtf(self) -> None:
         # Shortest Time Remaining First
