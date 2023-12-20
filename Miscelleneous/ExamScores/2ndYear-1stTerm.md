@@ -24,6 +24,18 @@
 
 **Average Score Per Exam:** `80/100`
 
+## Pre-Finals
+
+- Data Structures and Algorithms: `100/100`
+- Platform Technology (Operating Systems): `100/100`
+- Object-Oriented Programming: `91/100`
+- Human-Computer Interaction: `87/100`
+- Rizal's Life and Works - `82/100`
+- Principles of Communication: `77/100`
+- Readings in Philippine History: `62/100`
+
+**Average Score Per Exam:** `85/100`
+
 ## Finals
 
 - Data Structures and Algorithms: `/100`
