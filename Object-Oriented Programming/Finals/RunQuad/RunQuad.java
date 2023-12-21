@@ -37,7 +37,7 @@ public class RunQuad {
 
 class Quadrilateral {
     public void showDescription() {
-        System.out.println("- us quadrilateral");
+        System.out.println("- is quadrilateral");
     }
 }
 
