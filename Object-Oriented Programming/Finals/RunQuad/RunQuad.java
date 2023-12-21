@@ -17,6 +17,12 @@ public class RunQuad {
                 return new Rectangle();
             case "S":
                 return new Square();
+            case "P":
+                return new Parellelogram();
+            case "H":
+                return new Rhombus();
+            case "T":
+                return new Trapezoid();
             default:
                 System.out.println("Invalid option! Choose either S or R!");
                 return chooseShape();
@@ -41,5 +47,23 @@ class Square extends Rectangle {
     public void showDescription() {
         System.out.println("- has 4 equal sides");
         super.showDescription();
+    }
+}
+
+class Parellelogram extends Quadrilateral {
+    public void showDescription() {
+        System.out.println("- has 2 pairs of parallel sides");
+    }
+}
+
+class Rhombus extends Parellelogram {
+    public void showDescription() {
+        System.out.println("- has 4 congruent sides");
+    }
+}
+
+class Trapezoid extends Quadrilateral {
+    public void showDescription() {
+        System.out.println("- has 1 pair of parallel sides");
     }
 }
