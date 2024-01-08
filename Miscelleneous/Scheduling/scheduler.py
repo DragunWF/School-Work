@@ -122,15 +122,7 @@ class Scheduler:
     def fcfs(self) -> None:
         # First-Come First-Serve
         # A simple bubble sort to sort the processes by its arrival time
-        for i in range(len(self.__ready_queue)):
-            is_sorted = True
-            for j in range(len(self.__ready_queue) - 1):
-                if self.__ready_queue[j].get_arrival_time() > self.__ready_queue[j + 1].get_arrival_time():
-                    self.__ready_queue[j], self.__ready_queue[j + 1] = (
-                        self.__ready_queue[j + 1], self.__ready_queue[j])
-                    is_sorted = False
-            if is_sorted:
-                break
+        self.sort_ready_queue_by_arrival()
 
         # Visualize the Gantt Chart
         current_waiting_time = 0
@@ -142,9 +134,9 @@ class Scheduler:
             # process.set_completion_time(current_waiting_time)
             current_waiting_time += process.get_burst_time()
     
-    def sjf() -> None:
+    def sjf(self) -> None:
         # Shortest Job First
-        pass
+        self.sort_ready_queue_by_arrival()
 
     def srtf(self) -> None:
         # Shortest Time Remaining First
@@ -246,6 +238,16 @@ class Scheduler:
                 self.__gantt_chart.append(ChartProcess(time_passed, current_queue[process_index].get_name(),
                                                        time_passed))
             # print(f"{[p.get_name() for p in current_queue]} {current_queue[process_index].get_name()}")
+    
+    def sort_ready_queue_by_arrival(self):
+        for i in range(len(self.__ready_queue)):
+            is_sorted = True
+            for j in range(len(self.__ready_queue) - 1):
+                if self.__ready_queue[j].get_arrival_time() > self.__ready_queue[j + 1].get_arrival_time():
+                    self.__ready_queue[j], self.__ready_queue[j + 1] = self.__ready_queue[j + 1], self.__ready_queue[j]
+                    is_sorted = False
+            if is_sorted:
+                break
 
     def set_completion_times(self) -> None:
         for process in self.__gantt_chart:
