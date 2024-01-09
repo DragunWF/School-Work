@@ -61,9 +61,9 @@ class Dialogue:
     def intro() -> str:
         words = Utils.input(
             "May we help you with our store's categories or do you need to meet with the manager?")
-        if "category" in words or "categories" in words:
+        if Utils.contains("category", "categories", "sections"):
             return "left"
-        elif "manager" in words:
+        elif Utils.contains(words, "manager", "managers", "boss", "master"):
             return "right"
         print("I'm sorry but I don't comprehend your request. Do you need help with categories or the manager?")
         return Dialogue.intro()
