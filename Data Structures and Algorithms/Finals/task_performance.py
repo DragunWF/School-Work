@@ -1,19 +1,19 @@
 from time import sleep
 
 
-class User:
-    def __init__(self):
-        self.name = None
-
-
 class Node:
-    def __init__(self, func, left=None, right=None):
+    def __init__(self, func, left=None, right=None, visit_sensitive=False):
         self.execution = func
         self.left = left
         self.right = right
+        self.visit_sensitive = visit_sensitive
+        self.visited = False
 
     def execute(self) -> str:
-        return self.execution()
+        self.visited = True
+        if not self.visit_sensitive:
+            return self.execution()
+        return self.execution(not self.visited)
 
 
 class DialogueTree:
@@ -27,14 +27,17 @@ class DialogueTree:
                 self.traverse(node.left)
             else:
                 self.traverse(node.right)
+
+    def end(self) -> None:
         while True:
             option = Utils.input(
                 "Is there anything else you need help with? Please answer with a simple yes or no")
-            if "y" in option or "yes" in option:
+            sleep(2)
+            if "yes" in option:
                 self.traverse(self.root)
                 break
-            elif "n" in option or "no" in option:
-                print("Thank you for interacting with me, a chatbot.")
+            elif "no" in option:
+                print("Thank you for interacting with me.")
                 break
             else:
                 print("Please answer with either yes or no...")
@@ -45,12 +48,15 @@ class Utils:
     def input(prompt: str) -> list[str]:
         return input(f"{prompt}\n> ").split(" ")
 
+    @staticmethod
+    def contains(prompt: list[str], *words: list[str]) -> bool:
+        for word in words:
+            if word.lower() in prompt:
+                return True
+        return False
+
 
 class Dialogue:
-    @staticmethod
-    def start() -> None:
-        pass
-
     @staticmethod
     def intro() -> str:
         words = Utils.input(
@@ -63,9 +69,11 @@ class Dialogue:
         return Dialogue.intro()
 
     @staticmethod
-    def categories(repeat: bool = False) -> None:
+    def categories() -> None:
         print(
             "The categories available are food, utilities, school supplies, and medicine...")
+        sleep(2)
+
         words = Utils.input("Which one would you like to know about?")
         if "food" in words:
             print("It is located at section A1 of the building. The section contains meat, diary products, and junk food.")
@@ -79,25 +87,55 @@ class Dialogue:
         else:
             print(
                 "I do not comprehend what your request, which category are you looking for exactly?")
-            sleep(0.25)
+            sleep(1)
             print("The category you are looking for may not exist, please choose the categories I listed previously...")
-            sleep(0.25)
-            return Dialogue.categories(True)
+            sleep(1)
+            return Dialogue.categories()
 
         while True:
             words = Utils.input(
                 "Is there anything else you need help with the categories? Answer with either yes or no")
-            if "y" in words or "yes" in words or "absolutely" in words:
-                Dialogue.categories(True)
+            if Utils.contains(words, "yes", "absolutely"):
+                Dialogue.categories()
                 break
-            elif "n" in words or "no" in words or "not" in words:
+            elif Utils.contains(words, "no", "not"):
                 break
             else:
-                print("Please answer with either yes or no...")
+                print(
+                    "Please answer with either yes or no... Or you can answer with something like 'absolutely'")
 
     @staticmethod
-    def manager() -> str:
-        pass
+    def manager(repeat=False) -> str:
+        if not repeat:
+            print(
+                "Do you a problem with our store that you would like to report to the manager?")
+        sleep(0.75)
+        words = Utils.input(
+            "If so, is it with the employees or the environment of the store?")
+        if Utils.contains(words, "employee", "worker", "employees", "workers"):
+            return "left"
+        elif Utils.contains(words, "environment", "surroundings", "enviroments"):
+            return "right"
+        else:
+            print(
+                "I do not comprehend your message, is it with the employees or the environment")
+            Dialogue.manager(True)
+        sleep(2)
+
+    @staticmethod
+    def employees():
+        Utils.input("What are your problems about our employees?")
+        sleep(3)
+        print("I see... Email us a full report for consideration.")
+        sleep(1)
+
+    @staticmethod
+    def environment() -> str:
+        Utils.input(
+            "What are your issues about our store's environment and surroundings?")
+        sleep(3)
+        print("Affirmative, please email us a full report for consideration")
+        sleep(1)
 
 
 def main() -> None:
@@ -108,7 +146,15 @@ def main() -> None:
     root.left = category_node
     root.right = manager_node
 
-    DialogueTree(root).traverse(root)
+    employee_node = Node(Dialogue.employees)
+    environment_node = Node(Dialogue.environment)
+
+    manager_node.left = employee_node
+    manager_node.right = environment_node
+
+    dialogue_tree = DialogueTree(root)
+    dialogue_tree.traverse(root)
+    dialogue_tree.end()
 
 
 if __name__ == '__main__':
