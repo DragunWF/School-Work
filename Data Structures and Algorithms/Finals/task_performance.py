@@ -1,8 +1,9 @@
 from time import sleep
+from typing import Callable
 
 
 class Node:
-    def __init__(self, func, left=None, right=None, visit_sensitive=False):
+    def __init__(self, func: Callable, left=None, right=None, visit_sensitive=False):
         self.left = left
         self.right = right
 
@@ -61,6 +62,7 @@ class Dialogue:
     def intro() -> str:
         words = Utils.input(
             "May we help you with our store's categories or do you need to meet with the manager?")
+        sleep(2)
         if Utils.contains("category", "categories", "sections"):
             return "left"
         elif Utils.contains(words, "manager", "managers", "boss", "master"):
@@ -95,6 +97,7 @@ class Dialogue:
         while True:
             words = Utils.input(
                 "Is there anything else you need help with the categories? Answer with either yes or no")
+            sleep(1)
             if Utils.contains(words, "yes", "absolutely"):
                 Dialogue.categories()
                 break
