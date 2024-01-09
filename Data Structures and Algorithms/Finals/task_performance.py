@@ -46,8 +46,23 @@ class Dialogue:
         return Dialogue.intro()
     
     @staticmethod
-    def categories() -> str:
-        print("Welcome")
+    def categories(repeat: bool = False) -> None:
+        print("The categories available are food, utilities, school supplies, and medicine...")
+        words = Utils.input("Which one would you like to know about?")
+        if "food" in words:
+            print("It is located at section A1 of the building. The section contains meat, diary products, and junk food.")
+        elif "utility" in words or "utilities" in words:
+            pass
+        elif "school" in words or "supplies" in words:
+            pass
+        elif "medicine" in words or "medical" in words:
+            print("")
+        else:
+            print("I do not comprehend what your request, which category are you looking for exactly?")
+            sleep(0.25)
+            print("The category you are looking for may not exist, please choose the categories I listed previously...")
+            sleep(0.25)
+            Dialogue.categories(True)
 
     @staticmethod
     def manager() -> str:
