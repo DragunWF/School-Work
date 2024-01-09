@@ -3,9 +3,10 @@ from time import sleep
 
 class Node:
     def __init__(self, func, left=None, right=None, visit_sensitive=False):
-        self.execution = func
         self.left = left
         self.right = right
+
+        self.execution = func
         self.visit_sensitive = visit_sensitive
         self.visited = False
 
@@ -35,7 +36,6 @@ class DialogueTree:
             sleep(2)
             if "yes" in option:
                 self.traverse(self.root)
-                break
             elif "no" in option:
                 print("Thank you for interacting with me.")
                 break
@@ -109,10 +109,17 @@ class Dialogue:
         if not repeat:
             print(
                 "Do you a problem with our store that you would like to report to the manager?")
-        sleep(0.75)
+        sleep(3)
         words = Utils.input(
             "If so, is it with the employees or the environment of the store?")
-        if Utils.contains(words, "employee", "worker", "employees", "workers"):
+        if Utils.contains(words, "no", "not", "none", "don't", "dont"):
+            print(
+                "I see, well you can only contact the manager with problems about the store")
+            sleep(2)
+            print(
+                "But since you don't have any problems, let's talk about something else...")
+            return
+        elif Utils.contains(words, "employee", "worker", "employees", "workers"):
             return "left"
         elif Utils.contains(words, "environment", "surroundings", "enviroments"):
             return "right"
@@ -123,14 +130,14 @@ class Dialogue:
         sleep(2)
 
     @staticmethod
-    def employees():
+    def employees() -> None:
         Utils.input("What are your problems about our employees?")
         sleep(3)
         print("I see... Email us a full report for consideration.")
         sleep(1)
 
     @staticmethod
-    def environment() -> str:
+    def environment() -> None:
         Utils.input(
             "What are your issues about our store's environment and surroundings?")
         sleep(3)
