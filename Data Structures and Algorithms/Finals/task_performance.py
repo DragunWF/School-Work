@@ -81,12 +81,12 @@ class Dialogue:
         if "food" in words:
             print("It is located at section A1 of the building. " + 
                   "The section contains meat, diary products, and junk food.")
-        elif "utility" in words or "utilities" in words:
+        elif Utils.contains(words, "utility", "utilities"):
             print("The utility section is located at section A2 of the building")
-        elif "school" in words or "supplies" in words:
+        elif Utils.contains(words, "school", "supplies", "college", "schools", "university"):
             print("If you're looking for school supplies, it is located at " + 
                   "section A3 of the building")
-        elif "medicine" in words or "medical" in words:
+        elif Utils.contains(words, "medical", "medicine", "pills", "bandages", "bandage", "aid"):
             print("If you are looking for medicine, you should go to section B4 of " + 
                   "the building which is all the way at one of the corners.")
         else:
