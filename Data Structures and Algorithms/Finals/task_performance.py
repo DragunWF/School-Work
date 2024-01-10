@@ -63,7 +63,7 @@ class Dialogue:
         words = Utils.input("May we help you with our store's categories or " + 
                             "do you need to meet with the manager?")
         sleep(2)
-        if Utils.contains("category", "categories", "sections"):
+        if Utils.contains(words, "category", "categories", "sections"):
             return "left"
         elif Utils.contains(words, "manager", "managers", "boss", "master"):
             return "right"
