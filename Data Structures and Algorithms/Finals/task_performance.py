@@ -142,6 +142,7 @@ class Dialogue:
     @staticmethod
     def employees(visited=False) -> None:
         if visited:
+            sleep(1)
             print("You have already reported issues about our employees and workers. " + 
                   "Please try again in our next session.")
             sleep(1)
@@ -155,6 +156,7 @@ class Dialogue:
     @staticmethod
     def environment(visited=False) -> None:
         if visited:
+            sleep(1)
             print("You have already reported problems about our store's environment. " + 
                   "Please try again in our next interaction.")
             sleep(1)
