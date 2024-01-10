@@ -145,7 +145,7 @@ class Dialogue:
             sleep(1)
             print("You have already reported issues about our employees and workers. " + 
                   "Please try again in our next session.")
-            sleep(1)
+            sleep(2)
             return
         Utils.input("What are your problems about our employees?")
         sleep(3)
