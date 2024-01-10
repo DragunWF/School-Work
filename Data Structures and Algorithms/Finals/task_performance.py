@@ -27,17 +27,17 @@ class DialogueTree:
             path = node.execute()
             if path == "left":
                 self.traverse(node.left)
-            else:
+            elif path == "right":
                 self.traverse(node.right)
 
     def end(self) -> None:
         while True:
-            option = Utils.input("Is there anything else you need help with? " +
-                                 "Please answer with a simple yes or no")
+            option = Utils.input("Okay, is there anything else you need help with overall? " +
+                                 "Answer with a yes or no")
             sleep(2)
-            if Utils.contains("yes", "absolutely"):
+            if Utils.contains(option, "yes", "absolutely"):
                 self.traverse(self.root)
-            elif Utils.contains("no", "bye", "not", "dont", "don't"):
+            elif Utils.contains(option, "no", "bye", "not", "dont", "don't"):
                 print("Thank you for interacting with me.")
                 break
             else:
