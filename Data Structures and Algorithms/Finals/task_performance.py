@@ -67,8 +67,10 @@ class Dialogue:
             return "left"
         elif Utils.contains(words, "manager", "managers", "boss", "master"):
             return "right"
+        sleep(2)
         print("I'm sorry but I don't comprehend your request. " + 
               "Do you need help with categories or the manager?")
+        sleep(1)
         return Dialogue.intro()
 
     @staticmethod
@@ -121,6 +123,7 @@ class Dialogue:
         sleep(3)
         words = Utils.input("If so, is it with the employees or " + 
                             "the environment of the store?")
+        sleep(2)
         if Utils.contains(words, "no", "not", "none", "don't", "dont"):
             print("I see, well you can only contact the manager " + 
                   "with problems about the store")
