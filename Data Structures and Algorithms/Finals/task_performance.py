@@ -110,6 +110,7 @@ class Dialogue:
             else:
                 print("Please answer with either yes or no... " + 
                       "Or you can answer with something like 'absolutely'")
+                sleep(1)
 
     @staticmethod
     def manager(repeat=False) -> str:
