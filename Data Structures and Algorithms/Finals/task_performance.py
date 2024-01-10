@@ -12,10 +12,10 @@ class Node:
         self.visited = False
 
     def execute(self) -> str:
+        if self.visit_sensitive and self.visited:
+            return self.execution(self.visited)
         self.visited = True
-        if not self.visit_sensitive:
-            return self.execution()
-        return self.execution(not self.visited)
+        return self.execution()
 
 
 class DialogueTree:
