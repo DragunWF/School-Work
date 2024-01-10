@@ -100,9 +100,10 @@ class Dialogue:
                   "please choose the categories I listed previously...")
             sleep(1)
             return Dialogue.categories()
+        sleep(3)
 
         while True:
-            words = Utils.input("Is there anything else you need help with the categories? " +
+            words = Utils.input("Do you need more help with our grocery store's categories? " +
                                 "Answer with either yes or no")
             sleep(1)
             if Utils.contains(words, "yes", "absolutely"):
