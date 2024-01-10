@@ -78,6 +78,7 @@ class Dialogue:
         sleep(2)
 
         words = Utils.input("Which one would you like to know about?")
+        sleep(2)
         if "food" in words:
             print("It is located at section A1 of the building. " + 
                   "The section contains meat, diary products, and junk food.")
