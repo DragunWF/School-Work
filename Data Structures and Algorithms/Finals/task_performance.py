@@ -127,6 +127,7 @@ class Dialogue:
             sleep(2)
             print("But since you don't have any problems, " + 
                   "let's talk about something else...")
+            sleep(2)
             return
         elif Utils.contains(words, "employee", "worker", "employees", "workers"):
             return "left"
