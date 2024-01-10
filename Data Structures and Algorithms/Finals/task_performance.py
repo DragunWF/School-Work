@@ -187,6 +187,8 @@ def main() -> None:
     manager_node.right = environment_node
 
     dialogue_tree = DialogueTree(root)
+    print("Welcome to the Dragun grocery store!")
+    sleep(1)
     dialogue_tree.traverse(root)
     dialogue_tree.end()
 
