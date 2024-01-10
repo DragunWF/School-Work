@@ -35,13 +35,14 @@ class DialogueTree:
             option = Utils.input("Is there anything else you need help with? " +
                                  "Please answer with a simple yes or no")
             sleep(2)
-            if "yes" in option:
+            if Utils.contains("yes", "absolutely"):
                 self.traverse(self.root)
-            elif "no" in option:
+            elif Utils.contains("no", "bye", "not", "dont", "don't"):
                 print("Thank you for interacting with me.")
                 break
             else:
                 print("Please answer with either yes or no...")
+                sleep(1)
 
 
 class Utils:
@@ -109,7 +110,7 @@ class Dialogue:
             if Utils.contains(words, "yes", "absolutely"):
                 Dialogue.categories()
                 break
-            elif Utils.contains(words, "no", "not"):
+            elif Utils.contains(words, "no", "not", "dont", "don't"):
                 break
             else:
                 print("Please answer with either yes or no... " +
