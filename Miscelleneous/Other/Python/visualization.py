@@ -11,6 +11,9 @@ class File:
         self.protection = protection
         self.timestamp = timestamp
 
+        bytes_measurement = ("KB", "MB")
+        self.size = f"{randint(1, 20)} {bytes_measurement[randint(0, len(bytes_measurement) - 1)]}"
+
 
 class Utils:
     chosen_names = {}
@@ -37,7 +40,7 @@ class Utils:
         "programming_assignment",
         "coding_assignment"
     ]
-    file_types = []
+    file_types = [".docx", "txt", "ppsx", "pdf"]
     file_protection = ["admin", "user", "guest"]
 
     @staticmethod
@@ -56,7 +59,7 @@ class Utils:
 
     @staticmethod
     def choose_random(data: list[str]) -> str:
-        return data[randint(0, len(data))]
+        return data[randint(0, len(data) - 1)]
 
     @staticmethod
     def generate_random_file() -> File:
@@ -76,7 +79,11 @@ def main() -> None:
 
     table_data: list = []
     for file in files:
-        pass
+        table_data.append([file.name, file.type,
+                          file.protection, file.size, file.timestamp])
+    print(tabulate(table_data, headers=["File Name", "File Type", "File Protection",
+                                        "File Protection", "File Timestamp"],
+                   tablefmt="simple_grid"))
 
 
 if __name__ == '__main__':
