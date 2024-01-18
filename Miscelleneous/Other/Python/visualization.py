@@ -4,12 +4,14 @@ from random import randint
 
 
 class File:
-    def __init__(self, identifier: int, name: str, type: str, protection: str, timestamp: str):
+    def __init__(self, identifier: int, name: str, type: str, protection: str, timestamp: str, log_count: int):
         self.identifier = identifier
         self.name = name
         self.type = type
         self.protection = protection
         self.timestamp = timestamp
+        self.automatic_backups = randint(0, 1) == 1
+        self.log_count = log_count
 
         bytes_measurement = ("KB", "MB")
         self.size = f"{randint(1, 20)} {bytes_measurement[randint(0, len(bytes_measurement) - 1)]}"
@@ -68,21 +70,22 @@ class Utils:
         file_type = Utils.choose_random(Utils.file_types)
         protection = Utils.choose_random(Utils.file_protection)
         timestamp = Utils.random_date()
-        return File(identifier, name, file_type, protection, timestamp)
+        log_count = randint(1, 50)
+        return File(identifier, name, file_type, protection, timestamp, log_count)
 
 
 def main() -> None:
-    FILE_COUNT = 20  # Feel free to change
+    FILE_COUNT = 23  # Feel free to change
     files: list[File] = []
     for i in range(FILE_COUNT):
         files.append(Utils.generate_random_file())
 
     table_data: list = []
     for file in files:
-        table_data.append([file.name, file.type,
-                          file.protection, file.size, file.timestamp])
-    print(tabulate(table_data, headers=["File Name", "File Type", "File Protection",
-                                        "File Protection", "File Timestamp"],
+        table_data.append([file.identifier, file.name, file.type, file.protection,
+                           file.size, file.timestamp, file.automatic_backups, file.log_count])
+    print(tabulate(table_data, headers=["Identifier", "File Name", "File Type", "File Protection",
+                                        "File Protection", "File Timestamp", "Automatic Backups", "Audit Log Count"],
                    tablefmt="simple_grid"))
 
 
