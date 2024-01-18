@@ -40,7 +40,7 @@ class Utils:
         "programming_assignment",
         "coding_assignment"
     ]
-    file_types = [".docx", "txt", "ppsx", "pdf"]
+    file_types = ["docx", "txt", "ppsx", "pdf"]
     file_protection = ["admin", "user", "guest"]
 
     @staticmethod
