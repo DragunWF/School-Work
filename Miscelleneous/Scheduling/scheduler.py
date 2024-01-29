@@ -1,7 +1,5 @@
 # Platform Technology (Operating Systems)
 # Applying scheduling algorithms through Python code
-# Programmed by DragunWF
-# My GitHub: https://github.com/DragunWF
 
 # Requires two modules to install
 # > pip install rich
@@ -133,7 +131,7 @@ class Scheduler:
                              new_waiting_time))
             # process.set_completion_time(current_waiting_time)
             current_waiting_time += process.get_burst_time()
-    
+
     def sjf(self) -> None:
         # Shortest Job First
         self.sort_ready_queue_by_arrival()
@@ -238,13 +236,14 @@ class Scheduler:
                 self.__gantt_chart.append(ChartProcess(time_passed, current_queue[process_index].get_name(),
                                                        time_passed))
             # print(f"{[p.get_name() for p in current_queue]} {current_queue[process_index].get_name()}")
-    
+
     def sort_ready_queue_by_arrival(self):
         for i in range(len(self.__ready_queue)):
             is_sorted = True
             for j in range(len(self.__ready_queue) - 1):
                 if self.__ready_queue[j].get_arrival_time() > self.__ready_queue[j + 1].get_arrival_time():
-                    self.__ready_queue[j], self.__ready_queue[j + 1] = self.__ready_queue[j + 1], self.__ready_queue[j]
+                    self.__ready_queue[j], self.__ready_queue[j +
+                                                              1] = self.__ready_queue[j + 1], self.__ready_queue[j]
                     is_sorted = False
             if is_sorted:
                 break
