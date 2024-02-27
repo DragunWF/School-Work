@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 namespace GreetingApp {
     class GreetingProgram
@@ -17,7 +16,6 @@ namespace GreetingApp {
         private static string input(string prompt)
         {
             Console.Write($"{prompt}: ");
-            #pragma warning disable CS8603 // Possible null reference return.
             return Console.ReadLine();
         }
     }
