@@ -1,0 +1,11 @@
+CREATE TABLE Vendors (
+	VendorID VARCHAR(50) PRIMARY KEY,
+	VendorName VARCHAR(50),
+	ContactNum VARCHAR(50)
+);
+
+CREATE TABLE Items (
+	ItemID VARCHAR(50) PRIMARY KEY,
+	ItemDesc VARCHAR(50),
+	VendorID VARCHAR(50)
+);
