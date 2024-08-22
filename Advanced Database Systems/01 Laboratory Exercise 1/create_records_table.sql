@@ -1,0 +1,8 @@
+CREATE TABLE Records (
+	Id INT PRIMARY KEY,
+	LastName VARCHAR(50),
+	FirstName VARCHAR(50),
+	Age INT,
+	Gender VARCHAR(50),
+	Level VARCHAR(50)
+);
