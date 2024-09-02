@@ -3,9 +3,15 @@
 
 CREATE VIEW Subqueries_View
 AS
-SELECT CONCAT('Lab_', Orders.OrderID) AS 'New OrderID',
-       (SELECT Cust_Name FROM Customers WHERE Customers.CustomerID = Orders.CustomerID) AS Cust_Name,
-       (SELECT Address FROM Customers WHERE Customers.CustomerID = Orders.CustomerID) AS Address,
-       (SELECT ItemName FROM Items WHERE Items.ItemID = Orders.ItemID) AS ItemName,
-       (SELECT Price FROM Items WHERE Items.ItemID = Orders.ItemID) AS Price
+SELECT (SELECT CONCAT('Lab_OR-', Orders.OrderID)) AS 'New OrderID', 
+       Customers.Cust_Name, Customers.Address, Items.ItemName, Items.Price
 FROM Orders
+JOIN Customers ON Customers.CustomerID = Orders.CustomerID
+JOIN Items ON Items.ItemID = Orders.ItemID
+WHERE Items.Price > (
+    SELECT Items.Price -- Subquery for obtaining the price of Badang's Purchased item
+    FROM Orders
+    JOIN Customers ON Customers.CustomerID = Orders.CustomerID
+    JOIN Items ON Items.ItemID = Orders.ItemID
+    WHERE Customers.CustomerID = 'Cust-1'
+)
