@@ -11,3 +11,4 @@ WHERE Items.Price > (
     JOIN Items ON Items.ItemID = Orders.ItemID
     WHERE Customers.CustomerID = 'Cust-1'
 )
+ORDER BY Items.Price
