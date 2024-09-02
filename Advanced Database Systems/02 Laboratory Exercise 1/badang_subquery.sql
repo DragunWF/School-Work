@@ -5,7 +5,7 @@ FROM Orders
 JOIN Customers ON Customers.CustomerID = Orders.CustomerID
 JOIN Items ON Items.ItemID = Orders.ItemID
 WHERE Items.Price > (
-    SELECT Items.Price
+    SELECT Items.Price -- Subquery for obtaining the price of Badang's Purchased item
     FROM Orders
     JOIN Customers ON Customers.CustomerID = Orders.CustomerID
     JOIN Items ON Items.ItemID = Orders.ItemID
