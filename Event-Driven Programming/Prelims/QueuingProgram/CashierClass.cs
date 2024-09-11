@@ -3,6 +3,7 @@
     public class CashierClass
     {
         private int x;
+        private static string lastDequeuedNum;
         public static string getNumberInQueue = "";
         public static Queue<string> CashierQueue;
 
@@ -23,8 +24,10 @@
         {
             if (CashierQueue.Count > 0)
             {
-                CashierQueue.Dequeue();
+                lastDequeuedNum = CashierQueue.Dequeue();
             }
         }
+
+        public static string getLastDequeuedNum() => lastDequeuedNum;
     }
 }

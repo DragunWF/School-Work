@@ -4,9 +4,13 @@ namespace QueuingProgram
 {
     public partial class CashierWindowQueue : Form
     {
+        private ServingForm servingForm;
+
         public CashierWindowQueue()
         {
             InitializeComponent();
+            servingForm = new ServingForm();
+            servingForm.Show();
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -18,6 +22,7 @@ namespace QueuingProgram
         {
             CashierClass.CallNextInLine();
             RefreshDisplay(); // Auto refreshes the queue display whenever the an item gets removed
+            servingForm.UpdateServingNum(CashierClass.getLastDequeuedNum());
         }
 
         public void DisplayCashierQueue(IEnumerable<string> CashierList)
