@@ -1,0 +1,8 @@
+BEGIN
+    BEGIN TRANSACTION
+    DECLARE @SlarkID AS INT = 50;
+    DECLARE @DateSlarkPaid AS DATE = '2020-08-5';
+
+    
+    COMMIT
+END
