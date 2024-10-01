@@ -1,23 +1,23 @@
 BEGIN
 	BEGIN TRANSACTION
     
+    -- Cashier mistakenly encoded the payment to Slark
     DECLARE @TuitionFeePayment AS INT = 15000
-    DECLARE @StudentID = 50
+    DECLARE @StudentID AS INT = 50 -- Slark's ID
 
     UPDATE Students
-    SET Balance -= @TutionFeePayment
+    SET Balance -= @TuitionFeePayment
     WHERE S_ID = @StudentID
-    SAVE TRANSACTION TuitionFeePaymentTransfer
                                       
-    -- Cashier realized his unwanted mistake
-    ROLLBACK TRANSACTION TuitionFeePaymentTransfer
+    -- Cashier realized her unwanted mistake
+    ROLLBACK TRANSACTION
 
     BEGIN TRANSACTION
     -- Sets the StudentID to the correct person (Lina)
-    SET @StudentID = 90 
+    SET @StudentID = 90 -- Lina's ID
 
     UPDATE Students
-    SET Balance -= @TutionFeePayment
+    SET Balance -= @TuitionFeePayment
     WHERE S_ID = @StudentID
 
     INSERT INTO Payment
