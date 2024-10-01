@@ -1,6 +1,5 @@
 BEGIN
 	BEGIN TRANSACTION
-    
     DECLARE @PaymentAmount AS INT = 1000;
     
     UPDATE Students
