@@ -21,8 +21,10 @@ BEGIN
     SET Balance -= @SlarkPayment
     FROM S_ID = @SlarkPayment
 
-    INSERT INTO Payments
+    INSERT INTO Payment
     VALUES (6, @DateSlarkPaid, @SlarkPayment, @SlarkID)
 
     COMMIT
 END
+SELECT * FROM Students;
+SELECT * FROM Payment;

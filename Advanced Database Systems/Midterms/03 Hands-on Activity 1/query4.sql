@@ -25,3 +25,5 @@ BEGIN
 
     COMMIT
 END
+SELECT * FROM Students;
+SELECT * FROM Payment;
