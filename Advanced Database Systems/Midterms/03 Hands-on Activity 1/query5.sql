@@ -8,7 +8,7 @@ BEGIN
     );
     DECLARE @PaymentAmount AS INT = 15000;
 
-    -- Medusa tries to make a payment on August 5, 2024
+    -- Medusa tries to make a payment on August 1, 2024
     UPDATE Students
     SET Balance -= @PaymentAmount
     WHERE S_ID = @MedusaID
