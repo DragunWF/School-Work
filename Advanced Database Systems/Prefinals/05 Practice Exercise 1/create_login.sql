@@ -1,0 +1,1 @@
+CREATE LOGIN Plarisan WITH PASSWORD = 'pw123';

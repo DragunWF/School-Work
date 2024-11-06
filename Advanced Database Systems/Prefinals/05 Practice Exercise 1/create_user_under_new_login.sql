@@ -1,0 +1,1 @@
+CREATE USER Dragun FOR LOGIN Plarisan;

@@ -1,0 +1,4 @@
+CREATE ROLE udr_Marc
+GO
+GRANT SELECT, UPDATE ON Items TO udr_Marc
+GO
