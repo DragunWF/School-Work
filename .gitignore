@@ -1,12 +1,10 @@
-# Dragun Files
+# ========= DRAGUN =========
 Test
 Dump
 .DS_Store
-bin
 obj
 
-# ----------------------------------------------------------------
-# WinForms C# Visual Studio
+# ========= C# WINFORMS PROJECT VISUAL STUDIO =========
 
 # User-specific files
 *.suo
