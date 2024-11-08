@@ -48,6 +48,7 @@
             txtMI = new TextBox();
             txtContactNo = new TextBox();
             btnRegister = new Button();
+            btnRecords = new Button();
             SuspendLayout();
             // 
             // label1
@@ -226,11 +227,22 @@
             btnRegister.UseVisualStyleBackColor = true;
             btnRegister.Click += btnRegister_Click;
             // 
+            // btnRecords
+            // 
+            btnRecords.Location = new Point(440, 212);
+            btnRecords.Name = "btnRecords";
+            btnRecords.Size = new Size(75, 28);
+            btnRecords.TabIndex = 20;
+            btnRecords.Text = "Records";
+            btnRecords.UseVisualStyleBackColor = true;
+            btnRecords.Click += btnRecords_Click;
+            // 
             // FrmRegistration
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(537, 252);
+            Controls.Add(btnRecords);
             Controls.Add(btnRegister);
             Controls.Add(txtContactNo);
             Controls.Add(txtMI);
@@ -279,5 +291,6 @@
         private TextBox txtMI;
         private TextBox txtContactNo;
         private Button btnRegister;
+        private Button btnRecords;
     }
 }

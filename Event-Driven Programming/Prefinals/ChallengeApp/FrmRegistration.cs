@@ -5,6 +5,7 @@ namespace ChallengeApp
         public FrmRegistration()
         {
             InitializeComponent();
+            FormManager.setFrmRegistration(this);
         }
 
         private void btnRegister_Click(object sender, EventArgs e)
@@ -36,6 +37,11 @@ namespace ChallengeApp
 
             // I added this extra bit so I and the users can know where the file is located at
             MessageBox.Show($"Your file has been generated at {docPath}\\{fileName}");
+        }
+
+        private void btnRecords_Click(object sender, EventArgs e)
+        {
+            FormManager.openStudentRecordForm();
         }
     }
 }
