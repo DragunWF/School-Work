@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Forms | Marc Plarisan | BSIT601</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+      .textLabel {
+        margin-top: 7.5px;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <h1>Enrollment Form</h1>
+      <h2>Student Details</h2>
+      <div class="textLabel">
+        <label for="FirstName">First Name:</label>
+        <input type="text" id="FirstName" required />
+      </div>
+      <div class="textLabel">
+        <label for="LastName">Last Name:</label>
+        <input type="text" id="LastName" required />
+      </div>
+      <div class="textLabel">
+        <label for="MiddleInitial">Middle Initial:</label>
+        <input type="text" id="MiddleInitial" required />
+      </div>
+      <div class="textLabel">
+        <label for="Address">Address:</label>
+        <input type="text" id="Address" required />
+      </div>
+      <div class="textLabel">
+        <label for="PreviousSchool">Name of Previous School:</label>
+        <input type="text" id="PreviousSchool" required />
+      </div>
+      <div>
+        <h3>Methods of Payment</h3>
+        <input type="radio" name="payment" />
+        <label>Low Monthly Payment</label>
+        <input type="radio" name="payment" />
+        <label>Low Down Payment</label>
+        <input type="radio" name="payment" />
+        <label>Cash Payment</label>
+      </div>
+      <div>
+        <h3>Actions</h3>
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+      </div>
+    </form>
+  </body>
+</html>
