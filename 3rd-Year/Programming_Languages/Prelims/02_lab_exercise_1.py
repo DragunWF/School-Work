@@ -1,7 +1,7 @@
-# ======== First Instruction ========
+# ======== 3rd Instruction ========
 print("Hello, World!")
 
-# ======== Second Instruction ========
+# ======== 6th Instruction ========
 print("Marc")
 
 # ======== Instructions on Simulating Errors ========
