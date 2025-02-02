@@ -3,6 +3,7 @@ Test
 Dump
 .DS_Store
 obj
+PrivateSubmission
 
 # ========= C# WINFORMS PROJECT VISUAL STUDIO =========
 
@@ -388,5 +389,19 @@ InteropTests/NativeTests/out
 **/ScratchProject/
 **/ScratchProjectWithInternals/
 
-# DragunWF
-PrivateSubmission
+# ========= ANDROID STUDIO =========
+*.iml
+.gradle
+local.properties
+.idea/caches
+.idea/libraries
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.DS_Store
+captures
+.externalNativeBuild
+.cxx
+local.properties
+build
