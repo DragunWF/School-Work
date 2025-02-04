@@ -1,0 +1,25 @@
+:root {
+  --color-border-top: powderblue;
+  --color-border-bottom: lightgreen;
+  --border-width: 5px;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+table {
+  margin: 15px;
+}
+
+th,
+td {
+  border: solid;
+  border-bottom-color: var(--color-border-top);
+  border-left-style: double;
+  border-right-style: groove;
+  border-top-color: var(--color-border-bottom);
+  border-width: var(--border-width);
+  padding: 10px;
+  text-align: center;
+}
