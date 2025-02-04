@@ -2,6 +2,7 @@
   --color-border-top: powderblue;
   --color-border-bottom: lightgreen;
   --border-width: 5px;
+  --horizontal-gap: 40px;
 }
 
 body {
@@ -12,8 +13,29 @@ table {
   margin: 15px;
 }
 
-th,
-td {
+h2 {
+  font-size: 18px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: 0;
+}
+
+li {
+  list-style-type: none;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.category {
   border: solid;
   border-bottom-color: var(--color-border-top);
   border-left-style: double;
@@ -21,5 +43,13 @@ td {
   border-top-color: var(--color-border-bottom);
   border-width: var(--border-width);
   padding: 10px;
+  padding-left: var(--horizontal-gap);
+  padding-right: var(--horizontal-gap);
   text-align: center;
+}
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }
