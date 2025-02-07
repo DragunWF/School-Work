@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="#E2F2E2">
+
+    <LinearLayout
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        tools:ignore="MissingConstraints"
+        android:padding="40dp">
+
+        <LinearLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            tools:ignore="MissingConstraints">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lothern Bank"
+                android:textSize="35dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/websiteLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            tools:ignore="MissingConstraints"
+            android:paddingTop="20dp">
+
+            <ImageView
+                android:id="@+id/websiteImage"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/earth" />
+
+            <Button
+                android:id="@+id/websiteBtn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#2D922D"
+                android:text="Go to Website"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linkedinLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            tools:ignore="MissingConstraints"
+            android:paddingTop="20dp">
+
+            <ImageView
+                android:id="@+id/linkedinImage"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/linkedin" />
+
+            <Button
+                android:id="@+id/linkedinBtn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#2D922D"
+                android:text="Go to LinkedIn"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/youtubeLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            tools:ignore="MissingConstraints"
+            android:paddingTop="20dp">
+
+            <ImageView
+                android:id="@+id/homeSocialsImage"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/youtube" />
+
+            <Button
+                android:id="@+id/youtubeBtn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#2D922D"
+                android:text="Go to YouTube"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/facebookLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            tools:ignore="MissingConstraints"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:id="@+id/facebookImage"
+                android:layout_width="80dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:src="@drawable/facebook" />
+
+            <Button
+                android:id="@+id/facebookBtn"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#2D922D"
+                android:text="Go to Facebook"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/informationLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            tools:ignore="MissingConstraints"
+            android:background="#C6F1C6">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your Balance:"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:textAlignment="center" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="872,103 PHP"
+                android:textSize="25dp"
+                android:textAlignment="center" />
+
+            <ImageView
+                android:id="@+id/moneyImage"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center"
+                android:src="@drawable/money" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomNavLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            tools:ignore="MissingConstraints"
+            android:layout_marginTop="30dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:background="#C6F1C6">
+
+            <LinearLayout
+                android:id="@+id/historyLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="97dp"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:paddingLeft="20dp"
+                tools:ignore="MissingConstraints">
+
+                <ImageView
+                    android:id="@+id/historyImage"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/history" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="History"
+                    android:textAlignment="center"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/billLayout"
+                android:layout_width="90dp"
+                android:layout_height="97dp"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:layout_marginLeft="20dp"
+                tools:ignore="MissingConstraints">
+
+                <ImageView
+                    android:id="@+id/billImage"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/bill" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pay Bills"
+                    android:textAlignment="center"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/usersLayout"
+                android:layout_width="90dp"
+                android:layout_height="97dp"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="20dp"
+                android:paddingRight="20dp"
+                android:layout_marginLeft="20dp"
+                tools:ignore="MissingConstraints">
+
+                <ImageView
+                    android:id="@+id/accountsImage"
+                    android:layout_width="70dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/accounts" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Users"
+                    android:textAlignment="center"
+                    android:textSize="20dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
