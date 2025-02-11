@@ -5,10 +5,13 @@ valid_operations = ("addition", "subtraction", "multiplication", "division")
 
 
 def main() -> None:
+    print(f"Valid Operations: {valid_operations}")
+
     operation = input_operation()
     first_num = input_num("first number")
     second_num = input_num("second number")
     result = perform_operation(operation, first_num, second_num)
+
     if not result is None:
         print(f"Result: {result}")
 
