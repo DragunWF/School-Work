@@ -45,6 +45,7 @@ nav ul {
   flex-direction: row;
   gap: 4rem;
   list-style-type: none;
+  padding-left: 0;
 }
 
 a {
@@ -82,6 +83,14 @@ footer img {
   height: 10rem;
 }
 
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 1rem;
+}
+
 .heading-text {
   display: flex;
   gap: 1rem;
@@ -103,10 +112,6 @@ footer img {
   text-shadow: 1px 1px 1px #bfecf7;
 }
 
-.wrapper {
-  margin: 1rem;
-}
-
 .sections-wrapper {
   display: flex;
   align-items: center;
@@ -118,4 +123,24 @@ footer img {
 .sections-wrapper img {
   width: 80%;
   height: 80%;
+}
+
+@media screen and (max-width: 1280px) {
+  header,
+  nav {
+    width: 90%;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  header,
+  nav,
+  section,
+  footer {
+    width: 50%;
+  }
+
+  .sections-wrapper {
+    width: 55%;
+  }
 }
