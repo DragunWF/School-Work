@@ -1,0 +1,107 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --color-text: white;
+  --color-card: #1d1c1a;
+  --color-border: green;
+  --color-link: powderblue;
+}
+
+body {
+  font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: rgb(201, 221, 211);
+  background: radial-gradient(
+    circle,
+    rgba(201, 221, 211, 1) 0%,
+    rgba(200, 201, 223, 1) 36%,
+    rgba(209, 209, 227, 1) 69%,
+    rgba(216, 248, 255, 1) 100%
+  );
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+nav {
+  background: var(--color-card);
+  color: var(--color-white);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+nav ul {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 4rem;
+  list-style-type: none;
+}
+
+a {
+  color: var(--color-link);
+  transition: 0.25s;
+}
+
+a:hover {
+  color: #e5f9f7;
+}
+
+section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 3rem !important;
+  border-radius: 30px;
+}
+
+section h2 {
+  font-size: 1.9rem;
+  margin-top: 0.1rem;
+}
+
+footer {
+  margin-top: 2rem;
+  bottom: 0;
+  width: 100%;
+  height: 6rem;
+}
+
+footer img {
+  width: 100%;
+  height: 10rem;
+}
+
+.card {
+  background: var(--color-card);
+  color: var(--color-text);
+  padding: 2rem;
+  border-radius: 25px;
+  border: solid var(--color-border);
+  box-shadow: inset #009688 0 0 0 5px, inset #059c8e 0 0 0 1px,
+    inset #0cab9c 0 0 0 10px, inset #1fbdae 0 0 0 11px, inset #8ce9ff 0 0 0 16px,
+    inset #48e4d6 0 0 0 17px, inset #e5f9f7 0 0 0 21px, inset #bfecf7 0 0 0 22px;
+  text-shadow: 1px 1px 1px #bfecf7;
+}
+
+.wrapper {
+  margin: 1rem;
+}
+
+.sections-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.sections-wrapper img {
+  width: 80%;
+  height: 80%;
+}
