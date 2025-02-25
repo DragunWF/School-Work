@@ -7,6 +7,11 @@
   --color-link: powderblue;
 }
 
+::selection {
+  background: palegoldenrod;
+  color: black;
+}
+
 body {
   font-family: "Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background: rgb(201, 221, 211);
@@ -23,7 +28,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  flex-direction: column;
 }
 
 nav {
@@ -75,6 +80,15 @@ footer {
 footer img {
   width: 100%;
   height: 10rem;
+}
+
+.heading-text {
+  display: flex;
+  gap: 1rem;
+}
+
+.search-bar {
+  margin-bottom: 1rem;
 }
 
 .card {
