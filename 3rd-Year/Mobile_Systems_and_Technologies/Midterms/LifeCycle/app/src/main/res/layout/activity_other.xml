@@ -14,10 +14,10 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/backBtn"
+            android:id="@+id/switchBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back" />
+            android:text="Back to Home" />
 
     </LinearLayout>
 

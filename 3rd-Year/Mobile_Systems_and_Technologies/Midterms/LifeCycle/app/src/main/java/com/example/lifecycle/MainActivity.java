@@ -12,7 +12,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    private Button homeBtn;
+    private Button switchBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Toast.makeText(this, "Created!", Toast.LENGTH_SHORT).show();
-        homeBtn = findViewById(R.id.homeBtn);
-        homeBtn.setOnClickListener(v -> {
+        switchBtn = findViewById(R.id.switchBtn);
+        switchBtn.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, OtherActivity.class));
         });
     }
@@ -42,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Toast.makeText(this, "Resumed!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Toast.makeText(this, "Restarted!", Toast.LENGTH_SHORT).show();
     }
 
     @Override
