@@ -5,10 +5,6 @@ body {
 header,
 article {
   border-bottom: solid 1px black;
-}
-
-header,
-article {
   width: 60%;
 }
 
@@ -23,7 +19,8 @@ footer {
   flex-direction: column;
 }
 
-.first-summary {
+.first-summary,
+.second-summary {
   text-align: center;
 }
 
@@ -37,10 +34,6 @@ footer {
 .first-summary h3,
 .second-summary h3 {
   margin-top: 0;
-}
-
-.second-summary {
-  text-align: center;
 }
 
 @media screen and (max-width: 1280px) {
