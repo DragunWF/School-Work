@@ -1,0 +1,25 @@
+h1 {
+  margin-bottom: 3rem !important;
+  text-align: center;
+}
+
+.btn {
+  border: solid 1px black;
+  transition: 0.25s;
+}
+
+.btn:hover {
+  border: solid 2px green;
+}
+
+.input-group {
+  width: 75%;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
