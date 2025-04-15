@@ -85,7 +85,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 // Create a handler to delay the Snackbar and card flipping
                 new Handler().postDelayed(() -> {
                     Utils.snackbar(GameState.isMatched() ? "Both pairs have been matched!" : "Wrong pair!", view);
-                    GameState.reset();
+                    if (!GameState.isMatched()) {
+                        GameState.resetPair();
+                    }
                     notifyDataSetChanged();
                 }, 1000);
             }
