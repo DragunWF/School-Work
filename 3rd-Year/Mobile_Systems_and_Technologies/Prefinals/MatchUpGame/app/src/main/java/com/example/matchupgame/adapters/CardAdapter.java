@@ -1,11 +1,13 @@
 package com.example.matchupgame.adapters;
 
+import android.content.Context;
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.matchupgame.R;
@@ -19,6 +21,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     private List<Card> localDataSet;
     private View view;
+    private Context context;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -45,9 +48,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
      * @param dataSet String[] containing the data to populate views to be used
      * by RecyclerView
      */
-    public CardAdapter(List<Card> dataSet, View view) {
+    public CardAdapter(List<Card> dataSet, View view, Context context) {
         localDataSet = dataSet;
         this.view = view;
+        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
@@ -85,11 +89,19 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
                 // Create a handler to delay the Snackbar and card flipping
                 new Handler().postDelayed(() -> {
                     Utils.snackbar(GameState.isMatched() ? "Both pairs have been matched!" : "Wrong pair!", view);
-                    if (!GameState.isMatched()) {
-                        GameState.resetPair();
-                    }
+                    GameState.resetPair();
                     notifyDataSetChanged();
                 }, 1000);
+            }
+
+            if (GameState.isGameWon()) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+                builder.setMessage("To play again, click the reset button down below.")
+                        .setTitle("You won!");
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }

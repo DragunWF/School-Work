@@ -11,7 +11,7 @@ import java.util.Objects;
 public class GameState {
     private static Card firstChoice, secondChoice;
     private static boolean isMatched;
-    private static List<Card> gameCards;
+    private static List<Card> gameCards = new ArrayList<>();
 
     public static List<Card> getGameCards() {
         return gameCards;
@@ -49,15 +49,18 @@ public class GameState {
     }
 
     public static void resetPair() {
-        if (firstChoice != null) {
-            firstChoice.setOpen(false);
-        }
-        if (secondChoice != null) {
-            secondChoice.setOpen(false);
+        if (!isMatched) {
+            if (firstChoice != null) {
+                firstChoice.setOpen(false);
+            }
+            if (secondChoice != null) {
+                secondChoice.setOpen(false);
+            }
         }
 
         firstChoice = null;
         secondChoice = null;
+        isMatched = false;
     }
 
     public static void resetGame() {
@@ -66,7 +69,7 @@ public class GameState {
     }
 
     private static void addCardData() {
-        gameCards = new ArrayList<>();
+        gameCards.clear();
 
         // Create pairs of programming language cards
         // Each card needs to have a pair with the same pairName

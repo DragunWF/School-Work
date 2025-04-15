@@ -15,14 +15,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.matchupgame.adapters.CardAdapter;
-import com.example.matchupgame.data.Card;
 import com.example.matchupgame.helpers.GameState;
 import com.example.matchupgame.helpers.Utils;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private View view;
@@ -67,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     GameState.resetGame();
-                    cardAdapter.notifyDataSetChanged();
+                    setRecycler();
                     Utils.snackbar("Game has been reset!", view);
                 }
             });
@@ -87,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     private void setRecycler() {
         cardRecycler.setHasFixedSize(false);
 
-        cardAdapter = new CardAdapter(GameState.getGameCards(), view);
+        cardAdapter = new CardAdapter(GameState.getGameCards(), view, this);
         cardRecycler.setAdapter(cardAdapter);
 
         layoutManager = new GridLayoutManager(this, 3);
