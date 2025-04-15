@@ -1,13 +1,14 @@
-package com.example.matchupgame;
+package com.example.matchupgame.data;
 
 public class Card {
     private String pairName;
-    private boolean isOpen;
+    private boolean isOpen, isMatched;
     private int imageResource;
 
     public Card(String name, int imageResource) {
         this.pairName = name;
         this.isOpen = false;
+        this.isMatched = false;
         this.imageResource = imageResource;
     }
 
@@ -34,6 +35,14 @@ public class Card {
 
     public void setOpen(boolean open) {
         isOpen = open;
+    }
+
+    public boolean isMatched() {
+        return isMatched;
+    }
+
+    public void setMatched(boolean matched) {
+        isMatched = matched;
     }
 
     public int getImageResource() {

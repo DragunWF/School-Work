@@ -1,30 +1,38 @@
-package com.example.matchupgame;
+package com.example.matchupgame.helpers;
+
+import com.example.matchupgame.data.Card;
 
 import java.util.Objects;
 
 public class GameState {
-    private Card firstChoice, secondChoice;
-    private boolean isCorrect;
+    private static Card firstChoice, secondChoice;
+    private static boolean isMatched;
 
-    public void chooseCard(Card chosenCard) {
-        if (firstChoice != null) {
+    public static void chooseCard(Card chosenCard) {
+        if (firstChoice == null) {
             firstChoice = chosenCard;
             return;
         }
 
         secondChoice = chosenCard;
-        isCorrect = Objects.equals(firstChoice.getPairName(), secondChoice.getPairName());
+        isMatched = Objects.equals(firstChoice.getPairName(), secondChoice.getPairName());
+        if (isMatched) {
+            firstChoice.setMatched(true);
+            secondChoice.setMatched(true);
+        }
     }
 
-    public boolean isBothChosen() {
+    public static boolean isBothChosen() {
         return firstChoice != null && secondChoice != null;
     }
 
-    public boolean isCorrect() {
-        return isCorrect;
+    public static boolean isMatched() {
+        return isMatched;
     }
 
-    public void reset() {
+    public static void reset() {
+        firstChoice.setOpen(false);
+        secondChoice.setOpen(false);
         firstChoice = null;
         secondChoice = null;
     }

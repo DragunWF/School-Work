@@ -1,4 +1,4 @@
-package com.example.matchupgame;
+package com.example.matchupgame.helpers;
 
 import android.content.Context;
 import android.view.View;

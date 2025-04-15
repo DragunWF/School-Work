@@ -1,14 +1,17 @@
-package com.example.matchupgame;
+package com.example.matchupgame.adapters;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.example.matchupgame.R;
+import com.example.matchupgame.data.Card;
+import com.example.matchupgame.helpers.GameState;
+import com.example.matchupgame.helpers.Utils;
 
 import java.util.List;
 
@@ -68,13 +71,24 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         viewHolder.getCardImage().setImageResource(card.isOpen() ? card.getImageResource() : DEFAULT_IMAGE_RESOURCE);
 
         viewHolder.getCardImage().setOnClickListener(v -> {
-            card.setOpen(!card.isOpen());
+            if (card.isMatched() || card.isOpen() || GameState.isBothChosen()) {
+                return;
+            }
+            card.setOpen(true);
+            GameState.chooseCard(card);
 
             // Update the ImageView with the new state immediately
             viewHolder.getCardImage().setImageResource(card.isOpen() ? card.getImageResource() : DEFAULT_IMAGE_RESOURCE);
-
-            // Optional: Notify item changed is more efficient than notifyDataSetChanged
             notifyItemChanged(position);
+
+            if (GameState.isBothChosen()) {
+                // Create a handler to delay the Snackbar and card flipping
+                new Handler().postDelayed(() -> {
+                    Utils.snackbar(GameState.isMatched() ? "Both pairs have been matched!" : "Wrong pair!", view);
+                    GameState.reset();
+                    notifyDataSetChanged();
+                }, 1000);
+            }
         });
     }
 
