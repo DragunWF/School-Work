@@ -21,9 +21,14 @@ class History:
 
 
 class Chatbot:
-    MIN, MAX = 1, 10  # Indicates the values for the personality parameters
+    MIN, MAX = 1, 10  # Indicates the range of values for the personality parameters
 
     def __init__(self, player_name: str, chatbot_name: str, api_key: str):
+        if Chatbot.MIN > Chatbot.MAX:
+            raise Exception(
+                "The minimum value personality parameter should be lower than the maximum value parameter!"
+            )
+
         genai.configure(api_key=api_key)
         self.__player_name = player_name
         self.__chatbot_name = chatbot_name
@@ -114,11 +119,20 @@ Conversation History:
         """Let user manually set numerical parameters"""
         try:
             self.__mood = int(
-                input(f"Set mood ({Chatbot.MIN}-{Chatbot.MAX}, where {Chatbot.MIN}=negative, {Chatbot.MAX}=positive): "))
+                input(
+                    f"Set mood ({Chatbot.MIN}-{Chatbot.MAX}, where {Chatbot.MIN}=negative, {Chatbot.MAX}=positive): "
+                )
+            )
             self.__energy = int(
-                input(f"Set energy ({Chatbot.MIN}-{Chatbot.MAX}, where {Chatbot.MIN}=low, {Chatbot.MAX}=high): "))
+                input(
+                    f"Set energy ({Chatbot.MIN}-{Chatbot.MAX}, where {Chatbot.MIN}=low, {Chatbot.MAX}=high): "
+                )
+            )
             self.__trust_level = int(
-                input(f"Set trust level ({Chatbot.MIN}-{Chatbot.MAX}, where {Chatbot.MIN}=guarded, {Chatbot.MAX}=trusting): "))
+                input(
+                    f"Set trust level ({Chatbot.MIN}-{Chatbot.MAX}, where {Chatbot.MIN}=guarded, {Chatbot.MAX}=trusting): "
+                )
+            )
 
             # Validate inputs
             for param in [self.__mood, self.__energy, self.__trust_level]:
