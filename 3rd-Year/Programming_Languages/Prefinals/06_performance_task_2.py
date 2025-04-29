@@ -4,20 +4,40 @@
 import sys
 import os
 import google.generativeai as genai
+from dotenv import load_dotenv
 
 
-class History:
-    def __init__(self):
-        self.__content: list[str] = []
+class Program:
+    @staticmethod
+    def main() -> None:
+        EXIT_WORD = "exit"
 
-    def add_message(self, author: str, message: str) -> None:
-        self.__content.append(f"{author}: {message}")
+        load_dotenv()
+        player_name = Program.enter_name()
+        chatbot_name = Program.enter_name("chatbot's name")
+        chatbot = Chatbot(
+            player_name=player_name,
+            chatbot_name=chatbot_name,
+            api_key=os.environ.get("API_KEY")
+        )
+        chatbot.set_personality()
 
-    def get_count(self) -> int:
-        return len(self.__content)
+        print(
+            f"You may now start the conversation! Type \"{EXIT_WORD}\" to exit the conversation anytime!\n"
+        )
+        while True:
+            player_message = input(f"{player_name}: ")
+            if player_message == EXIT_WORD:
+                sys.exit()
+            chatbot.chat(player_message)
 
-    def __str__(self) -> str:
-        return "\n".join(self.__content)
+    @staticmethod
+    def enter_name(target: str = "name") -> str:
+        name = input(f"Enter your {target}: ").strip()
+        if not name:
+            print("Name cannot be empty!")
+            return Program.enter_name()
+        return name
 
 
 class Chatbot:
@@ -47,9 +67,9 @@ Keep your responses concise (1-3 sentences max) like you're in a natural convers
 Reply specifically to the most recent message, but maintain continuity with previous exchanges.
 
 PERSONALITY PARAMETERS:
-1. Mood: {mood}/10 (1=very negative, 5=neutral, 10=extremely positive)
-2. Energy: {energy}/10 (1=lethargic/tired, 5=calm, 10=highly energetic/excited)
-3. Trust Level: {trust}/10 (1=guarded/suspicious, 5=neutral, 10=completely open/trusting)
+1. Mood: {mood}/{max_parameter_value} ({min_parameter_value}=very negative, {mid_parameter_value}=neutral, {max_parameter_value}=extremely positive)
+2. Energy: {energy}/{max_parameter_value} ({min_parameter_value}=lethargic/tired, {mid_parameter_value}=calm, {max_parameter_value}=highly energetic/excited)
+3. Trust Level: {trust}/{max_parameter_value} ({min_parameter_value}=guarded/suspicious, {mid_parameter_value}=neutral, {max_parameter_value}=completely open/trusting)
 4. Memory Recall: Reference these specific facts about the user when relevant: {memory_recall}
 
 PERSONALITY TRAITS:
@@ -82,33 +102,37 @@ Conversation History:
     def __suggest_parameters(self) -> None:
         """Analyze personality and suggest numerical parameters"""
         print("\nBased on your description, you might want to set these parameters:")
-
-        # Simple keyword analysis to suggest parameters
         personality_lower = self.__personality.lower()
 
         # Mood suggestions
-        if any(word in personality_lower for word in ["happy", "cheerful", "optimistic", "joyful"]):
+        POSITIVE_MOOD_WORDS = ("happy", "cheerful", "optimistic", "joyful")
+        NEGATIVE_MOOD_WORDS = ("sad", "gloomy", "depressed", "negative")
+        if any(word in personality_lower for word in POSITIVE_MOOD_WORDS):
             self.__mood = 8
-            print(f"- Mood: 8/10 (Quite positive)")
-        elif any(word in personality_lower for word in ["sad", "gloomy", "depressed", "negative"]):
+            print(f"- Mood: 8/{Chatbot.MAX} (Quite positive)")
+        elif any(word in personality_lower for word in NEGATIVE_MOOD_WORDS):
             self.__mood = 3
-            print(f"- Mood: 3/10 (Somewhat negative)")
+            print(f"- Mood: 3/{Chatbot.MAX} (Somewhat negative)")
 
         # Energy suggestions
-        if any(word in personality_lower for word in ["energetic", "excited", "enthusiastic", "hyper"]):
+        HIGH_ENERGY_WORDS = ("energetic", "excited", "enthusiastic", "hyper")
+        LOW_ENERGY_WORDS = ("calm", "relaxed", "chill", "laid-back")
+        if any(word in personality_lower for word in HIGH_ENERGY_WORDS):
             self.__energy = 9
-            print(f"- Energy: 9/10 (Very high energy)")
-        elif any(word in personality_lower for word in ["calm", "relaxed", "chill", "laid-back"]):
+            print(f"- Energy: 9/{Chatbot.MAX} (Very high energy)")
+        elif any(word in personality_lower for word in LOW_ENERGY_WORDS):
             self.__energy = 3
-            print(f"- Energy: 3/10 (Relaxed)")
+            print(f"- Energy: 3/{Chatbot.MAX} (Relaxed)")
 
         # Trust suggestions
-        if any(word in personality_lower for word in ["suspicious", "cautious", "guarded"]):
+        LOW_TRUST_WORDS = ("suspicious", "cautious", "guarded")
+        HIGH_TRUST_WORDS = ("trusting", "open", "friendly")
+        if any(word in personality_lower for word in LOW_TRUST_WORDS):
             self.__trust_level = 2
-            print(f"- Trust: 2/10 (Quite guarded)")
-        elif any(word in personality_lower for word in ["trusting", "open", "friendly"]):
+            print(f"- Trust: 2/{Chatbot.MAX} (Quite guarded)")
+        elif any(word in personality_lower for word in HIGH_TRUST_WORDS):
             self.__trust_level = 8
-            print(f"- Trust: 8/10 (Very trusting)")
+            print(f"- Trust: 8/{Chatbot.MAX} (Very trusting)")
 
         # Allow manual override
         print("\nWould you like to manually set these parameters? (y/n)")
@@ -137,7 +161,9 @@ Conversation History:
             # Validate inputs
             for param in [self.__mood, self.__energy, self.__trust_level]:
                 if not Chatbot.MIN <= param <= Chatbot.MAX:
-                    print("All parameters must be between 1-10. Using defaults.")
+                    print(
+                        f"All parameters must be between {Chatbot.MIN}-{Chatbot.MAX}. Using defaults."
+                    )
                     self.__mood = self.__energy = 5
                     self.__trust_level = 1
                     break
@@ -157,7 +183,8 @@ Conversation History:
         if trust is not None and Chatbot.MIN <= trust <= Chatbot.MAX:
             self.__trust_level = trust
         print(
-            f"Parameters updated: Mood={self.__mood}, Energy={self.__energy}, Trust={self.__trust_level}")
+            f"Parameters updated: Mood={self.__mood}, Energy={self.__energy}, Trust={self.__trust_level}"
+        )
 
     def remember_fact(self, fact: str) -> None:
         """Store important information about the user"""
@@ -199,43 +226,28 @@ Conversation History:
             energy=self.__energy,
             trust=self.__trust_level,
             memory_recall=", ".join(
-                self.__memory_recall) if self.__memory_recall else "None yet"
+                self.__memory_recall) if self.__memory_recall else "None yet",
+            max_parameter_value=Chatbot.MAX,
+            mid_parameter_value=Chatbot.MAX // 2,
+            min_parameter_value=Chatbot.MIN
         )
 
         formatted_prompt += "\n" + str(self.__chat_history)
         return formatted_prompt
 
 
-class Program:
-    @staticmethod
-    def main() -> None:
-        EXIT_WORD = "exit"
+class History:
+    def __init__(self):
+        self.__content: list[str] = []
 
-        player_name = Program.enter_name()
-        chatbot_name = Program.enter_name("chatbot's name")
-        chatbot = Chatbot(
-            player_name=player_name,
-            chatbot_name=chatbot_name,
-            api_key=os.environ.get("API_KEY")
-        )
-        chatbot.set_personality()
+    def add_message(self, author: str, message: str) -> None:
+        self.__content.append(f"{author}: {message}")
 
-        print(
-            f"You may now start the conversation! Type \"{EXIT_WORD}\" to exit the conversation anytime!\n"
-        )
-        while True:
-            player_message = input(f"{player_name}: ")
-            if player_message == EXIT_WORD:
-                sys.exit()
-            chatbot.chat(player_message)
+    def get_count(self) -> int:
+        return len(self.__content)
 
-    @staticmethod
-    def enter_name(target: str = "name") -> str:
-        name = input(f"Enter your {target}: ").strip()
-        if not name:
-            print("Name cannot be empty!")
-            return Program.enter_name()
-        return name
+    def __str__(self) -> str:
+        return "\n".join(self.__content)
 
 
 if __name__ == "__main__":
