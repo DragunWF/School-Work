@@ -4,6 +4,7 @@ Dump
 .DS_Store
 obj
 PrivateSubmission
+.env
 
 # ========= C# WINFORMS PROJECT VISUAL STUDIO =========
 
