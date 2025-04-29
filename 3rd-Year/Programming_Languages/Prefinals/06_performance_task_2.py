@@ -1,4 +1,4 @@
-# Marc Plarisan | BSIT601 | Programming Languages - 06 Performance Task 1
+# Marc Plarisan | BSIT601 | Programming Languages - 06 Performance Task 2
 # Free Form Programming - Chosen: AI Chatbot
 
 import sys
