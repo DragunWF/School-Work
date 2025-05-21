@@ -16,7 +16,7 @@ def input_num(prompt: str) -> int:
         return int(input(f" {prompt}: "))
     except ValueError:
         print("Please provide a valid integer!")
-    return input_num(prompt)
+        return input_num(prompt)
 
 
 if __name__ == "__main__":

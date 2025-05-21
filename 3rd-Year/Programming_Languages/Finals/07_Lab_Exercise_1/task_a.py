@@ -30,7 +30,7 @@ def input_num(prompt: str) -> int:
         return num
     except ValueError:
         print("Please provide a valid positive integer!")
-    return input_num(prompt)
+        return input_num(prompt)
 
 
 if __name__ == "__main__":
