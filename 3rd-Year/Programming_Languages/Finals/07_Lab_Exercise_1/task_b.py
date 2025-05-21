@@ -13,7 +13,7 @@ def main() -> None:
 
 def input_num(prompt: str) -> int:
     try:
-        return int(input(f" {prompt}: "))
+        return int(input(f"{prompt}: "))
     except ValueError:
         print("Please provide a valid integer!")
         return input_num(prompt)

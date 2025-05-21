@@ -14,7 +14,7 @@ def main() -> None:
 
 
 def input_str(prompt: str) -> str:
-    name = input(f" {prompt}: "). strip()
+    name = input(f"{prompt}: "). strip()
     if not name:
         print("Input must not be empty!")
         return input_str(prompt)
@@ -23,7 +23,7 @@ def input_str(prompt: str) -> str:
 
 def input_num(prompt: str) -> int:
     try:
-        num = int(input(f" {prompt}: "))
+        num = int(input(f"{prompt}: "))
         if num <= 0:
             print("Integer must be positive!")
             return input_num(prompt)
