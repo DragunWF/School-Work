@@ -1,2 +1,3 @@
 *.sql linguist-detectable=true
 *.sql linguist-language=sql
+3rd-Year/Web_Systems_and_Technologies/Finals/PlarisanWebApp/Scripts/** linguist-vendored
