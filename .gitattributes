@@ -2,4 +2,4 @@
 *.sql linguist-language=sql
 3rd-Year/Web_Systems_and_Technologies/Finals/PlarisanWebApp/Scripts/** linguist-vendored
 3rd-Year/Web_Systems_and_Technologies/Finals/PT_Plarisan_Marc/wwwroot/** linguist-vendored
-4th-Year/Computer_Graphics_Programming/Game_Development/Prelims/PlarisanMarc_BSIT701_Lab2 linguist-vendored
+4th-Year/Game_Development/Prelims/PlarisanMarc_BSIT701_Lab2/** linguist-vendored
