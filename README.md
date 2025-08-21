@@ -31,6 +31,7 @@ This repository includes code and exercises grouped into the following categorie
 - **Microsoft SQL**: Database operations and management tasks.
 - **SQL Management Studio**: Tools for managing SQL Server databases.
 - **Bootstrap**: Frontend framework for building responsive and modern web designs.
+- **Unity:** Game engine for developing both 2D and 3D games.
 
 ## 📂 Repository Structure
 
