@@ -24,6 +24,7 @@ namespace Plane.Gameplay
         public float m_GameSpeed = 100;
 
         private ScoringSystem scoringSystem;
+        private AudioPlayer audioPlayer;
 
         void Awake()
         {
@@ -35,9 +36,15 @@ namespace Plane.Gameplay
             m_GameState = State_Start;
 
             scoringSystem = FindObjectOfType<ScoringSystem>();
+            audioPlayer = FindObjectOfType<AudioPlayer>();
+
             if (scoringSystem == null)
             {
                 Debug.LogError("ScoringSystem not found in the scene.");
+            }
+            if (audioPlayer == null)
+            {
+                Debug.LogError("AudioPlayer component cannot be found in the scene");
             }
         }
 
@@ -57,13 +64,12 @@ namespace Plane.Gameplay
             UIControl.Current.m_LoseUI.SetActive(true);
 
             scoringSystem.OnGameLose();
+            audioPlayer.OnGameLose();
         }
 
         public void HandleWin()
         {
-
+            // Empty for now...
         }
-
-
     }
 }
