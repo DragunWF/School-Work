@@ -6,3 +6,7 @@ These are the links to play my games on the web browser. They're all built with 
 
 - [02 Laboratory Exercise 1](https://play.unity.com/en/games/606eca45-c3b6-4372-a6ec-8ba064eea364/webgl-builds)
 - [02 Performance Task 1](https://play.unity.com/en/games/cb4a3d22-ef0f-4dd8-b75d-a0abe23977df/02-performance-task-1-plarisan)
+
+## Midterms
+
+- [04 Laboratory Exercise 1](https://play.unity.com/en/games/fdbf24f1-3c60-4f98-bab9-a78172b4b3f6/04-laboratory-exercise-1-plarisan)
